@@ -89,6 +89,22 @@ export default function FAQ() {
       className="relative py-24 bg-primary"
       aria-labelledby="faq-title"
     >
+      <div className="absolute bottom-0 inset-x-0">
+        <motion.div
+          animate={{
+            opacity: [0.5, 1, 0.5]
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          <div className="h-1 bg-gradient-to-r from-transparent via-accent-orange/40 to-transparent"></div>
+          <div className="h-[3px] bg-gradient-to-r from-transparent via-accent-orange/30 to-transparent transform -translate-y-px"></div>
+        </motion.div>
+      </div>
+
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.header
           initial={{ y: 50 }}
@@ -99,7 +115,7 @@ export default function FAQ() {
         >
           <h2
             id="faq-title"
-            className="text-4xl font-bold mb-6 text-accent-orange"
+            className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-accent-green via-accent-orange to-accent-gold bg-clip-text text-transparent"
           >
             Frequently Asked Questions
           </h2>

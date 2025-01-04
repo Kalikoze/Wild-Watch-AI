@@ -108,19 +108,38 @@ export default function UseCases() {
       className="relative py-32 bg-primary overflow-hidden"
       aria-labelledby="use-cases-title"
     >
+      <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary-light to-primary"></div>
+
       <motion.div
-        aria-hidden="true"
-        className="absolute top-0 left-0 w-96 h-96 bg-accent-green/10 rounded-full blur-3xl"
+        className="absolute inset-0 opacity-30"
+        style={{
+          background: 'radial-gradient(circle at 50% 50%, rgba(40, 167, 69, 0.1) 0%, transparent 50%)',
+        }}
         animate={{
-          x: [0, 100, 0],
-          y: [0, 50, 0],
+          scale: [1, 1.2, 1],
         }}
         transition={{
-          duration: 20,
+          duration: 8,
           repeat: Infinity,
           ease: "linear"
         }}
       />
+
+      <div className="absolute bottom-0 inset-x-0">
+        <motion.div
+          animate={{
+            opacity: [0.5, 1, 0.5]
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          <div className="h-1 bg-gradient-to-r from-transparent via-accent-green/40 to-transparent"></div>
+          <div className="h-[3px] bg-gradient-to-r from-transparent via-accent-green/30 to-transparent transform -translate-y-px"></div>
+        </motion.div>
+      </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.header

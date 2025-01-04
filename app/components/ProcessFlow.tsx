@@ -120,6 +120,21 @@ export default function ProcessFlow() {
       className="relative py-32 bg-primary overflow-hidden"
       aria-labelledby="process-title"
     >
+      <motion.div
+        className="absolute bottom-0 inset-x-0"
+        animate={{
+          opacity: [0.5, 1, 0.5]
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      >
+        <div className="h-1 bg-gradient-to-r from-transparent via-accent-orange/40 to-transparent"></div>
+        <div className="h-[3px] bg-gradient-to-r from-transparent via-accent-orange/30 to-transparent transform -translate-y-px"></div>
+      </motion.div>
+
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.header
           initial={{ y: 50 }}
@@ -130,7 +145,7 @@ export default function ProcessFlow() {
         >
           <h2
             id="process-title"
-            className="text-4xl md:text-5xl font-bold mb-6 text-accent-orange"
+            className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-accent-green via-accent-orange to-accent-gold bg-clip-text text-transparent"
           >
             How It Works
           </h2>

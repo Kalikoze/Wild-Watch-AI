@@ -124,7 +124,42 @@ export default function Features() {
   ];
 
   return (
-    <section className="relative py-32 bg-primary overflow-hidden">
+    <section className="relative py-32 overflow-hidden">
+      {/* Modern gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary-light to-primary"></div>
+
+      {/* Animated glow effect */}
+      <motion.div
+        className="absolute inset-0 opacity-30"
+        style={{
+          background: 'radial-gradient(circle at 50% 50%, rgba(40, 167, 69, 0.1) 0%, transparent 50%)',
+        }}
+        animate={{
+          scale: [1, 1.2, 1],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+      />
+
+      <div className="absolute bottom-0 inset-x-0">
+        <motion.div
+          animate={{
+            opacity: [0.5, 1, 0.5]
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          <div className="h-1 bg-gradient-to-r from-transparent via-accent-green/40 to-transparent"></div>
+          <div className="h-[3px] bg-gradient-to-r from-transparent via-accent-green/30 to-transparent transform -translate-y-px"></div>
+        </motion.div>
+      </div>
+
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.header
           initial={{ y: 50 }}
@@ -133,7 +168,7 @@ export default function Features() {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-neutral-light mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-accent-green via-accent-orange to-accent-gold bg-clip-text text-transparent">
             Streamlined Animal Monitoring
           </h2>
           <p className="text-xl text-neutral-light/80 max-w-3xl mx-auto">
@@ -142,7 +177,7 @@ export default function Features() {
           </p>
         </motion.header>
 
-        <div className="divide-y divide-neutral-light/10">
+        <div className="space-y-20">
           {features.map((feature, index) => (
             <FeatureRow
               key={index}

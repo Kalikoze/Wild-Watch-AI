@@ -33,6 +33,23 @@ export default function Hero() {
         }}
       />
 
+      {/* Section Separator - Top */}
+      <div className="absolute bottom-0 inset-x-0">
+        <motion.div
+          animate={{
+            opacity: [0.5, 1, 0.5]
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          <div className="h-1 bg-gradient-to-r from-transparent via-accent-orange/40 to-transparent"></div>
+          <div className="h-[3px] bg-gradient-to-r from-transparent via-accent-orange/30 to-transparent transform -translate-y-px"></div>
+        </motion.div>
+      </div>
+
       <motion.div
         className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full"
       >
