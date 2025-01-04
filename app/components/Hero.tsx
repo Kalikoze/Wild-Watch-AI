@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion';
 import { HiArrowRight, HiSparkles } from 'react-icons/hi';
+import BackgroundEffects from '@/app/components/common/BackgroundEffects';
 
 export default function Hero() {
   return (
@@ -11,47 +12,7 @@ export default function Hero() {
       aria-labelledby="hero-heading"
       className="relative h-[80vh] bg-primary flex items-center overflow-hidden"
     >
-      <motion.div
-        aria-hidden="true"
-        className="absolute top-0 -left-64 w-96 h-96 bg-accent-green/30 rounded-full blur-3xl"
-        animate={{
-          x: [0, 100, 0],
-          y: [0, 50, 0],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-      />
-      <motion.div
-        aria-hidden="true"
-        className="absolute bottom-0 -right-64 w-96 h-96 bg-accent-orange/30 rounded-full blur-3xl"
-        animate={{
-          x: [0, -100, 0],
-          y: [0, -50, 0],
-        }}
-        transition={{
-          duration: 15,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-      />
-
-      <motion.div
-        className="absolute bottom-0 inset-x-0"
-        animate={{
-          opacity: [0.5, 1, 0.5]
-        }}
-        transition={{
-          duration: 3,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      >
-        <div className="h-1 bg-gradient-to-r from-transparent via-accent-orange/40 to-transparent"></div>
-        <div className="h-[3px] bg-gradient-to-r from-transparent via-accent-orange/30 to-transparent transform -translate-y-px"></div>
-      </motion.div>
+      <BackgroundEffects color="orange" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
