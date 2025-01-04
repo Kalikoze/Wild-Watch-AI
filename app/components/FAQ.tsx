@@ -21,22 +21,22 @@ function FAQItem({ question, answer, index, isOpen, onToggle }: FAQItemProps) {
       viewport={{ once: true }}
       className="border-b border-neutral-light/10"
     >
-        <button
-          onClick={onToggle}
-          className="w-full py-6 flex items-center justify-between text-left"
-          aria-expanded={isOpen}
-          aria-controls={`faq-answer-${index}`}
+      <button
+        onClick={onToggle}
+        className="w-full py-6 flex items-center justify-between text-left"
+        aria-expanded={isOpen}
+        aria-controls={`faq-answer-${index}`}
+      >
+        <h3 className="text-lg font-medium text-neutral-light">{question}</h3>
+        <motion.span
+          aria-hidden="true"
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.3 }}
+          className="text-accent-orange"
         >
-          <h3 className="text-lg font-medium text-neutral-light">{question}</h3>
-          <motion.span
-            aria-hidden="true"
-            animate={{ rotate: isOpen ? 180 : 0 }}
-            transition={{ duration: 0.3 }}
-            className="text-accent-orange"
-          >
-            <FaChevronDown />
-          </motion.span>
-        </button>
+          <FaChevronDown />
+        </motion.span>
+      </button>
       <motion.div
         id={`faq-answer-${index}`}
         initial={false}
@@ -56,28 +56,28 @@ function FAQItem({ question, answer, index, isOpen, onToggle }: FAQItemProps) {
 export default function FAQ() {
   const faqs = [
     {
-      question: "How does WildWatch AI protect animal privacy and data security?",
-      answer: "We implement enterprise-grade security measures and follow strict ethical guidelines for animal monitoring. All data is encrypted, and access is strictly controlled through role-based permissions."
+      question: "How does WildWatch AI store and manage video data?",
+      answer: "Videos are securely stored using Cloudinary's enterprise-grade cloud storage, while metadata and analysis results are managed in our secure database. Access is controlled through user authentication, ensuring your data remains private and accessible only to authorized team members."
     },
     {
-      question: "Can WildWatch AI be customized for specific species?",
-      answer: "Yes! Our AI models are designed to be adaptable and can be trained for any species. We work closely with your team to understand specific behavioral patterns and requirements."
+      question: "What kind of animal behaviors can the AI currently detect?",
+      answer: "In our initial release, we focus on basic movement detection and presence tracking. Our AI model can identify when animals enter or leave frame and track simple movement patterns. More complex behavior analysis features will be added in future updates."
     },
     {
-      question: "What kind of technical setup is required?",
-      answer: "Our platform is cloud-based and works with most standard camera systems. We provide full technical support for integration and can recommend compatible hardware if needed."
+      question: "What file formats and video sizes are supported?",
+      answer: "We support common video formats including MP4, MOV, and AVI through our Cloudinary integration. For optimal performance, we recommend videos under 100MB per upload, though larger files are supported."
     },
     {
-      question: "How long does it take to implement the system?",
-      answer: "Basic implementation can be completed within weeks. We offer a phased approach, starting with core features and gradually expanding based on your needs."
+      question: "How can I access and share the analysis results?",
+      answer: "Analysis results are available through our dashboard, where you can view basic metrics and download simple CSV reports. Team members can access shared videos and results through their authorized accounts."
     },
     {
-      question: "What kind of support do you provide?",
-      answer: "We offer comprehensive 24/7 technical support, regular training sessions, and dedicated account management to ensure you get the most value from our platform."
+      question: "What technical requirements are needed to use WildWatch AI?",
+      answer: "You just need a modern web browser and internet connection. Our cloud-based platform handles all the processing - no special software installation required. Simply upload your videos and access results through our web interface."
     },
     {
-      question: "How accurate is the AI in detecting animal behaviors?",
-      answer: "Our AI system uses advanced deep learning models that continuously improve over time. While accuracy can vary by species and behavior type, we focus on high-precision detection and provide confidence scores with all observations. We also offer model fine-tuning for your specific needs."
+      question: "Can multiple team members collaborate on the platform?",
+      answer: "Yes! Our authentication system supports multiple users, allowing team members to access shared videos and analysis results. Each user gets their own secure login while working with the same dataset."
     }
   ];
 
