@@ -8,21 +8,21 @@ interface FAQItemProps {
   question: string;
   answer: string;
   index: number;
+  isOpen: boolean;
+  onToggle: () => void;
 }
 
-function FAQItem({ question, answer, index }: FAQItemProps) {
-  const [isOpen, setIsOpen] = useState(false);
-
+function FAQItem({ question, answer, index, isOpen, onToggle }: FAQItemProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      initial={{ y: 50 }}
+      whileInView={{ y: 0 }}
+      transition={{ duration: 0.7, delay: index * 0.1 }}
       viewport={{ once: true }}
       className="border-b border-neutral-light/10"
     >
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={onToggle}
         className="w-full py-6 flex items-center justify-between text-left"
         aria-expanded={isOpen}
       >
@@ -39,7 +39,6 @@ function FAQItem({ question, answer, index }: FAQItemProps) {
         initial={false}
         animate={{
           height: isOpen ? 'auto' : 0,
-          opacity: isOpen ? 1 : 0,
           marginBottom: isOpen ? 16 : 0
         }}
         transition={{ duration: 0.3 }}
@@ -79,13 +78,16 @@ export default function FAQ() {
     }
   ];
 
+  const [leftColumnOpen, setLeftColumnOpen] = useState<number | null>(null);
+  const [rightColumnOpen, setRightColumnOpen] = useState<number | null>(null);
+
   return (
-    <section className="relative py-32 bg-primary min-h-[800px]" aria-labelledby="faq-title">
+    <section className="relative py-24 bg-primary" aria-labelledby="faq-title">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.header
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          initial={{ y: 50 }}
+          whileInView={{ y: 0 }}
+          transition={{ duration: 0.7 }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
@@ -100,7 +102,7 @@ export default function FAQ() {
           </p>
         </motion.header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 min-h-[600px]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="space-y-2">
             {faqs.slice(0, Math.ceil(faqs.length / 2)).map((faq, index) => (
               <FAQItem
@@ -108,6 +110,10 @@ export default function FAQ() {
                 question={faq.question}
                 answer={faq.answer}
                 index={index}
+                isOpen={leftColumnOpen === index}
+                onToggle={() => {
+                  setLeftColumnOpen(leftColumnOpen === index ? null : index);
+                }}
               />
             ))}
           </div>
@@ -118,6 +124,10 @@ export default function FAQ() {
                 question={faq.question}
                 answer={faq.answer}
                 index={index + Math.ceil(faqs.length / 2)}
+                isOpen={rightColumnOpen === index}
+                onToggle={() => {
+                  setRightColumnOpen(rightColumnOpen === index ? null : index);
+                }}
               />
             ))}
           </div>

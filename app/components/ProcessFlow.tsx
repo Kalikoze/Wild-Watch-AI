@@ -13,16 +13,15 @@ interface ProcessStepProps {
 function ProcessStep({ icon, title, description, index }: ProcessStepProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ y: 50 }}
+      whileInView={{ y: 0 }}
       transition={{
-        duration: 0.5,
+        duration: 0.7,
         delay: index * 0.2
       }}
       viewport={{ once: true }}
       className="relative flex flex-col items-center"
     >
-      {/* Step number - now larger and more prominent */}
       <motion.div
         className="absolute -top-4 left-0 w-8 h-8 rounded-full bg-accent-orange 
           flex items-center justify-center text-neutral-light font-bold text-lg
@@ -41,7 +40,6 @@ function ProcessStep({ icon, title, description, index }: ProcessStepProps) {
         {index + 1}
       </motion.div>
 
-      {/* Icon circle with pulse animation */}
       <motion.div
         className="relative mb-4"
         whileInView={{
@@ -56,8 +54,7 @@ function ProcessStep({ icon, title, description, index }: ProcessStepProps) {
         <motion.div
           className="absolute inset-0 rounded-full border-2 border-accent-green"
           animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.5, 0.2, 0.5]
+            scale: [1, 1.2, 1]
           }}
           transition={{
             duration: 2,
@@ -72,11 +69,10 @@ function ProcessStep({ icon, title, description, index }: ProcessStepProps) {
         </div>
       </motion.div>
 
-      {/* Content with fade-in animation */}
       <motion.div
         className="text-center"
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ y: 30 }}
+        whileInView={{ y: 0 }}
         transition={{
           duration: 0.5,
           delay: (index * 0.2) + 0.3
@@ -127,9 +123,9 @@ export default function ProcessFlow() {
     <section className="relative py-32 bg-primary overflow-hidden" aria-labelledby="process-title">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.header
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          initial={{ y: 50 }}
+          whileInView={{ y: 0 }}
+          transition={{ duration: 0.7 }}
           viewport={{ once: true }}
           className="text-center mb-20"
         >
@@ -146,8 +142,6 @@ export default function ProcessFlow() {
         </motion.header>
 
         <div className="relative grid grid-cols-1 md:grid-cols-5 gap-8">
-          {/* Background line */}
-
           {steps.map((step, index) => (
             <ProcessStep
               key={index}

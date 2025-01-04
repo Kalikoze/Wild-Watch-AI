@@ -17,9 +17,9 @@ interface FeatureCardProps {
 function FeatureCard({ title, description, Icon, index }: FeatureCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      initial={{ y: 50 }}
+      whileInView={{ y: 0 }}
+      transition={{ duration: 0.7, delay: index * 0.1 }}
       viewport={{ once: true }}
       className="relative p-8 bg-gradient-to-br from-primary-light to-primary rounded-2xl border border-neutral-dark/20 backdrop-blur-xl shadow-lg"
     >
@@ -85,37 +85,11 @@ export default function Features() {
 
   return (
     <section className="relative py-32 bg-primary overflow-hidden">
-      {/* Animated background elements */}
-      <motion.div
-        className="absolute top-0 -left-64 w-96 h-96 bg-accent-green/30 rounded-full blur-3xl"
-        animate={{
-          x: [0, 100, 0],
-          y: [0, 50, 0],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-      />
-      <motion.div
-        className="absolute bottom-0 -right-64 w-96 h-96 bg-accent-orange/30 rounded-full blur-3xl"
-        animate={{
-          x: [0, -100, 0],
-          y: [0, -50, 0],
-        }}
-        transition={{
-          duration: 15,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-      />
-
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          initial={{ y: 50 }}
+          whileInView={{ y: 0 }}
+          transition={{ duration: 0.8 }}
           viewport={{ once: true }}
           className="text-center mb-20"
         >

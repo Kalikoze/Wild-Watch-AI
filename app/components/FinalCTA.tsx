@@ -10,7 +10,6 @@ export default function FinalCTA() {
         className="absolute top-0 right-0 w-96 h-96 bg-accent-green/10 rounded-full blur-3xl"
         animate={{
           scale: [1, 1.2, 1],
-          opacity: [0.3, 0.2, 0.3],
         }}
         transition={{
           duration: 8,
@@ -23,19 +22,19 @@ export default function FinalCTA() {
         <div className="relative p-8 md:p-12 rounded-2xl bg-gradient-to-br from-primary to-primary-light border border-neutral-light/10">
           <div className="max-w-3xl mx-auto text-center">
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              initial={{ y: 50 }}
+              whileInView={{ y: 0 }}
+              transition={{ duration: 0.7 }}
               viewport={{ once: true }}
               className="text-3xl md:text-4xl font-bold mb-6 text-neutral-light"
             >
               Ready to Transform Animal Care?
             </motion.h2>
-            
+
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
+              initial={{ y: 50 }}
+              whileInView={{ y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
               viewport={{ once: true }}
               className="text-xl text-neutral-light/80 mb-12"
             >
@@ -43,9 +42,9 @@ export default function FinalCTA() {
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              initial={{ y: 50 }}
+              whileInView={{ y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
               viewport={{ once: true }}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
@@ -67,4 +66,4 @@ export default function FinalCTA() {
       </div>
     </section>
   );
-} 
+}
