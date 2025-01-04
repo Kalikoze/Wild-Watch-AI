@@ -14,28 +14,31 @@ interface FAQItemProps {
 
 function FAQItem({ question, answer, index, isOpen, onToggle }: FAQItemProps) {
   return (
-    <motion.div
+    <motion.article
       initial={{ y: 50 }}
       whileInView={{ y: 0 }}
       transition={{ duration: 0.7, delay: index * 0.1 }}
       viewport={{ once: true }}
       className="border-b border-neutral-light/10"
     >
-      <button
-        onClick={onToggle}
-        className="w-full py-6 flex items-center justify-between text-left"
-        aria-expanded={isOpen}
-      >
-        <span className="text-lg font-medium text-neutral-light">{question}</span>
-        <motion.span
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
-          className="text-accent-orange"
+        <button
+          onClick={onToggle}
+          className="w-full py-6 flex items-center justify-between text-left"
+          aria-expanded={isOpen}
+          aria-controls={`faq-answer-${index}`}
         >
-          <FaChevronDown />
-        </motion.span>
-      </button>
+          <h3 className="text-lg font-medium text-neutral-light">{question}</h3>
+          <motion.span
+            aria-hidden="true"
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            transition={{ duration: 0.3 }}
+            className="text-accent-orange"
+          >
+            <FaChevronDown />
+          </motion.span>
+        </button>
       <motion.div
+        id={`faq-answer-${index}`}
         initial={false}
         animate={{
           height: isOpen ? 'auto' : 0,
@@ -44,9 +47,9 @@ function FAQItem({ question, answer, index, isOpen, onToggle }: FAQItemProps) {
         transition={{ duration: 0.3 }}
         className="overflow-hidden text-neutral-light/80"
       >
-        {answer}
+        <p>{answer}</p>
       </motion.div>
-    </motion.div>
+    </motion.article>
   );
 }
 
@@ -82,7 +85,10 @@ export default function FAQ() {
   const [rightColumnOpen, setRightColumnOpen] = useState<number | null>(null);
 
   return (
-    <section className="relative py-24 bg-primary" aria-labelledby="faq-title">
+    <section
+      className="relative py-24 bg-primary"
+      aria-labelledby="faq-title"
+    >
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.header
           initial={{ y: 50 }}
@@ -102,7 +108,8 @@ export default function FAQ() {
           </p>
         </motion.header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8" role="presentation">
+          {/* Left Column */}
           <div className="space-y-2">
             {faqs.slice(0, Math.ceil(faqs.length / 2)).map((faq, index) => (
               <FAQItem
@@ -117,6 +124,7 @@ export default function FAQ() {
               />
             ))}
           </div>
+          {/* Right Column */}
           <div className="space-y-2">
             {faqs.slice(Math.ceil(faqs.length / 2)).map((faq, index) => (
               <FAQItem

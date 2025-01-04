@@ -12,7 +12,7 @@ interface ProcessStepProps {
 
 function ProcessStep({ icon, title, description, index }: ProcessStepProps) {
   return (
-    <motion.div
+    <motion.article
       initial={{ y: 50 }}
       whileInView={{ y: 0 }}
       transition={{
@@ -22,7 +22,8 @@ function ProcessStep({ icon, title, description, index }: ProcessStepProps) {
       viewport={{ once: true }}
       className="relative flex flex-col items-center"
     >
-      <motion.div
+      <motion.span
+        aria-hidden="true"
         className="absolute -top-4 left-0 w-8 h-8 rounded-full bg-accent-orange 
           flex items-center justify-center text-neutral-light font-bold text-lg
           shadow-lg shadow-accent-orange/20"
@@ -31,62 +32,57 @@ function ProcessStep({ icon, title, description, index }: ProcessStepProps) {
           rotate: [0, -10, 0]
         }}
         transition={{
-          duration: 0.6,
-          delay: index * 0.2,
+          duration: 2,
+          delay: index * 1,
           ease: "easeOut"
         }}
         viewport={{ once: true }}
       >
         {index + 1}
-      </motion.div>
+      </motion.span>
 
-      <motion.div
+      <motion.figure
         className="relative mb-4"
         whileInView={{
           scale: [0.9, 1]
         }}
         transition={{
-          duration: 0.5,
-          delay: index * 0.2
+          duration: 2,
+          delay: index * 1
         }}
         viewport={{ once: true }}
       >
-        <motion.div
+        <motion.span
+          aria-hidden="true"
           className="absolute inset-0 rounded-full border-2 border-accent-green"
           animate={{
             scale: [1, 1.2, 1]
           }}
           transition={{
             duration: 2,
-            repeat: Infinity,
+            delay: index * 1,
             ease: "easeInOut"
           }}
         />
-        <div className="relative w-16 h-16 rounded-full border-2 border-accent-green 
-          flex items-center justify-center text-accent-orange text-2xl
-          bg-primary-light/10 backdrop-blur-sm">
+        <span
+          aria-hidden="true"
+          className="relative w-16 h-16 rounded-full border-2 border-accent-green 
+            flex items-center justify-center text-accent-orange text-2xl
+            bg-primary-light/10 backdrop-blur-sm"
+        >
           {icon}
-        </div>
-      </motion.div>
+        </span>
+      </motion.figure>
 
-      <motion.div
-        className="text-center"
-        initial={{ y: 30 }}
-        whileInView={{ y: 0 }}
-        transition={{
-          duration: 0.5,
-          delay: (index * 0.2) + 0.3
-        }}
-        viewport={{ once: true }}
-      >
+      <div className="text-center">
         <h3 className="text-xl font-bold text-neutral-light mb-2">
           {title}
         </h3>
         <p className="text-neutral-light/60 text-sm">
           {description}
         </p>
-      </motion.div>
-    </motion.div>
+      </div>
+    </motion.article>
   );
 }
 
@@ -120,7 +116,10 @@ export default function ProcessFlow() {
   ];
 
   return (
-    <section className="relative py-32 bg-primary overflow-hidden" aria-labelledby="process-title">
+    <section
+      className="relative py-32 bg-primary overflow-hidden"
+      aria-labelledby="process-title"
+    >
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.header
           initial={{ y: 50 }}
@@ -141,17 +140,18 @@ export default function ProcessFlow() {
           </p>
         </motion.header>
 
-        <div className="relative grid grid-cols-1 md:grid-cols-5 gap-8">
+        <ol className="relative grid grid-cols-1 md:grid-cols-5 gap-8">
           {steps.map((step, index) => (
-            <ProcessStep
-              key={index}
-              icon={step.icon}
-              title={step.title}
-              description={step.description}
-              index={index}
-            />
+            <li key={index}>
+              <ProcessStep
+                icon={step.icon}
+                title={step.title}
+                description={step.description}
+                index={index}
+              />
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );

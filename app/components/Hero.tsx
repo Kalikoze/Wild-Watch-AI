@@ -5,8 +5,9 @@ import { motion } from 'framer-motion';
 
 export default function Hero() {
   return (
-    <section data-cy="hero-section" className="relative h-[80vh] bg-primary flex items-center overflow-hidden">
+    <header data-cy="hero-section" className="relative h-[80vh] bg-primary flex items-center overflow-hidden">
       <motion.div
+        aria-hidden="true"
         className="absolute top-0 -left-64 w-96 h-96 bg-accent-green/30 rounded-full blur-3xl"
         animate={{
           x: [0, 100, 0],
@@ -19,6 +20,7 @@ export default function Hero() {
         }}
       />
       <motion.div
+        aria-hidden="true"
         className="absolute bottom-0 -right-64 w-96 h-96 bg-accent-orange/30 rounded-full blur-3xl"
         animate={{
           x: [0, -100, 0],
@@ -31,7 +33,9 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <motion.div
+        className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full"
+      >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <motion.article
             initial={{ x: -50 }}
@@ -39,8 +43,8 @@ export default function Hero() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="max-w-4xl lg:max-w-7xl"
           >
-            <header>
-              <motion.h1
+            <div>
+              <motion.p
                 initial={{ y: -20 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
@@ -48,9 +52,9 @@ export default function Hero() {
                 className="mb-4 text-accent-green font-medium tracking-wide uppercase text-sm"
               >
                 WildWatch AI
-              </motion.h1>
+              </motion.p>
 
-              <motion.h2
+              <motion.h1
                 initial={{ y: -30 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
@@ -61,8 +65,8 @@ export default function Hero() {
                 <span className="text-accent-green">Wildlife</span>{' '}
                 Monitoring with{' '}
                 <span className="text-accent-orange">AI</span>
-              </motion.h2>
-            </header>
+              </motion.h1>
+            </div>
 
             <motion.p
               initial={{ y: -40 }}
@@ -104,7 +108,7 @@ export default function Hero() {
             </motion.nav>
           </motion.article>
 
-          <motion.div
+          <motion.aside
             initial={{ x: 100 }}
             animate={{ x: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
@@ -113,9 +117,9 @@ export default function Hero() {
             <div className="aspect-square rounded-2xl bg-neutral-dark/10 backdrop-blur-sm border border-neutral-light/10">
               {/* Placeholder for future image/graphic */}
             </div>
-          </motion.div>
+          </motion.aside>
         </div>
-      </div>
-    </section>
+      </motion.div>
+    </header>
   )
 } 
