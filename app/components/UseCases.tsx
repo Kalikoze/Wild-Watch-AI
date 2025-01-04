@@ -73,29 +73,29 @@ export default function UseCases() {
       icon: <FaPaw className="w-6 h-6" />,
       description: "Streamline daily monitoring and record-keeping with automated video analysis tools.",
       benefits: [
-        "Quick video analysis for basic behaviors",
+        "Quick video behavior analysis",
         "Automated daily activity logging",
-        "Simple report generation for staff handovers",
-        "Centralized video storage and notes"
+        "Simple report generation for staff",
+        "Centralized video storage & notes"
       ]
     },
     {
       title: "Wildlife Sanctuaries",
       icon: <FaTree className="w-6 h-6" />,
-      description: "Monitor rehabilitation progress while minimizing human interaction.",
+      description: "Monitor wildlife rehabilitation with AI tools while minimizing disruption to recovering animals.",
       benefits: [
         "Non-invasive behavior monitoring",
         "Basic activity pattern tracking",
-        "Easy report generation for care plans",
-        "Secure video management system"
+        "Easy reporting for care plans",
+        "Secure video management"
       ]
     },
     {
       title: "Research Institutions",
       icon: <FaMicroscope className="w-6 h-6" />,
-      description: "Support education and research with reliable behavioral data collection.",
+      description: "Support research projects with comprehensive tools for behavioral analysis and data collection.",
       benefits: [
-        "Educational resource for students",
+        "Student educational resources",
         "Research data collection tools",
         "Exportable data for analysis",
         "Collaborative video library"
