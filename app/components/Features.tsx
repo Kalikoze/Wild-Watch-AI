@@ -20,7 +20,7 @@ function FeatureRow({ title, description, details, Icon, imagePosition, index }:
   const imageOrder = imagePosition === 'left' ? 'lg:order-1' : '';
 
   return (
-    <motion.div
+    <motion.article
       initial={{ y: 50, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, delay: index * 0.1 }}
@@ -28,23 +28,23 @@ function FeatureRow({ title, description, details, Icon, imagePosition, index }:
       className="grid lg:grid-cols-2 gap-12 items-center py-20"
     >
       <div className={`space-y-8 ${contentOrder}`}>
-        <div className="flex items-center gap-4">
+        <header className="flex items-center gap-4">
           <span className="p-3 bg-accent-orange/10 rounded-lg">
-            <Icon className="w-6 h-6 text-accent-orange" />
+            <Icon className="w-6 h-6 text-accent-orange" aria-hidden="true" />
           </span>
           <h3 className="text-3xl font-bold text-neutral-light">
             {title}
           </h3>
-        </div>
+        </header>
 
         <p className="text-xl text-neutral-light/80 leading-relaxed">
           {description}
         </p>
 
-        <ul className="space-y-4">
+        <ul className="space-y-4" role="list">
           {details.map((detail, i) => (
             <li key={i} className="flex items-start gap-3">
-              <div className="relative mt-1 w-5 h-5 flex items-center justify-center">
+              <span className="relative mt-1 w-5 h-5 flex items-center justify-center" aria-hidden="true">
                 <motion.span
                   className="absolute inset-0 rounded-full bg-accent-green/30"
                   animate={{
@@ -58,20 +58,20 @@ function FeatureRow({ title, description, details, Icon, imagePosition, index }:
                   }}
                 />
                 <span className="w-2.5 h-2.5 rounded-full bg-accent-green" />
-              </div>
+              </span>
               <span className="text-neutral-light/80">{detail}</span>
             </li>
           ))}
         </ul>
       </div>
 
-      <div className={`${imageOrder}`}>
+      <figure className={`${imageOrder}`}>
         <div className="aspect-video rounded-2xl bg-neutral-dark/10 backdrop-blur-sm border border-neutral-light/10 overflow-hidden">
           {/* Placeholder for feature image/demo */}
           <div className="w-full h-full bg-gradient-to-br from-accent-orange/5 to-accent-orange/20" />
         </div>
-      </div>
-    </motion.div>
+      </figure>
+    </motion.article>
   );
 }
 
@@ -125,10 +125,8 @@ export default function Features() {
 
   return (
     <section className="relative py-32 overflow-hidden">
-      {/* Modern gradient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary-light to-primary"></div>
 
-      {/* Animated glow effect */}
       <motion.div
         className="absolute inset-0 opacity-30"
         style={{
@@ -177,16 +175,17 @@ export default function Features() {
           </p>
         </motion.header>
 
-        <div className="space-y-20">
+        <ul className="space-y-20" role="list">
           {features.map((feature, index) => (
-            <FeatureRow
-              key={index}
-              {...feature}
-              imagePosition={index % 2 === 0 ? 'right' : 'left'}
-              index={index}
-            />
+            <li key={index}>
+              <FeatureRow
+                {...feature}
+                imagePosition={index % 2 === 0 ? 'right' : 'left'}
+                index={index}
+              />
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

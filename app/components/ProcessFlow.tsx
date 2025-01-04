@@ -52,7 +52,7 @@ function ProcessStep({ icon, title, description, index }: ProcessStepProps) {
         }}
         viewport={{ once: true }}
       >
-        <motion.span
+        <motion.div
           aria-hidden="true"
           className="absolute inset-0 rounded-full border-2 border-accent-green"
           animate={{
@@ -74,14 +74,14 @@ function ProcessStep({ icon, title, description, index }: ProcessStepProps) {
         </span>
       </motion.figure>
 
-      <div className="text-center">
+      <header>
         <h3 className="text-xl font-bold text-neutral-light mb-2">
           {title}
         </h3>
         <p className="text-neutral-light/60 text-sm">
           {description}
         </p>
-      </div>
+      </header>
     </motion.article>
   );
 }
@@ -155,7 +155,10 @@ export default function ProcessFlow() {
           </p>
         </motion.header>
 
-        <ol className="relative grid grid-cols-1 md:grid-cols-5 gap-8">
+        <ol
+          className="relative grid grid-cols-1 md:grid-cols-5 gap-8"
+          aria-label="Process steps"
+        >
           {steps.map((step, index) => (
             <li key={index}>
               <ProcessStep

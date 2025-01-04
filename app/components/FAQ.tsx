@@ -14,42 +14,50 @@ interface FAQItemProps {
 
 function FAQItem({ question, answer, index, isOpen, onToggle }: FAQItemProps) {
   return (
-    <motion.article
+    <motion.div
       initial={{ y: 50 }}
       whileInView={{ y: 0 }}
       transition={{ duration: 0.7, delay: index * 0.1 }}
       viewport={{ once: true }}
       className="border-b border-neutral-light/10"
     >
-      <button
-        onClick={onToggle}
-        className="w-full py-6 flex items-center justify-between text-left"
-        aria-expanded={isOpen}
-        aria-controls={`faq-answer-${index}`}
-      >
-        <h3 className="text-lg font-medium text-neutral-light">{question}</h3>
-        <motion.span
-          aria-hidden="true"
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
-          className="text-accent-orange"
+      <dt>
+        <button
+          id={`faq-question-${index}`}
+          onClick={onToggle}
+          className="w-full py-6 flex items-center justify-between text-left"
+          aria-expanded={isOpen}
+          aria-controls={`faq-answer-${index}`}
         >
-          <FaChevronDown />
-        </motion.span>
-      </button>
-      <motion.div
-        id={`faq-answer-${index}`}
-        initial={false}
-        animate={{
-          height: isOpen ? 'auto' : 0,
-          marginBottom: isOpen ? 16 : 0
-        }}
-        transition={{ duration: 0.3 }}
-        className="overflow-hidden text-neutral-light/80"
-      >
-        <p>{answer}</p>
-      </motion.div>
-    </motion.article>
+          <span className="text-lg font-medium text-neutral-light">{question}</span>
+          <motion.span
+            aria-hidden="true"
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            transition={{ duration: 0.3 }}
+            className="text-accent-orange"
+          >
+            <FaChevronDown />
+          </motion.span>
+        </button>
+      </dt>
+
+      <dd>
+        <motion.div
+          id={`faq-answer-${index}`}
+          role="region"
+          aria-labelledby={`faq-question-${index}`}
+          initial={false}
+          animate={{
+            height: isOpen ? 'auto' : 0,
+            marginBottom: isOpen ? 16 : 0
+          }}
+          transition={{ duration: 0.3 }}
+          className="overflow-hidden text-neutral-light/80"
+        >
+          <p>{answer}</p>
+        </motion.div>
+      </dd>
+    </motion.div>
   );
 }
 
@@ -89,7 +97,7 @@ export default function FAQ() {
       className="relative py-24 bg-primary"
       aria-labelledby="faq-title"
     >
-      <div className="absolute bottom-0 inset-x-0">
+      <div aria-hidden="true" className="absolute bottom-0 inset-x-0">
         <motion.div
           animate={{
             opacity: [0.5, 1, 0.5]
@@ -100,8 +108,8 @@ export default function FAQ() {
             ease: "easeInOut"
           }}
         >
-          <div className="h-1 bg-gradient-to-r from-transparent via-accent-orange/40 to-transparent"></div>
-          <div className="h-[3px] bg-gradient-to-r from-transparent via-accent-orange/30 to-transparent transform -translate-y-px"></div>
+          <div className="h-1 bg-gradient-to-r from-transparent via-accent-orange/40 to-transparent" />
+          <div className="h-[3px] bg-gradient-to-r from-transparent via-accent-orange/30 to-transparent transform -translate-y-px" />
         </motion.div>
       </div>
 
@@ -124,9 +132,8 @@ export default function FAQ() {
           </p>
         </motion.header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8" role="presentation">
-          {/* Left Column */}
-          <div className="space-y-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <dl className="space-y-2">
             {faqs.slice(0, Math.ceil(faqs.length / 2)).map((faq, index) => (
               <FAQItem
                 key={index}
@@ -139,9 +146,8 @@ export default function FAQ() {
                 }}
               />
             ))}
-          </div>
-          {/* Right Column */}
-          <div className="space-y-2">
+          </dl>
+          <dl className="space-y-2">
             {faqs.slice(Math.ceil(faqs.length / 2)).map((faq, index) => (
               <FAQItem
                 key={index + Math.ceil(faqs.length / 2)}
@@ -154,7 +160,7 @@ export default function FAQ() {
                 }}
               />
             ))}
-          </div>
+          </dl>
         </div>
       </div>
     </section>

@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { HiArrowRight, HiSparkles } from 'react-icons/hi';
 
 export default function FinalCTA() {
   return (
@@ -9,11 +10,14 @@ export default function FinalCTA() {
       className="relative py-32 overflow-hidden"
       aria-labelledby="cta-heading"
     >
-      {/* Modern gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary-light to-primary"></div>
+      {/* Background effects */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-b from-primary via-primary-light to-primary"
+      />
 
-      {/* Animated glow effect */}
       <motion.div
+        aria-hidden="true"
         className="absolute inset-0 opacity-30"
         style={{
           background: 'radial-gradient(circle at 50% 50%, rgba(40, 167, 69, 0.1) 0%, transparent 50%)',
@@ -28,8 +32,8 @@ export default function FinalCTA() {
         }}
       />
 
-      {/* Bottom border glow */}
-      <div className="absolute bottom-0 inset-x-0">
+      {/* Gradient line animation */}
+      <div aria-hidden="true" className="absolute bottom-0 inset-x-0">
         <motion.div
           animate={{
             opacity: [0.5, 1, 0.5]
@@ -40,13 +44,13 @@ export default function FinalCTA() {
             ease: "easeInOut"
           }}
         >
-          <div className="h-1 bg-gradient-to-r from-transparent via-accent-green/40 to-transparent"></div>
-          <div className="h-[3px] bg-gradient-to-r from-transparent via-accent-green/30 to-transparent transform -translate-y-px"></div>
+          <div className="h-1 bg-gradient-to-r from-transparent via-accent-green/40 to-transparent" />
+          <div className="h-[3px] bg-gradient-to-r from-transparent via-accent-green/30 to-transparent transform -translate-y-px" />
         </motion.div>
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative p-12 rounded-2xl border border-neutral-light/10 backdrop-blur-sm">
+        <article className="relative p-12 rounded-2xl border border-neutral-light/10 backdrop-blur-sm">
           <motion.header
             initial={{ y: 50 }}
             whileInView={{ y: 0 }}
@@ -74,19 +78,27 @@ export default function FinalCTA() {
             >
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-neutral-light bg-accent-orange hover:bg-accent-orange-dark rounded-lg transition-all duration-300 shadow-lg shadow-accent-orange/20 hover:shadow-accent-orange/30 hover:-translate-y-0.5"
+                className="group inline-flex items-center px-8 py-4 text-lg font-medium text-neutral-light bg-accent-orange-dark hover:bg-accent-orange rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
               >
                 Schedule Demo
+                <HiArrowRight
+                  aria-hidden="true"
+                  className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1"
+                />
               </Link>
               <Link
                 href="/about"
-                className="inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-accent-green border-2 border-accent-green hover:bg-accent-green/10 rounded-lg transition-all duration-300 shadow-lg shadow-accent-green/10 hover:shadow-accent-green/20 hover:-translate-y-0.5"
+                className="group inline-flex items-center px-8 py-4 text-lg font-medium text-accent-green border-2 border-accent-green hover:bg-accent-green hover:text-primary rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
               >
                 Learn More
+                <HiSparkles
+                  aria-hidden="true"
+                  className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1"
+                />
               </Link>
             </motion.nav>
           </motion.header>
-        </div>
+        </article>
       </div>
     </section>
   );

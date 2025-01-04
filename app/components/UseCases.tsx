@@ -23,7 +23,7 @@ function UseCase({ title, icon, description, benefits, index }: UseCaseProps) {
       viewport={{ once: true }}
       className="relative p-6 bg-gradient-to-br from-primary-light to-primary rounded-2xl border border-neutral-dark/20"
     >
-      <div className="flex items-start gap-4">
+      <header className="flex items-start gap-4">
         <motion.span
           aria-hidden="true"
           initial={{ scale: 0.8 }}
@@ -42,6 +42,7 @@ function UseCase({ title, icon, description, benefits, index }: UseCaseProps) {
           <ul
             className="space-y-2"
             aria-label={`Benefits of ${title}`}
+            role="list"
           >
             {benefits.map((benefit, i) => (
               <motion.li
@@ -61,7 +62,7 @@ function UseCase({ title, icon, description, benefits, index }: UseCaseProps) {
             ))}
           </ul>
         </div>
-      </div>
+      </header>
     </motion.article>
   );
 }
@@ -108,9 +109,10 @@ export default function UseCases() {
       className="relative py-32 bg-primary overflow-hidden"
       aria-labelledby="use-cases-title"
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary-light to-primary"></div>
+      <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-primary via-primary-light to-primary" />
 
       <motion.div
+        aria-hidden="true"
         className="absolute inset-0 opacity-30"
         style={{
           background: 'radial-gradient(circle at 50% 50%, rgba(40, 167, 69, 0.1) 0%, transparent 50%)',
@@ -125,7 +127,7 @@ export default function UseCases() {
         }}
       />
 
-      <div className="absolute bottom-0 inset-x-0">
+      <div aria-hidden="true" className="absolute bottom-0 inset-x-0">
         <motion.div
           animate={{
             opacity: [0.5, 1, 0.5]
@@ -136,8 +138,8 @@ export default function UseCases() {
             ease: "easeInOut"
           }}
         >
-          <div className="h-1 bg-gradient-to-r from-transparent via-accent-green/40 to-transparent"></div>
-          <div className="h-[3px] bg-gradient-to-r from-transparent via-accent-green/30 to-transparent transform -translate-y-px"></div>
+          <div className="h-1 bg-gradient-to-r from-transparent via-accent-green/40 to-transparent" />
+          <div className="h-[3px] bg-gradient-to-r from-transparent via-accent-green/30 to-transparent transform -translate-y-px" />
         </motion.div>
       </div>
 
