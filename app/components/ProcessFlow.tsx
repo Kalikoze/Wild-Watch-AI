@@ -90,28 +90,28 @@ export default function ProcessFlow() {
   const steps = [
     {
       icon: <FaUpload />,
-      title: "Data Collection",
-      description: "Upload video feeds or connect live cameras. Support for multiple formats and streaming protocols.",
+      title: "Upload Videos",
+      description: "Securely upload and store your wildlife footage with cloud-based video management.",
     },
     {
       icon: <FaCog />,
-      title: "AI Processing",
-      description: "Advanced neural networks analyze behavior patterns, movements, and interactions in real-time.",
+      title: "Basic Analysis",
+      description: "Initial AI processing detects animal presence and tracks simple movement patterns.",
     },
     {
       icon: <FaChartBar />,
-      title: "Analysis & Insights",
-      description: "Generate detailed behavioral analytics and health insights using our specialized algorithms.",
+      title: "Simple Insights",
+      description: "View basic metrics about animal presence and movement patterns in an easy-to-read dashboard.",
     },
     {
       icon: <FaBell />,
-      title: "Smart Alerts",
-      description: "Receive immediate notifications for unusual behavior patterns or health concerns.",
+      title: "Team Access",
+      description: "Share findings with your team through secure, role-based access controls.",
     },
     {
       icon: <FaLightbulb />,
-      title: "Actionable Intelligence",
-      description: "Get AI-powered recommendations for animal care and management decisions.",
+      title: "Export Data",
+      description: "Download simple CSV reports and share insights with stakeholders.",
     },
   ];
 
