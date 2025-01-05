@@ -22,6 +22,7 @@ export default function FAQItem({ question, answer, index, isOpen, onToggle }: F
     >
       <dt>
         <button
+          data-cy={`faq-question-${index}`}
           id={`faq-question-${index}`}
           onClick={onToggle}
           className="w-full py-6 flex items-center justify-between text-left"
@@ -42,6 +43,7 @@ export default function FAQItem({ question, answer, index, isOpen, onToggle }: F
 
       <dd>
         <motion.div
+          data-cy={`faq-answer-${index}`}
           id={`faq-answer-${index}`}
           role="region"
           aria-labelledby={`faq-question-${index}`}

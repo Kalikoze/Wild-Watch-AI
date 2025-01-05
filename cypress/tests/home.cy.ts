@@ -1,7 +1,7 @@
 import { features } from '@/lib/data/features'
 import { processSteps } from '@/lib/data/process-steps'
 import { useCases } from '@/lib/data/useCases'
-
+import { faqs } from '@/lib/data/faqs'
 describe('Home Page', () => {
   beforeEach(() => {
     cy.visit('/')
@@ -211,6 +211,72 @@ describe('Home Page', () => {
     })
   })
 
+  context('FAQ Section Tests', () => {
+    beforeEach(() => {
+      cy.get('[data-cy="faq-section"]').scrollIntoView()
+    })
+
+    it('should render the FAQ section header correctly', () => {
+      cy.get('[data-cy="faq-title"]')
+        .should('be.visible')
+        .and('contain.text', 'Frequently Asked Questions')
+      cy.get('[data-cy="faq-description"]')
+        .should('be.visible')
+        .and('contain.text', 'Learn more about how WildWatch AI')
+    })
+
+    it('should render all FAQ items', () => {
+      cy.get('[data-cy^="faq-question-"]').should('have.length', faqs.length)
+    })
+
+    faqs.forEach((faq, index) => {
+      it(`should render and interact with FAQ item ${index + 1} correctly`, () => {
+        cy.get(`[data-cy="faq-question-${index}"]`)
+          .should('be.visible')
+          .and('contain.text', faq.question)
+
+        // Initially, answer should not be visible
+        cy.get(`[data-cy="faq-answer-${index}"]`)
+          .should('exist')
+          .and('not.be.visible')
+
+        // Click question to expand
+        cy.get(`[data-cy="faq-question-${index}"]`).click()
+
+        // Answer should now be visible with correct text
+        cy.get(`[data-cy="faq-answer-${index}"]`)
+          .should('be.visible')
+          .and('contain.text', faq.answer)
+
+        // Click again to collapse
+        cy.get(`[data-cy="faq-question-${index}"]`).click()
+
+        // Answer should be hidden again
+        cy.get(`[data-cy="faq-answer-${index}"]`)
+          .should('exist')
+          .and('not.be.visible')
+      })
+    })
+
+    it('should maintain proper accordion behavior in each column', () => {
+      const middleIndex = Math.ceil(faqs.length / 2)
+
+      // Test left column
+      cy.get(`[data-cy="faq-question-0"]`).click()
+      cy.get(`[data-cy="faq-answer-0"]`).should('be.visible')
+      cy.get(`[data-cy="faq-question-1"]`).click()
+      cy.get(`[data-cy="faq-answer-0"]`).should('not.be.visible')
+      cy.get(`[data-cy="faq-answer-1"]`).should('be.visible')
+
+      // Test right column
+      cy.get(`[data-cy="faq-question-${middleIndex}"]`).click()
+      cy.get(`[data-cy="faq-answer-${middleIndex}"]`).should('be.visible')
+      cy.get(`[data-cy="faq-question-${middleIndex + 1}"]`).click()
+      cy.get(`[data-cy="faq-answer-${middleIndex}"]`).should('not.be.visible')
+      cy.get(`[data-cy="faq-answer-${middleIndex + 1}"]`).should('be.visible')
+    })
+  })
+
   context('Accessibility Tests', () => {
     beforeEach(() => {
       cy.injectAxe()
@@ -260,6 +326,15 @@ describe('Home Page', () => {
           cy.get('[data-cy="use-cases-list"]').should('be.visible')
           useCases.forEach((_, index) => {
             cy.get(`[data-cy="use-case-${index}"]`).should('be.visible')
+          });
+        });
+
+        it('should render FAQ section correctly', () => {
+          cy.get('[data-cy="faq-section"]').scrollIntoView()
+          cy.get('[data-cy="faq-title"]').should('be.visible')
+          cy.get('[data-cy="faq-description"]').should('be.visible')
+          faqs.forEach((_, index) => {
+            cy.get(`[data-cy="faq-question-${index}"]`).should('be.visible')
           });
         });
       });

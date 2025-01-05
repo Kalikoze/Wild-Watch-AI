@@ -12,6 +12,7 @@ export default function FAQ() {
 
   return (
     <section
+      data-cy="faq-section"
       className="relative py-24 bg-primary"
       aria-labelledby="faq-title"
     >
@@ -26,12 +27,13 @@ export default function FAQ() {
           className="text-center mb-16"
         >
           <h2
+            data-cy="faq-title"
             id="faq-title"
             className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-accent-green via-accent-orange to-accent-gold bg-clip-text text-transparent"
           >
             Frequently Asked Questions
           </h2>
-          <p className="text-xl text-neutral-light/80 max-w-2xl mx-auto">
+          <p data-cy="faq-description" className="text-xl text-neutral-light/80 max-w-2xl mx-auto">
             Learn more about how WildWatch AI can transform your animal care and research
           </p>
         </motion.header>
