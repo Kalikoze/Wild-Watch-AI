@@ -1,5 +1,6 @@
 import { features } from '@/lib/data/features'
 import { processSteps } from '@/lib/data/process-steps'
+import { useCases } from '@/lib/data/useCases'
 
 describe('Home Page', () => {
   beforeEach(() => {
@@ -157,6 +158,59 @@ describe('Home Page', () => {
     })
   })
 
+  context('Use Cases Section Tests', () => {
+    beforeEach(() => {
+      cy.get('[data-cy="use-cases-section"]').scrollIntoView()
+    })
+
+    it('should render the use cases section header correctly', () => {
+      cy.get('[data-cy="use-cases-header"]').should('be.visible')
+      cy.get('[data-cy="use-cases-title"]')
+        .should('be.visible')
+        .and('contain.text', 'Transforming Animal Care')
+      cy.get('[data-cy="use-cases-description"]')
+        .should('be.visible')
+        .and('contain.text', 'Discover how WildWatch AI empowers')
+    })
+
+    it('should render all use cases', () => {
+      cy.get('[data-cy="use-cases-list"]').should('be.visible')
+      cy.get('[data-cy="use-cases-list"] > li > article[data-cy^="use-case-"]')
+        .should('have.length', useCases.length)
+    })
+
+    useCases.forEach((useCase, index) => {
+      it(`should render use case ${index + 1} (${useCase.title}) correctly`, () => {
+        cy.get(`[data-cy="use-cases-list"] > li > article[data-cy="use-case-${index}"]`)
+          .should('be.visible')
+          .within(() => {
+            // Check icon
+            cy.get(`[data-cy="use-case-icon-${index}"]`)
+              .should('be.visible')
+
+            // Check title and description
+            cy.get(`[data-cy="use-case-title-${index}"]`)
+              .should('be.visible')
+              .and('contain.text', useCase.title)
+            cy.get(`[data-cy="use-case-description-${index}"]`)
+              .should('be.visible')
+              .and('contain.text', useCase.description)
+
+            // Check benefits
+            cy.get(`[data-cy="use-case-benefits-${index}"]`)
+              .should('be.visible')
+              .within(() => {
+                useCase.benefits.forEach((benefit, benefitIndex) => {
+                  cy.get(`[data-cy="use-case-benefit-${index}-${benefitIndex}"]`)
+                    .should('be.visible')
+                    .and('contain.text', benefit)
+                })
+              })
+          })
+      })
+    })
+  })
+
   context('Accessibility Tests', () => {
     beforeEach(() => {
       cy.injectAxe()
@@ -197,6 +251,15 @@ describe('Home Page', () => {
           cy.get('[data-cy="process-steps-list"]').should('be.visible')
           processSteps.forEach((_, index) => {
             cy.get(`[data-cy="process-step-${index}"]`).should('be.visible')
+          });
+        });
+
+        it('should render use cases section correctly', () => {
+          cy.get('[data-cy="use-cases-section"]').scrollIntoView()
+          cy.get('[data-cy="use-cases-header"]').should('be.visible')
+          cy.get('[data-cy="use-cases-list"]').should('be.visible')
+          useCases.forEach((_, index) => {
+            cy.get(`[data-cy="use-case-${index}"]`).should('be.visible')
           });
         });
       });

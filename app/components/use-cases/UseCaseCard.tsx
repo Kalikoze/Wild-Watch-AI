@@ -22,6 +22,7 @@ export default function UseCaseCard({ title, iconName, description, benefits, in
 
   return (
     <motion.article
+      data-cy={`use-case-${index}`}
       initial={{ y: 50 }}
       whileInView={{ y: 0 }}
       transition={{ duration: 0.7, delay: index * 0.1 }}
@@ -30,6 +31,7 @@ export default function UseCaseCard({ title, iconName, description, benefits, in
     >
       <header className="flex items-start gap-4">
         <motion.span
+          data-cy={`use-case-icon-${index}`}
           aria-hidden="true"
           initial={{ scale: 0.8 }}
           whileInView={{ scale: 1 }}
@@ -41,16 +43,18 @@ export default function UseCaseCard({ title, iconName, description, benefits, in
         </motion.span>
 
         <div className="flex-1">
-          <h3 className="text-xl font-bold text-neutral-light mb-2">{title}</h3>
-          <p className="text-neutral-light/80 mb-4">{description}</p>
+          <h3 data-cy={`use-case-title-${index}`} className="text-xl font-bold text-neutral-light mb-2">{title}</h3>
+          <p data-cy={`use-case-description-${index}`} className="text-neutral-light/80 mb-4">{description}</p>
 
           <ul
+            data-cy={`use-case-benefits-${index}`}
             className="space-y-2"
             aria-label={`Benefits of ${title}`}
             role="list"
           >
             {benefits.map((benefit, i) => (
               <motion.li
+                data-cy={`use-case-benefit-${index}-${i}`}
                 key={i}
                 initial={{ x: -20 }}
                 whileInView={{ x: 0 }}
