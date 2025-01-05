@@ -21,6 +21,7 @@ export default function ProcessStep({ iconName, title, description, index }: Pro
 
   return (
     <motion.article
+      data-cy={`process-step-content-${index}`}
       initial={{ y: 50 }}
       whileInView={{ y: 0 }}
       transition={{
@@ -31,6 +32,7 @@ export default function ProcessStep({ iconName, title, description, index }: Pro
       className="relative flex flex-col items-center text-center w-full"
     >
       <motion.span
+        data-cy={`process-step-number-${index}`}
         aria-hidden="true"
         className="absolute -top-4 left-0 w-8 h-8 rounded-full bg-accent-orange 
           flex items-center justify-center text-neutral-light font-bold text-lg
@@ -50,6 +52,7 @@ export default function ProcessStep({ iconName, title, description, index }: Pro
       </motion.span>
 
       <motion.figure
+        data-cy={`process-step-icon-container-${index}`}
         className="relative mb-4"
         whileInView={{
           scale: [0.9, 1]
@@ -73,6 +76,7 @@ export default function ProcessStep({ iconName, title, description, index }: Pro
           }}
         />
         <span
+          data-cy={`process-step-icon-${index}`}
           aria-hidden="true"
           className="relative w-16 h-16 rounded-full border-2 border-accent-green 
             flex items-center justify-center text-accent-orange text-2xl
@@ -83,10 +87,16 @@ export default function ProcessStep({ iconName, title, description, index }: Pro
       </motion.figure>
 
       <header className="w-full">
-        <h3 className="text-xl font-bold text-neutral-light mb-2 text-center">
+        <h3
+          data-cy={`process-step-title-${index}`}
+          className="text-xl font-bold text-neutral-light mb-2 text-center"
+        >
           {title}
         </h3>
-        <p className="text-neutral-light/60 text-sm text-center">
+        <p
+          data-cy={`process-step-description-${index}`}
+          className="text-neutral-light/60 text-sm text-center"
+        >
           {description}
         </p>
       </header>

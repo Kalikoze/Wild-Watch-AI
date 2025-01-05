@@ -1,4 +1,5 @@
 import { features } from '@/lib/data/features'
+import { processSteps } from '@/lib/data/process-steps'
 
 describe('Home Page', () => {
   beforeEach(() => {
@@ -70,21 +71,15 @@ describe('Home Page', () => {
         cy.get(`[data-cy="feature-row-${index}"]`).scrollIntoView()
           .should('be.visible')
           .within(() => {
-            // Check icon
             cy.get(`[data-cy="feature-icon-${index}"]`)
               .should('be.visible')
-
-            // Check title
             cy.get(`[data-cy="feature-title-${index}"]`)
               .should('be.visible')
               .and('contain.text', feature.title)
-
-            // Check description
             cy.get(`[data-cy="feature-description-${index}"]`)
               .should('be.visible')
               .and('contain.text', feature.description)
 
-            // Check all details
             cy.get(`[data-cy="feature-details-${index}"]`)
               .should('be.visible')
               .within(() => {
@@ -95,7 +90,6 @@ describe('Home Page', () => {
                 })
               })
 
-            // Check image
             cy.get(`[data-cy="feature-image-${index}"]`)
               .should('be.visible')
           })
@@ -108,6 +102,57 @@ describe('Home Page', () => {
           cy.get(`[data-cy="feature-image-${index}"]`)
             .should('not.have.class', 'lg:order-1')
         }
+      })
+    })
+  })
+
+  context('Process Flow Section Tests', () => {
+    beforeEach(() => {
+      cy.get('[data-cy="process-section"]').scrollIntoView()
+    })
+
+    it('should render the process section header correctly', () => {
+      cy.get('[data-cy="process-header"]').should('be.visible')
+      cy.get('[data-cy="process-title"]')
+        .should('be.visible')
+        .and('contain.text', 'How It Works')
+      cy.get('[data-cy="process-description"]')
+        .should('be.visible')
+        .and('contain.text', 'Our advanced AI system transforms')
+    })
+
+    it('should render all process steps', () => {
+      cy.get('[data-cy="process-steps-list"]')
+        .should('be.visible')
+        .and('have.attr', 'aria-label', 'Process steps')
+
+      cy.get('li[data-cy^="process-step-"]').should('have.length', processSteps.length)
+    })
+
+    processSteps.forEach((step, index) => {
+      it(`should render process step ${index + 1} (${step.title}) correctly`, () => {
+        cy.get(`li[data-cy="process-step-${index}"]`)
+          .should('be.visible')
+          .within(() => {
+            // Check step number
+            cy.get(`[data-cy="process-step-number-${index}"]`)
+              .should('be.visible')
+              .and('contain.text', index + 1)
+
+            // Check icon container and icon
+            cy.get(`[data-cy="process-step-icon-container-${index}"]`)
+              .should('be.visible')
+            cy.get(`[data-cy="process-step-icon-${index}"]`)
+              .should('be.visible')
+
+            // Check content
+            cy.get(`[data-cy="process-step-title-${index}"]`)
+              .should('be.visible')
+              .and('contain.text', step.title)
+            cy.get(`[data-cy="process-step-description-${index}"]`)
+              .should('be.visible')
+              .and('contain.text', step.description)
+          })
       })
     })
   })
@@ -135,6 +180,24 @@ describe('Home Page', () => {
 
         it('should pass accessibility checks', () => {
           cy.checkA11y();
+        });
+
+        it('should render features section correctly', () => {
+          cy.get('[data-cy="features-section"]').scrollIntoView()
+          cy.get('[data-cy="features-header"]').should('be.visible')
+          cy.get('[data-cy="features-list"]').should('be.visible')
+          features.forEach((_, index) => {
+            cy.get(`[data-cy="feature-row-${index}"]`).scrollIntoView().should('be.visible')
+          });
+        });
+
+        it('should render process flow section correctly', () => {
+          cy.get('[data-cy="process-section"]').scrollIntoView()
+          cy.get('[data-cy="process-header"]').should('be.visible')
+          cy.get('[data-cy="process-steps-list"]').should('be.visible')
+          processSteps.forEach((_, index) => {
+            cy.get(`[data-cy="process-step-${index}"]`).should('be.visible')
+          });
         });
       });
     });
