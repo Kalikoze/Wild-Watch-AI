@@ -19,7 +19,7 @@ export default {
           orange: {
             DEFAULT: '#FF5722', // Vibrant orange
             light: '#FF7F50',   // Coral orange
-            dark: '#D84315',    // Deep orange
+            dark: '#B33810',    // Deep orange
           },
           gold: '#FFA000',      // Warm gold
         },
