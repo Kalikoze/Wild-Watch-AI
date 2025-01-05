@@ -31,12 +31,10 @@ describe('Home Page', () => {
     })
 
     it('should have working CTA buttons with correct links', () => {
-      // Check primary CTA
       cy.get('[data-cy="hero-cta-primary"]')
         .should('have.attr', 'href', '/dashboard')
         .and('contain.text', 'Get Started')
 
-      // Check secondary CTA
       cy.get('[data-cy="hero-cta-secondary"]')
         .should('have.attr', 'href', '/about')
         .and('contain.text', 'Learn More')
@@ -277,6 +275,41 @@ describe('Home Page', () => {
     })
   })
 
+  context('Final CTA Section Tests', () => {
+    beforeEach(() => {
+      cy.get('[data-cy="final-cta-section"]').scrollIntoView()
+    })
+
+    it('should render the final CTA section', () => {
+      cy.get('[data-cy="final-cta-section"]').should('be.visible')
+      cy.get('[data-cy="final-cta-content"]').should('be.visible')
+    })
+
+    it('should display the correct title and description', () => {
+      cy.get('[data-cy="final-cta-title"]')
+        .should('be.visible')
+        .and('contain.text', 'Ready to Transform Animal Care?')
+
+      cy.get('[data-cy="final-cta-description"]')
+        .should('be.visible')
+        .and('contain.text', 'Join the future of wildlife monitoring and research')
+    })
+
+    it('should have working CTA buttons with correct links and text', () => {
+      cy.get('[data-cy="final-cta-buttons"]').within(() => {
+        cy.get('[data-cy="final-cta-demo-button"]')
+          .should('be.visible')
+          .and('have.attr', 'href', '/contact')
+          .and('contain.text', 'Schedule Demo')
+
+        cy.get('[data-cy="final-cta-learn-more-button"]')
+          .should('be.visible')
+          .and('have.attr', 'href', '/about')
+          .and('contain.text', 'Learn More')
+      })
+    })
+  })
+
   context('Accessibility Tests', () => {
     beforeEach(() => {
       cy.injectAxe()
@@ -336,6 +369,12 @@ describe('Home Page', () => {
           faqs.forEach((_, index) => {
             cy.get(`[data-cy="faq-question-${index}"]`).should('be.visible')
           });
+        });
+
+        it('should render final CTA section correctly', () => {
+          cy.get('[data-cy="final-cta-section"]').scrollIntoView()
+          cy.get('[data-cy="final-cta-title"]').should('be.visible')
+          cy.get('[data-cy="final-cta-description"]').should('be.visible')
         });
       });
     });
