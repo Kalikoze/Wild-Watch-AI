@@ -69,7 +69,7 @@ export default function FinalCTA() {
               <Link
                 data-cy="final-cta-demo-button"
                 href="/contact"
-                className="group inline-flex items-center px-8 py-4 text-lg font-medium text-neutral-light bg-accent-orange-dark hover:bg-accent-orange rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+                className="group inline-flex items-center px-8 py-4 text-lg font-medium text-neutral-light bg-accent-orange-dark hover:bg-accent-orange rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
               >
                 Schedule Demo
                 <HiArrowRight
@@ -79,8 +79,8 @@ export default function FinalCTA() {
               </Link>
               <Link
                 data-cy="final-cta-learn-more-button"
-                href="/about"
-                className="group inline-flex items-center px-8 py-4 text-lg font-medium text-accent-green border-2 border-accent-green hover:bg-accent-green hover:text-primary rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+                href="/our-story"
+                className="group inline-flex items-center px-8 py-4 text-lg font-medium text-accent-green border-2 border-accent-green hover:bg-accent-green hover:text-primary rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
               >
                 Learn More
                 <HiSparkles

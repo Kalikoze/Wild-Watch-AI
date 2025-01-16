@@ -7,7 +7,7 @@ import FinalCTA from '@/app/components/FinalCTA'
 
 export default function Home() {
   return (
-    <main className="flex flex-col min-h-screen bg-primary">
+    <main className="flex flex-col min-h-screen bg-primary pt-16">
       <Hero />
       <Features />
       <ProcessFlow />

@@ -11,19 +11,11 @@ export default function BackgroundEffects({ color = 'green' }: BackgroundEffects
 
   return (
     <>
-      <motion.div
+      <div
         aria-hidden="true"
         className="absolute inset-0 opacity-30"
         style={{
           background: 'radial-gradient(circle at 50% 50%, rgba(40, 167, 69, 0.1) 0%, transparent 50%)',
-        }}
-        animate={{
-          scale: [1, 1.2, 1],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "linear"
         }}
       />
 

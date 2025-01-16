@@ -15,7 +15,11 @@ export default {
           dark: '#0A0A0A',    // Darker black
         },
         accent: {
-          green: '#28A745',     // Rich modern green
+          green: {
+            DEFAULT: '#28A745',     // Rich modern green
+            dark: '#1E7E34',        // Darker green for primary actions
+            light: '#34CE57',       // Lighter green for hover states
+          },
           orange: {
             DEFAULT: '#FF5722', // Vibrant orange
             light: '#FF7F50',   // Coral orange

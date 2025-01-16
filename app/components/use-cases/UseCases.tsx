@@ -36,9 +36,9 @@ export default function UseCases() {
           </p>
         </motion.header>
 
-        <ul 
-          data-cy="use-cases-list" 
-          className="grid grid-cols-1 md:grid-cols-3 gap-8" 
+        <ul
+          data-cy="use-cases-list"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
           role="list"
         >
           {useCases.map((useCase, index) => (

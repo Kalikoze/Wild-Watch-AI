@@ -68,15 +68,15 @@ export default function Hero() {
               <Link
                 data-cy="hero-cta-primary"
                 href="/dashboard"
-                className="group inline-flex items-center px-8 py-4 text-base font-medium text-neutral-light bg-accent-orange-dark hover:bg-accent-orange rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+                className="group inline-flex items-center px-8 py-4 text-base font-medium text-neutral-light bg-accent-orange-dark hover:bg-accent-orange rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
               >
                 Get Started
                 <HiArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
               <Link
                 data-cy="hero-cta-secondary"
-                href="/about"
-                className="group inline-flex items-center px-8 py-4 text-base font-medium text-accent-green border-2 border-accent-green hover:bg-accent-green hover:text-primary rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+                href="/our-story"
+                className="group inline-flex items-center px-8 py-4 text-base font-medium text-accent-green border-2 border-accent-green hover:bg-accent-green hover:text-primary rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
               >
                 Learn More
                 <HiSparkles className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
