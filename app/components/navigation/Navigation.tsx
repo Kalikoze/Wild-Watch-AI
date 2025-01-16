@@ -15,6 +15,42 @@ const navLinks = [
   { href: '/compare', label: 'Why WildWatch?' },
 ];
 
+const NavLink = ({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) => {
+  return (
+    <motion.div
+      whileHover={{
+        y: -4,
+        transition: {
+          y: {
+            type: "spring",
+            stiffness: 300,
+            damping: 3,
+            mass: 0.8,
+            repeat: 1,
+            repeatType: "reverse"
+          }
+        }
+      }}
+      whileTap={{
+        y: 2,
+        color: "#28A745",
+        transition: {
+          type: "spring",
+          stiffness: 400,
+          damping: 10
+        }
+      }}
+    >
+      <Link
+        href={href}
+        className={`${className} relative after:absolute after:-bottom-2 after:left-0 after:h-[2px] after:w-0 after:bg-accent-green hover:after:w-full after:transition-all after:duration-300`}
+      >
+        {children}
+      </Link>
+    </motion.div>
+  );
+};
+
 export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -33,7 +69,7 @@ export default function Navigation() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
-              <Link
+              <NavLink
                 key={link.href}
                 href={link.href}
                 className={`
@@ -55,7 +91,7 @@ export default function Navigation() {
                 ) : (
                   link.label
                 )}
-              </Link>
+              </NavLink>
             ))}
           </div>
 
@@ -95,15 +131,30 @@ export default function Navigation() {
             className="md:hidden bg-primary-light border-b border-neutral-light/10"
           >
             <div className="px-4 pt-2 pb-6 space-y-4">
+              {/* Mobile menu links */}
               {navLinks.map((link) => (
-                <Link
+                <motion.div
                   key={link.href}
-                  href={link.href}
-                  className="block text-neutral-light/80 hover:text-neutral-light py-2"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  whileHover={{ x: 10 }}
+                  whileTap={{ y: 2 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 10,
+                    mass: 0.5
+                  }}
                 >
-                  {link.label}
-                </Link>
+                  <Link
+                    href={link.href}
+                    className="block text-neutral-light/80 hover:text-neutral-light py-2 relative pl-4
+                      after:absolute after:left-0 after:top-0 after:h-full after:w-[2px] 
+                      after:bg-accent-green after:scale-y-0 after:origin-top
+                      hover:after:scale-y-100 after:transition-transform after:duration-300"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
               ))}
               <div className="pt-4 space-y-4">
                 <Link

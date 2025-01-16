@@ -70,7 +70,7 @@ export default function Hero() {
                 href="/dashboard"
                 className="group inline-flex items-center px-8 py-4 text-base font-medium text-neutral-light bg-accent-orange-dark hover:bg-accent-orange rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
               >
-                Get Started
+                Get Started Free
                 <HiArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
               <Link
