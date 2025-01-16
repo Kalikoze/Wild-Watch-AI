@@ -17,8 +17,8 @@ export default function ProcessFlow() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.header
           data-cy="process-header"
-          initial={{ y: 50 }}
-          whileInView={{ y: 0 }}
+          initial={{ y: 50, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.7 }}
           viewport={{ once: true }}
           className="text-center mb-20"

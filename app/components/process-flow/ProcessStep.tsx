@@ -22,8 +22,8 @@ export default function ProcessStep({ iconName, title, description, index }: Pro
   return (
     <motion.article
       data-cy={`process-step-content-${index}`}
-      initial={{ y: 50 }}
-      whileInView={{ y: 0 }}
+      initial={{ y: 50, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
       transition={{
         duration: 0.7,
         delay: index * 0.2
@@ -33,13 +33,11 @@ export default function ProcessStep({ iconName, title, description, index }: Pro
     >
       <motion.span
         data-cy={`process-step-number-${index}`}
-        aria-hidden="true"
-        className="absolute -top-4 left-0 w-8 h-8 rounded-full bg-accent-orange 
-          flex items-center justify-center text-neutral-light font-bold text-lg
-          shadow-lg shadow-accent-orange/20"
+        initial={{ opacity: 0 }}
         whileInView={{
           scale: [0.8, 1.2, 1],
-          rotate: [0, -10, 0]
+          rotate: [0, -10, 0],
+          opacity: 1
         }}
         transition={{
           duration: 2,
@@ -47,21 +45,26 @@ export default function ProcessStep({ iconName, title, description, index }: Pro
           ease: "easeOut"
         }}
         viewport={{ once: true }}
+        className="absolute -top-4 left-0 w-8 h-8 rounded-full bg-accent-orange 
+          flex items-center justify-center text-neutral-light font-bold text-lg
+          shadow-lg shadow-accent-orange/20"
       >
         {index + 1}
       </motion.span>
 
       <motion.figure
         data-cy={`process-step-icon-container-${index}`}
-        className="relative mb-4"
+        initial={{ opacity: 0 }}
         whileInView={{
-          scale: [0.9, 1]
+          scale: [0.9, 1],
+          opacity: 1
         }}
         transition={{
           duration: 2,
           delay: index * 1
         }}
         viewport={{ once: true }}
+        className="relative mb-4"
       >
         <motion.div
           aria-hidden="true"

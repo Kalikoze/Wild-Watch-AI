@@ -20,8 +20,8 @@ export default function FAQ() {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.header
-          initial={{ y: 50 }}
-          whileInView={{ y: 0 }}
+          initial={{ y: 50, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.7 }}
           viewport={{ once: true }}
           className="text-center mb-16"
@@ -39,7 +39,13 @@ export default function FAQ() {
         </motion.header>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <dl className="space-y-2">
+          <motion.dl
+            initial={{ x: -30, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true }}
+            className="space-y-2"
+          >
             {faqs.slice(0, Math.ceil(faqs.length / 2)).map((faq, index) => (
               <FAQItem
                 key={index}
@@ -52,8 +58,14 @@ export default function FAQ() {
                 }}
               />
             ))}
-          </dl>
-          <dl className="space-y-2">
+          </motion.dl>
+          <motion.dl
+            initial={{ x: 30, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true }}
+            className="space-y-2"
+          >
             {faqs.slice(Math.ceil(faqs.length / 2)).map((faq, index) => (
               <FAQItem
                 key={index + Math.ceil(faqs.length / 2)}
@@ -66,7 +78,7 @@ export default function FAQ() {
                 }}
               />
             ))}
-          </dl>
+          </motion.dl>
         </div>
       </div>
     </section>
