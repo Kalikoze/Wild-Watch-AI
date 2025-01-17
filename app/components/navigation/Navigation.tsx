@@ -19,25 +19,18 @@ const NavLink = ({ href, children, className }: { href: string; children: React.
   return (
     <motion.div
       whileHover={{
-        y: -4,
+        scale: 1.05,
         transition: {
-          y: {
-            type: "spring",
-            stiffness: 300,
-            damping: 3,
-            mass: 0.8,
-            repeat: 1,
-            repeatType: "reverse"
-          }
+          duration: 0.2,
+          ease: "easeInOut"
         }
       }}
       whileTap={{
-        y: 2,
+        scale: 0.95,
         color: "#28A745",
         transition: {
-          type: "spring",
-          stiffness: 400,
-          damping: 10
+          duration: 0.1,
+          ease: "easeOut"
         }
       }}
     >
@@ -135,13 +128,11 @@ export default function Navigation() {
               {navLinks.map((link) => (
                 <motion.div
                   key={link.href}
-                  whileHover={{ x: 10 }}
-                  whileTap={{ y: 2 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   transition={{
-                    type: "spring",
-                    stiffness: 400,
-                    damping: 10,
-                    mass: 0.5
+                    duration: 0.2,
+                    ease: "easeInOut"
                   }}
                 >
                   <Link
