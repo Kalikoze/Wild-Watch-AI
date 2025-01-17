@@ -23,8 +23,8 @@ export default function UseCaseCard({ title, iconName, description, benefits, in
   return (
     <motion.article
       data-cy={`use-case-${index}`}
-      initial={{ y: 50 }}
-      whileInView={{ y: 0 }}
+      initial={{ y: 50, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, delay: index * 0.1 }}
       viewport={{ once: true }}
       className="relative p-6 bg-gradient-to-br from-primary-light to-primary rounded-2xl border border-neutral-dark/20"
@@ -33,8 +33,8 @@ export default function UseCaseCard({ title, iconName, description, benefits, in
         <motion.span
           data-cy={`use-case-icon-${index}`}
           aria-hidden="true"
-          initial={{ scale: 0.8 }}
-          whileInView={{ scale: 1 }}
+          initial={{ scale: 0.8, opacity: 0 }}
+          whileInView={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5, delay: index * 0.1 }}
           viewport={{ once: true }}
           className="w-12 h-12 rounded-lg bg-gradient-to-br from-accent-orange/20 to-accent-orange/5 flex items-center justify-center text-accent-orange"
@@ -56,8 +56,8 @@ export default function UseCaseCard({ title, iconName, description, benefits, in
               <motion.li
                 data-cy={`use-case-benefit-${index}-${i}`}
                 key={i}
-                initial={{ x: -20 }}
-                whileInView={{ x: 0 }}
+                initial={{ x: -20, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.5, delay: (index * 0.1) + (i * 0.1) }}
                 viewport={{ once: true }}
                 className="flex items-center gap-2 text-neutral-light/80"

@@ -20,38 +20,56 @@ export default function FinalCTA() {
       <BackgroundEffects color="green" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <article data-cy="final-cta-content" className="relative p-12 rounded-2xl border border-neutral-light/10 backdrop-blur-sm">
+        <motion.article
+          data-cy="final-cta-content"
+          initial={{ y: 50, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true }}
+          className="relative p-12 rounded-2xl border border-neutral-light/10 backdrop-blur-sm"
+        >
           <motion.header
-            initial={{ y: 50 }}
-            whileInView={{ y: 0 }}
-            transition={{ duration: 0.7 }}
+            initial={{ y: 30, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
             viewport={{ once: true }}
             className="max-w-3xl mx-auto text-center"
           >
-            <h2
+            <motion.h2
               data-cy="final-cta-title"
               id="cta-heading"
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              viewport={{ once: true }}
               className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-accent-green via-accent-orange to-accent-gold bg-clip-text text-transparent"
             >
               Ready to Transform Animal Care?
-            </h2>
+            </motion.h2>
 
-            <p data-cy="final-cta-description" className="text-xl text-neutral-light/80 mb-12 leading-relaxed">
+            <motion.p
+              data-cy="final-cta-description"
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="text-xl text-neutral-light/80 mb-12 leading-relaxed"
+            >
               Join the future of wildlife monitoring and research. Schedule a demo to see how WildWatch AI can benefit your organization.
-            </p>
+            </motion.p>
 
             <motion.nav
               data-cy="final-cta-buttons"
-              initial={{ y: 50 }}
-              whileInView={{ y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
+              initial={{ y: 30, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.4 }}
               viewport={{ once: true }}
               className="flex flex-col sm:flex-row gap-6 justify-center"
             >
               <Link
                 data-cy="final-cta-demo-button"
                 href="/contact"
-                className="group inline-flex items-center px-8 py-4 text-lg font-medium text-neutral-light bg-accent-orange-dark hover:bg-accent-orange rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+                className="group inline-flex items-center px-8 py-4 text-lg font-medium text-neutral-light bg-accent-orange-dark hover:bg-accent-orange rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
               >
                 Schedule Demo
                 <HiArrowRight
@@ -61,8 +79,8 @@ export default function FinalCTA() {
               </Link>
               <Link
                 data-cy="final-cta-learn-more-button"
-                href="/about"
-                className="group inline-flex items-center px-8 py-4 text-lg font-medium text-accent-green border-2 border-accent-green hover:bg-accent-green hover:text-primary rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+                href="/our-story"
+                className="group inline-flex items-center px-8 py-4 text-lg font-medium text-accent-green border-2 border-accent-green hover:bg-accent-green hover:text-primary rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
               >
                 Learn More
                 <HiSparkles
@@ -72,7 +90,7 @@ export default function FinalCTA() {
               </Link>
             </motion.nav>
           </motion.header>
-        </article>
+        </motion.article>
       </div>
     </section>
   );

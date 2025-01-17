@@ -14,8 +14,8 @@ interface FAQItemProps {
 export default function FAQItem({ question, answer, index, isOpen, onToggle }: FAQItemProps) {
   return (
     <motion.div
-      initial={{ y: 50 }}
-      whileInView={{ y: 0 }}
+      initial={{ y: 50, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, delay: index * 0.1 }}
       viewport={{ once: true }}
       className="border-b border-neutral-light/10"
@@ -32,8 +32,15 @@ export default function FAQItem({ question, answer, index, isOpen, onToggle }: F
           <span className="text-lg font-medium text-neutral-light">{question}</span>
           <motion.span
             aria-hidden="true"
-            animate={{ rotate: isOpen ? 180 : 0 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              rotate: isOpen ? 180 : 0
+            }}
+            transition={{
+              opacity: { duration: 0.5, delay: index * 0.1 },
+              rotate: { duration: 0.3 }
+            }}
             className="text-accent-orange"
           >
             <FaChevronDown />
@@ -50,7 +57,8 @@ export default function FAQItem({ question, answer, index, isOpen, onToggle }: F
           initial={false}
           animate={{
             height: isOpen ? 'auto' : 0,
-            marginBottom: isOpen ? 16 : 0
+            marginBottom: isOpen ? 16 : 0,
+            opacity: isOpen ? 1 : 0
           }}
           transition={{ duration: 0.3 }}
           className="overflow-hidden text-neutral-light/80"

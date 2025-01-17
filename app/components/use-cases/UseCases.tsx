@@ -19,8 +19,8 @@ export default function UseCases() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.header
           data-cy="use-cases-header"
-          initial={{ y: 50 }}
-          whileInView={{ y: 0 }}
+          initial={{ y: 50, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.7 }}
           viewport={{ once: true }}
           className="text-center mb-20"
@@ -36,9 +36,9 @@ export default function UseCases() {
           </p>
         </motion.header>
 
-        <ul 
-          data-cy="use-cases-list" 
-          className="grid grid-cols-1 md:grid-cols-3 gap-8" 
+        <ul
+          data-cy="use-cases-list"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
           role="list"
         >
           {useCases.map((useCase, index) => (
