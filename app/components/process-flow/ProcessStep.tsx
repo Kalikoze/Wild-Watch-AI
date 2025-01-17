@@ -26,7 +26,7 @@ export default function ProcessStep({ iconName, title, description, index }: Pro
       whileInView={{ y: 0, opacity: 1 }}
       transition={{
         duration: 0.7,
-        delay: index * 0.2
+        delay: index * 0.15
       }}
       viewport={{ once: true }}
       className="relative flex flex-col items-center text-center w-full"
@@ -40,8 +40,8 @@ export default function ProcessStep({ iconName, title, description, index }: Pro
           opacity: 1
         }}
         transition={{
-          duration: 2,
-          delay: index * 1,
+          duration: 1.5,
+          delay: index * 0.3,
           ease: "easeOut"
         }}
         viewport={{ once: true }}
@@ -60,8 +60,8 @@ export default function ProcessStep({ iconName, title, description, index }: Pro
           opacity: 1
         }}
         transition={{
-          duration: 2,
-          delay: index * 1
+          duration: 1.5,
+          delay: index * 0.3
         }}
         viewport={{ once: true }}
         className="relative mb-4"
@@ -73,8 +73,8 @@ export default function ProcessStep({ iconName, title, description, index }: Pro
             scale: [1, 1.2, 1]
           }}
           transition={{
-            duration: 2,
-            delay: index * 1,
+            duration: 1.5,
+            delay: index * 0.3,
             ease: "easeInOut"
           }}
         />

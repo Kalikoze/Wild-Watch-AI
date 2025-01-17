@@ -36,7 +36,7 @@ describe('Home Page', () => {
         .and('contain.text', 'Get Started')
 
       cy.get('[data-cy="hero-cta-secondary"]')
-        .should('have.attr', 'href', '/about')
+        .should('have.attr', 'href', '/our-story')
         .and('contain.text', 'Learn More')
     })
   })
@@ -304,7 +304,7 @@ describe('Home Page', () => {
 
         cy.get('[data-cy="final-cta-learn-more-button"]')
           .should('be.visible')
-          .and('have.attr', 'href', '/about')
+          .and('have.attr', 'href', '/our-story')
           .and('contain.text', 'Learn More')
       })
     })
@@ -358,7 +358,7 @@ describe('Home Page', () => {
           cy.get('[data-cy="use-cases-header"]').should('be.visible')
           cy.get('[data-cy="use-cases-list"]').should('be.visible')
           useCases.forEach((_, index) => {
-            cy.get(`[data-cy="use-case-${index}"]`).should('be.visible')
+            cy.get(`[data-cy="use-case-${index}"]`).scrollIntoView().should('be.visible')
           });
         });
 
@@ -367,7 +367,7 @@ describe('Home Page', () => {
           cy.get('[data-cy="faq-title"]').should('be.visible')
           cy.get('[data-cy="faq-description"]').should('be.visible')
           faqs.forEach((_, index) => {
-            cy.get(`[data-cy="faq-question-${index}"]`).should('be.visible')
+            cy.get(`[data-cy="faq-question-${index}"]`).scrollIntoView().should('be.visible')
           });
         });
 

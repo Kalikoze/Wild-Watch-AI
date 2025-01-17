@@ -49,7 +49,10 @@ export default function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed w-full z-50 bg-primary/95 backdrop-blur-sm border-b border-neutral-light/10">
+    <nav
+      className="fixed w-full z-50 bg-primary/95 backdrop-blur-sm border-b border-neutral-light/10"
+      aria-label="Main navigation"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -109,6 +112,8 @@ export default function Navigation() {
           <button
             className="md:hidden text-neutral-light"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </button>
