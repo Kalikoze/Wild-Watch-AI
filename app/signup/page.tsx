@@ -20,11 +20,17 @@ export default function SignUp() {
     setMessage(null);
 
     try {
+      await supabase.auth.initialize();
+
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
           emailRedirectTo: `${window.location.origin}/auth/callback`,
-        },
+          shouldCreateUser: true,
+          data: {
+            email: email
+          }
+        }
       });
 
       if (error) throw error;
@@ -45,11 +51,13 @@ export default function SignUp() {
 
   const handleOAuthSignUp = async (provider: 'google' | 'github') => {
     try {
+      await supabase.auth.initialize();
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
-        },
+          skipBrowserRedirect: false
+        }
       });
 
       if (error) throw error;
