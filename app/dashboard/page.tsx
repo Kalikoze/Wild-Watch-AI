@@ -10,31 +10,26 @@ export default async function Dashboard() {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get(name: string) {
-          return cookieStore.get(name)?.value
+        getAll() {
+          return cookieStore.getAll()
         },
-        set(name: string, value: string, options: any) {
-          cookieStore.set(name, value, options)
-        },
-        remove(name: string, options: any) {
-          cookieStore.delete(name, options)
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            cookieStore.set({ name, value, ...options })
+          )
         }
-      }
+      },
     }
   )
 
-  const { data: { session }, error } = await supabase.auth.getSession()
+  const { data: { user }, error } = await supabase.auth.getUser()
+  if (!user) return redirect('/signup')
 
-  if (error || !session) {
-    console.log('No session found, redirecting to signup', { error })
-    return redirect('/signup')
-  }
 
-  // Fetch the user's profile
   const { data: profile } = await supabase
     .from('profiles')
     .select('*')
-    .eq('id', session.user.id)
+    .eq('id', user.id)
     .single()
 
   return (

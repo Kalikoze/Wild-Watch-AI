@@ -20,16 +20,11 @@ export default function SignUp() {
     setMessage(null);
 
     try {
-      await supabase.auth.initialize();
-
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
           emailRedirectTo: `${window.location.origin}/auth/callback`,
-          shouldCreateUser: true,
-          data: {
-            email: email
-          }
+          shouldCreateUser: true
         }
       });
 
