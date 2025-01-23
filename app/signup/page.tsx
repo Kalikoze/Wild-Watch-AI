@@ -35,6 +35,7 @@ export default function SignUp() {
         text: 'Check your email for the magic link!',
       });
     } catch (error) {
+      console.error('Error during sign-in with OTP:', error);
       setMessage({
         type: 'error',
         text: 'Failed to send magic link. Please try again.',
@@ -57,6 +58,7 @@ export default function SignUp() {
 
       if (error) throw error;
     } catch (error) {
+      console.error('Error during sign-in with OAuth:', error);
       setMessage({
         type: 'error',
         text: 'Failed to connect with provider. Please try again.',
@@ -107,10 +109,10 @@ export default function SignUp() {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-lg text-primary bg-accent-green hover:bg-accent-green-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-green transition-colors"
+                      className="group w-full flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-lg text-primary bg-accent-green hover:bg-accent-green-light transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-green"
                     >
-                      <HiMail className="w-5 h-5 mr-2" />
                       {isLoading ? 'Sending...' : 'Continue with Email'}
+                      <HiMail className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                     </button>
                   </form>
 
@@ -126,17 +128,17 @@ export default function SignUp() {
                   <div className="grid grid-cols-2 gap-4">
                     <button
                       onClick={() => handleOAuthSignUp('google')}
-                      className="flex items-center justify-center px-4 py-3 border border-neutral-dark/30 rounded-lg text-neutral-light hover:bg-primary transition-colors"
+                      className="group flex items-center justify-center px-4 py-3 border border-neutral-dark/30 rounded-lg text-neutral-light hover:bg-neutral-light hover:text-primary hover:border-neutral-light transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
                     >
-                      <FaGoogle className="w-5 h-5 mr-2" />
                       Google
+                      <FaGoogle className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                     </button>
                     <button
                       onClick={() => handleOAuthSignUp('github')}
-                      className="flex items-center justify-center px-4 py-3 border border-neutral-dark/30 rounded-lg text-neutral-light hover:bg-primary transition-colors"
+                      className="group flex items-center justify-center px-4 py-3 border border-neutral-dark/30 rounded-lg text-neutral-light hover:bg-neutral-light hover:text-primary hover:border-neutral-light transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
                     >
-                      <FaGithub className="w-5 h-5 mr-2" />
                       GitHub
+                      <FaGithub className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                     </button>
                   </div>
                 </div>

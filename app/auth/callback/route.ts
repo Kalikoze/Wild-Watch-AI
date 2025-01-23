@@ -8,8 +8,11 @@ export async function GET(request: Request) {
   const type = requestUrl.searchParams.get('type')
 
   if (!token_hash) {
-    console.log('No token hash found')
-    return NextResponse.redirect(new URL('/auth/auth-error', request.url))
+    return NextResponse.redirect(new URL('/auth/auth-error', request.url), {
+      headers: {
+        'x-auth-error-type': 'invalid'
+      }
+    })
   }
 
   const cookieStore = await cookies()
@@ -18,16 +21,15 @@ export async function GET(request: Request) {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get(name: string) {
-          return cookieStore.get(name)?.value
+        getAll() {
+          return cookieStore.getAll()
         },
-        set(name: string, value: string, options: any) {
-          cookieStore.set(name, value, options)
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            cookieStore.set({ name, value, ...options })
+          )
         },
-        remove(name: string, options: any) {
-          cookieStore.delete(name, options)
-        }
-      }
+      },
     }
   )
 
@@ -37,7 +39,13 @@ export async function GET(request: Request) {
       type: type as any
     })
 
-    if (error) throw error
+    if (error) {
+      return NextResponse.redirect(new URL('/auth/auth-error', request.url), {
+        headers: {
+          'x-auth-error-type': error.message === "Token has expired or is invalid" ? 'expired' : 'invalid'
+        }
+      })
+    }
 
     return NextResponse.redirect(new URL('/dashboard', request.url))
   } catch (error) {

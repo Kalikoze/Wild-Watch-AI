@@ -1,18 +1,20 @@
-'use client';
+import AuthErrorMessage from '@/app/components/AuthErrorMessage'
+import { headers } from 'next/headers'
 
-import Link from 'next/link';
+export default async function AuthErrorPage() {
+  const headersList = await headers()
+  const errorType = headersList.get('x-auth-error-type')
 
-export default function AuthError() {
-  return (
-    <div className="min-h-screen bg-primary flex flex-col justify-center items-center">
-      <h1 className="text-2xl text-neutral-light mb-4">Authentication Error</h1>
-      <p className="text-neutral-light/80 mb-6">There was a problem authenticating your account.</p>
-      <Link
-        href="/signup"
-        className="px-4 py-2 bg-accent-green text-primary rounded-lg hover:bg-accent-green-dark transition-colors"
-      >
-        Return to Sign Up
-      </Link>
-    </div>
-  );
+  const getErrorMessage = (type: string | null) => {
+    switch (type) {
+      case 'expired':
+        return "This login link has expired or has already been used. Please request a new one."
+      case 'invalid':
+        return "Invalid login link. Please request a new one."
+      default:
+        return "There was a problem verifying your authentication. Please try signing in again."
+    }
+  }
+
+  return <AuthErrorMessage message={getErrorMessage(errorType)} />
 } 
