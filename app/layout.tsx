@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Navigation from '@/app/components/navigation/Navigation';
 import "./globals.css";
+import AuthProvider from "@/app/providers/AuthProvider";
 
 export const metadata: Metadata = {
   title: "Wild Watch AI",
@@ -15,8 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <Navigation />
-        {children}
+        <AuthProvider>
+          <Navigation />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
