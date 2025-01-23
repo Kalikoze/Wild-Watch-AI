@@ -36,7 +36,7 @@ export async function GET(request: Request) {
   try {
     const { error } = await supabase.auth.verifyOtp({
       token_hash,
-      type: type as any
+      type: type as 'email' | 'recovery' | 'invite'
     })
 
     if (error) {
