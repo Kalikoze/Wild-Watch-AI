@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { FaGoogle, FaGithub } from 'react-icons/fa';
 import { HiMail } from 'react-icons/hi';
 import BackgroundEffects from '@/app/components/common/BackgroundEffects';
-import { handleMagicLinkSignUp } from './actions';
+import { handleMagicLinkSignUp, handleOAuthSignUp } from './actions';
 
 export default function SignUp() {
   const [email, setEmail] = useState('');
@@ -35,26 +35,17 @@ export default function SignUp() {
     }
   };
 
-  // const handleOAuthSignUp = async (provider: 'google' | 'github') => {
-  //   try {
-  //     await supabase.auth.initialize();
-  //     const { error } = await supabase.auth.signInWithOAuth({
-  //       provider,
-  //       options: {
-  //         redirectTo: `${window.location.origin}/auth/callback`,
-  //         skipBrowserRedirect: false
-  //       }
-  //     });
-
-  //     if (error) throw error;
-  //   } catch (error) {
-  //     console.error('Error during sign-in with OAuth:', error);
-  //     setMessage({
-  //       type: 'error',
-  //       text: 'Failed to connect with provider. Please try again.',
-  //     });
-  //   }
-  // };
+  const handleOAuthSubmit = async (provider: 'google' | 'github') => {
+    try {
+      await handleOAuthSignUp(provider);
+    } catch (error) {
+      console.error('Error during sign-in with OAuth:', error);
+      setMessage({
+        type: 'error',
+        text: 'Failed to connect with provider. Please try again.',
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-primary flex flex-col justify-center relative overflow-hidden py-12">
@@ -117,14 +108,14 @@ export default function SignUp() {
 
                   <div className="grid grid-cols-2 gap-4">
                     <button
-                      onClick={() => handleOAuthSignUp('google')}
+                      onClick={() => handleOAuthSubmit('google')}
                       className="group flex items-center justify-center px-4 py-3 border border-neutral-dark/30 rounded-lg text-neutral-light hover:bg-neutral-light hover:text-primary hover:border-neutral-light transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
                     >
                       Google
                       <FaGoogle className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                     </button>
                     <button
-                      onClick={() => handleOAuthSignUp('github')}
+                      onClick={() => handleOAuthSubmit('github')}
                       className="group flex items-center justify-center px-4 py-3 border border-neutral-dark/30 rounded-lg text-neutral-light hover:bg-neutral-light hover:text-primary hover:border-neutral-light transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
                     >
                       GitHub
