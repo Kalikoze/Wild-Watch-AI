@@ -1,11 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { HiCursorClick } from 'react-icons/hi';
+import { createClient } from '@/utils/supabase/client'
+import { User } from '@supabase/supabase-js'
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -44,9 +46,120 @@ const NavLink = ({ href, children, className }: { href: string; children: React.
   );
 };
 
-export default function Navigation() {
+export const Navigation = () => {
+  const [user, setUser] = useState<User | null>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const supabase = createClient()
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user)
+      setLoading(false)
+    })
+  }, [])
+
+  console.log(user)
+
+  const handleSignOut = async () => {
+    try {
+      await supabase.auth.signOut();
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
+  const AuthButtons = () => {
+    if (loading) {
+      return (
+        <div className="h-10 w-24 bg-neutral-dark/20 animate-pulse rounded-lg"></div>
+      );
+    }
+    if (user) {
+      return (
+        <>
+          <Link
+            href="/dashboard"
+            className="text-accent-green hover:text-accent-green-light transition-colors"
+          >
+            Dashboard
+          </Link>
+          <button
+            onClick={handleSignOut}
+            className="group inline-flex items-center px-6 py-2.5 text-base font-medium text-neutral-light border-2 border-neutral-light/20 hover:bg-neutral-light/10 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+          >
+            Sign Out
+          </button>
+        </>
+      );
+    }
+
+    return (
+      <>
+        <Link
+          href="/login"
+          className="text-neutral-light/80 hover:text-neutral-light transition-colors"
+        >
+          Log in
+        </Link>
+        <Link
+          href="/signup"
+          className="group inline-flex items-center px-6 py-2.5 text-base font-medium text-accent-green border-2 border-accent-green hover:bg-accent-green hover:text-primary rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+        >
+          Try for Free
+          <HiCursorClick className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+        </Link>
+      </>
+    );
+  };
+
+  const MobileAuthButtons = () => {
+    if (loading) return null;
+
+    if (user) {
+      return (
+        <div className="pt-4 space-y-4">
+          <Link
+            href="/dashboard"
+            className="block text-accent-green hover:text-accent-green-light font-medium"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Dashboard
+          </Link>
+          <button
+            onClick={() => {
+              handleSignOut();
+              setIsMobileMenuOpen(false);
+            }}
+            className="w-full group flex items-center justify-center px-6 py-2.5 text-base font-medium text-neutral-light border-2 border-neutral-light/20 hover:bg-neutral-light/10 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+          >
+            Sign Out
+          </button>
+        </div>
+      );
+    }
+
+    return (
+      <div className="pt-4 space-y-4">
+        <Link
+          href="/login"
+          className="block text-neutral-light/80 hover:text-neutral-light font-medium"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          Log in
+        </Link>
+        <Link
+          href="/signup"
+          className="group flex items-center justify-center px-6 py-2.5 text-base font-medium text-accent-green border-2 border-accent-green hover:bg-accent-green hover:text-primary rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          Try for Free
+          <HiCursorClick className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+        </Link>
+      </div>
+    );
+  };
 
   return (
     <nav
@@ -93,19 +206,7 @@ export default function Navigation() {
 
           {/* Updated CTA Buttons */}
           <div className="hidden md:flex items-center space-x-6">
-            <Link
-              href="/login"
-              className="text-neutral-light/80 hover:text-neutral-light transition-colors"
-            >
-              Log in
-            </Link>
-            <Link
-              href="/signup"
-              className="group inline-flex items-center px-6 py-2.5 text-base font-medium text-accent-green border-2 border-accent-green hover:bg-accent-green hover:text-primary rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
-            >
-              Try for Free
-              <HiCursorClick className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
+            <AuthButtons />
           </div>
 
           {/* Mobile menu button */}
@@ -152,23 +253,7 @@ export default function Navigation() {
                   </Link>
                 </motion.div>
               ))}
-              <div className="pt-4 space-y-4">
-                <Link
-                  href="/login"
-                  className="block text-neutral-light/80 hover:text-neutral-light font-medium"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Log in
-                </Link>
-                <Link
-                  href="/signup"
-                  className="group flex items-center justify-center px-6 py-2.5 text-base font-medium text-accent-green border-2 border-accent-green hover:bg-accent-green hover:text-primary rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Try for Free
-                  <HiCursorClick className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-                </Link>
-              </div>
+              <MobileAuthButtons />
             </div>
           </motion.div>
         )}

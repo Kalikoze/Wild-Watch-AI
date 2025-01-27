@@ -2,33 +2,23 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { createClient } from '@/utils/supabase';
 import { FaGoogle, FaGithub } from 'react-icons/fa';
 import { HiMail } from 'react-icons/hi';
 import BackgroundEffects from '@/app/components/common/BackgroundEffects';
+import { handleMagicLinkSignUp } from './actions';
 
 export default function SignUp() {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
-  const supabase = createClient();
-
-  const handleMagicLinkSignUp = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setMessage(null);
 
     try {
-      const { error } = await supabase.auth.signInWithOtp({
-        email,
-        options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
-          shouldCreateUser: true
-        }
-      });
-
-      if (error) throw error;
+      await handleMagicLinkSignUp(email);
 
       setMessage({
         type: 'success',
@@ -45,26 +35,26 @@ export default function SignUp() {
     }
   };
 
-  const handleOAuthSignUp = async (provider: 'google' | 'github') => {
-    try {
-      await supabase.auth.initialize();
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
-          skipBrowserRedirect: false
-        }
-      });
+  // const handleOAuthSignUp = async (provider: 'google' | 'github') => {
+  //   try {
+  //     await supabase.auth.initialize();
+  //     const { error } = await supabase.auth.signInWithOAuth({
+  //       provider,
+  //       options: {
+  //         redirectTo: `${window.location.origin}/auth/callback`,
+  //         skipBrowserRedirect: false
+  //       }
+  //     });
 
-      if (error) throw error;
-    } catch (error) {
-      console.error('Error during sign-in with OAuth:', error);
-      setMessage({
-        type: 'error',
-        text: 'Failed to connect with provider. Please try again.',
-      });
-    }
-  };
+  //     if (error) throw error;
+  //   } catch (error) {
+  //     console.error('Error during sign-in with OAuth:', error);
+  //     setMessage({
+  //       type: 'error',
+  //       text: 'Failed to connect with provider. Please try again.',
+  //     });
+  //   }
+  // };
 
   return (
     <div className="min-h-screen bg-primary flex flex-col justify-center relative overflow-hidden py-12">
@@ -91,7 +81,7 @@ export default function SignUp() {
                 )}
 
                 <div className="space-y-4">
-                  <form onSubmit={handleMagicLinkSignUp} className="space-y-4">
+                  <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-neutral-light/80 mb-2">
                         Email address
