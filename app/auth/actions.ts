@@ -23,7 +23,8 @@ export const handleOAuthSignUp = async (provider: 'google' | 'azure') => {
     provider,
     options: {
       redirectTo: `${window.location.origin}/auth/callback`,
-      skipBrowserRedirect: false
+      skipBrowserRedirect: false,
+      scopes: 'email profile'
     }
   });
 

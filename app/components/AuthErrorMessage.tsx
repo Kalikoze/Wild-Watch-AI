@@ -12,7 +12,7 @@ interface AuthErrorMessageProps {
 
 export default function AuthErrorMessage({
   message,
-  redirectPath = "/signup",
+  redirectPath = "/auth",
   redirectText = "Back to Sign Up"
 }: AuthErrorMessageProps) {
   // If no message prop is provided, try to get it from URL parameters
