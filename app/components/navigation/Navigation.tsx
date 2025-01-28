@@ -65,6 +65,7 @@ export const Navigation = () => {
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
+      window.location.href = 'https://wildwatch.ai';
     } catch (error) {
       console.error('Error signing out:', error);
     }
@@ -96,21 +97,13 @@ export const Navigation = () => {
     }
 
     return (
-      <>
-        <Link
-          href="/login"
-          className="text-neutral-light/80 hover:text-neutral-light transition-colors"
-        >
-          Log in
-        </Link>
-        <Link
-          href="/signup"
-          className="group inline-flex items-center px-6 py-2.5 text-base font-medium text-accent-green border-2 border-accent-green hover:bg-accent-green hover:text-primary rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
-        >
-          Try for Free
-          <HiCursorClick className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-        </Link>
-      </>
+      <Link
+        href="/auth"
+        className="group inline-flex items-center px-6 py-2.5 text-base font-medium text-accent-green border-2 border-accent-green hover:bg-accent-green hover:text-primary rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+      >
+        Get Started
+        <HiCursorClick className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+      </Link>
     );
   };
 
@@ -143,14 +136,14 @@ export const Navigation = () => {
     return (
       <div className="pt-4 space-y-4">
         <Link
-          href="/login"
+          href="/auth"
           className="block text-neutral-light/80 hover:text-neutral-light font-medium"
           onClick={() => setIsMobileMenuOpen(false)}
         >
-          Log in
+          Sign in
         </Link>
         <Link
-          href="/signup"
+          href="/auth"
           className="group flex items-center justify-center px-6 py-2.5 text-base font-medium text-accent-green border-2 border-accent-green hover:bg-accent-green hover:text-primary rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
           onClick={() => setIsMobileMenuOpen(false)}
         >
