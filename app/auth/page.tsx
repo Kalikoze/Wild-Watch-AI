@@ -35,7 +35,7 @@ export default function Auth() {
     }
   };
 
-  const handleOAuthSubmit = async (provider: 'google' | 'microsoft') => {
+  const handleOAuthSubmit = async (provider: 'google' | 'azure') => {
     try {
       await handleOAuthSignUp(provider);
     } catch (error) {
@@ -119,7 +119,7 @@ export default function Auth() {
                   Google
                 </button>
                 <button
-                  onClick={() => handleOAuthSubmit('microsoft')}
+                  onClick={() => handleOAuthSubmit('azure')}
                   className="group flex items-center justify-center px-4 py-3 bg-neutral-light/5 border border-neutral-dark/30 rounded-lg text-neutral-light hover:bg-neutral-light/10 transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
                 >
                   <FaMicrosoft className="w-5 h-5 mr-2" />

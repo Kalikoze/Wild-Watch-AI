@@ -41,6 +41,7 @@ export async function GET(request: Request) {
 
       return NextResponse.redirect(new URL('/dashboard', request.url))
     } catch (error) {
+      console.error('Auth error:', error)
       return NextResponse.redirect(new URL('/auth/auth-error', request.url))
     }
   }

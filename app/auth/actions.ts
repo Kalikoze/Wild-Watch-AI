@@ -16,7 +16,7 @@ export const handleMagicLinkSignUp = async (email: string) => {
   }
 }
 
-export const handleOAuthSignUp = async (provider: 'google' | 'microsoft') => {
+export const handleOAuthSignUp = async (provider: 'google' | 'azure') => {
   const supabase = createClient();
 
   const { error } = await supabase.auth.signInWithOAuth({

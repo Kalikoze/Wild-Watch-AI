@@ -69,7 +69,7 @@ export const Navigation = () => {
     return () => {
       subscription.unsubscribe()
     }
-  }, [])
+  }, [supabase.auth])
 
   const handleSignOut = async () => {
     try {
