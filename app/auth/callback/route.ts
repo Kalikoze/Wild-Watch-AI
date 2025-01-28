@@ -13,12 +13,8 @@ export async function GET(request: Request) {
   if (code) {
     // Handle OAuth flow
     try {
-      const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+      const { error } = await supabase.auth.exchangeCodeForSession(code)
       if (error) throw error
-
-      // Verify the session was created
-      const { data: { session } } = await supabase.auth.getSession()
-      console.log('Session established:', session?.user?.id)
 
       return NextResponse.redirect(new URL('/dashboard', request.url))
     } catch (error) {

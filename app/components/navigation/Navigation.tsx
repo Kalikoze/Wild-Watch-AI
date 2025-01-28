@@ -8,6 +8,7 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 import { HiCursorClick } from 'react-icons/hi';
 import { createClient } from '@/utils/supabase/client'
 import { User } from '@supabase/supabase-js'
+import { useRouter } from 'next/navigation';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -47,6 +48,7 @@ const NavLink = ({ href, children, className }: { href: string; children: React.
 };
 
 export const Navigation = () => {
+  const router = useRouter();
   const [user, setUser] = useState<User | null>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -58,14 +60,22 @@ export const Navigation = () => {
       setUser(user)
       setLoading(false)
     })
-  }, [])
 
-  console.log(user)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+      setLoading(false)
+    })
+
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [])
 
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut();
-      window.location.href = 'https://wildwatch.ai';
+      setUser(null);
+      router.push('/');
     } catch (error) {
       console.error('Error signing out:', error);
     }
