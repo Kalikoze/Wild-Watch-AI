@@ -29,7 +29,7 @@ export async function GET(request: Request) {
 
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) throw new Error('User not found')
-      
+
       const needsOnboarding = await checkOnboardingStatus(user.id)
       if (needsOnboarding) {
         return NextResponse.redirect(new URL('/onboarding', request.url))
