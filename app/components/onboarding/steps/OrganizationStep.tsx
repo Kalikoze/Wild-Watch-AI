@@ -5,6 +5,7 @@ type OrgData = {
   type: 'new' | 'existing';
   name: string;
   organizationType: string;
+  otherType?: string;
 };
 
 export function OrganizationStep({
@@ -17,12 +18,19 @@ export function OrganizationStep({
   const [orgData, setOrgData] = useState<OrgData>({
     type: 'new',
     name: '',
-    organizationType: ''
+    organizationType: '',
+    otherType: ''
   });
   const [error, setError] = useState<string>('');
 
   const isValid = () => {
+    console.log(orgData)
     if (orgData.type === 'new') {
+      if (orgData.organizationType === 'other_specify') {
+        return orgData.name.trim().length >= 2 &&
+          orgData.organizationType.length > 0 &&
+          orgData.otherType?.trim().length >= 2;
+      }
       return orgData.name.trim().length >= 2 && orgData.organizationType.length > 0;
     }
     return false;
@@ -92,8 +100,8 @@ export function OrganizationStep({
                     setOrgData(d => ({ ...d, name: e.target.value }));
                   }}
                   className={`w-full px-4 py-3 rounded-lg bg-neutral-light/5 border ${error && !orgData.name.trim()
-                      ? 'border-accent-orange'
-                      : 'border-neutral-dark/30'
+                    ? 'border-accent-orange'
+                    : 'border-neutral-dark/30'
                     } text-neutral-light placeholder-neutral-light/30 focus:outline-none focus:ring-2 focus:ring-accent-green focus:border-transparent`}
                 />
                 <select
@@ -104,9 +112,24 @@ export function OrganizationStep({
                   <option value="">Select Organization Type</option>
                   <option value="sanctuary">Wildlife Sanctuary</option>
                   <option value="zoo">Zoo</option>
+                  <option value="aquarium">Aquarium</option>
                   <option value="research">Research Institution</option>
-                  <option value="other">Other</option>
+                  <option value="conservation">Conservation Center</option>
+                  <option value="rehabilitation">Wildlife Rehabilitation Center</option>
+                  <option value="education">Educational Institution</option>
+                  <option value="veterinary">Wildlife Veterinary Facility</option>
+                  <option value="other_specify">Other</option>
                 </select>
+
+                {orgData.organizationType === 'other_specify' && (
+                  <input
+                    type="text"
+                    placeholder="Please specify your organization type *"
+                    value={orgData.otherType || ''}
+                    onChange={(e) => setOrgData(d => ({ ...d, otherType: e.target.value }))}
+                    className="w-full px-4 py-3 rounded-lg bg-neutral-light/5 border border-neutral-dark/30 text-neutral-light placeholder-neutral-light/30 focus:outline-none focus:ring-2 focus:ring-accent-green focus:border-transparent"
+                  />
+                )}
               </>
             )}
 

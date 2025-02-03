@@ -5,6 +5,7 @@ type OnboardingData = {
     type: 'new' | 'existing';
     name: string;
     organizationType: string;
+    otherType?: string;
   } | null;
   role: {
     role: string;
@@ -48,10 +49,14 @@ export async function saveOnboardingData(data: OnboardingData) {
     if (roleQueryError) throw roleQueryError
     if (!roleData) throw new Error('Invalid role selected')
 
+    const orgType = data.organization?.organizationType === 'other_specify' 
+      ? data.organization.otherType 
+      : data.organization?.organizationType
+
     const { error } = await supabase.rpc('handle_onboarding', {
       p_user_id: user.id,
       p_org_name: data.organization?.name,
-      p_org_type: data.organization?.organizationType,
+      p_org_type: orgType,
       p_subscription_tier: data.plan?.planId || 'free',
       p_role_id: roleData.id
     })

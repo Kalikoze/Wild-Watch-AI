@@ -1,36 +1,39 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { FaUserShield } from "react-icons/fa";
+import { MdScience, MdPets } from "react-icons/md";
+import { IoMdEye } from "react-icons/io";
 
 type RoleData = {
   role: string;
   title: string;
 };
 
-const ROLE_OPTIONS = [
+const roles = [
   {
     id: 'admin',
     title: 'Administrator',
-    description: 'Full access to manage organization, users, and settings',
-    icon: '👑'
+    description: 'Full access to manage organization, users, and video analysis settings',
+    icon: <FaUserShield className="w-6 h-6" />,
   },
   {
     id: 'researcher',
     title: 'Researcher',
-    description: 'Access to analysis tools and data collection',
-    icon: '🔬'
+    description: 'Can upload videos, conduct analysis, and generate behavioral reports',
+    icon: <MdScience className="w-6 h-6" />,
   },
   {
-    id: 'staff',
-    title: 'Staff Member',
-    description: 'Daily operations and animal care tracking',
-    icon: '👤'
+    id: 'animal_care',
+    title: 'Animal Care Specialist',
+    description: 'Can view analysis, add notes, and download behavioral reports',
+    icon: <MdPets className="w-6 h-6" />,
   },
   {
     id: 'viewer',
     title: 'Viewer',
-    description: 'View-only access to reports and data',
-    icon: '👁️'
-  }
+    description: 'View-only access to analysis results and reports',
+    icon: <IoMdEye className="w-6 h-6" />,
+  },
 ];
 
 export function RoleStep({
@@ -77,31 +80,50 @@ export function RoleStep({
           </p>
 
           <div className="grid grid-cols-1 gap-4">
-            {ROLE_OPTIONS.map((option) => (
+            {roles.map((role) => (
               <button
-                key={option.id}
-                onClick={() => setRoleData({ role: option.id, title: option.title })}
-                className={`p-4 rounded-lg border transition-all text-left flex items-center gap-4 ${roleData.role === option.id
+                key={role.id}
+                onClick={() => {
+                  setError('');
+                  setRoleData(d => ({
+                    ...d,
+                    role: role.id
+                  }));
+                }}
+                className={`flex items-center gap-4 p-4 rounded-lg border transition-all ${roleData.role === role.id
                   ? 'border-accent-green bg-accent-green/10 text-accent-green'
-                  : 'border-neutral-dark/30 text-neutral-light hover:bg-neutral-light/5'
+                  : 'border-neutral-dark/30 text-neutral-light/60 hover:bg-neutral-light/5'
                   }`}
               >
-                <span className="text-2xl">{option.icon}</span>
-                <div>
-                  <div className="font-medium">{option.title}</div>
-                  <div className="text-sm text-neutral-light/60">{option.description}</div>
+                <div className="text-2xl">
+                  {role.icon}
+                </div>
+                <div className="text-left">
+                  <div className="font-semibold">{role.title}</div>
+                  <div className="text-sm opacity-80">{role.description}</div>
                 </div>
               </button>
             ))}
           </div>
 
-          <input
-            type="text"
-            placeholder="Your Job Title (Optional)"
-            value={roleData.title}
-            onChange={(e) => setRoleData(d => ({ ...d, title: e.target.value }))}
-            className="w-full px-4 py-3 rounded-lg bg-neutral-light/5 border border-neutral-dark/30 text-neutral-light placeholder-neutral-light/30 focus:outline-none focus:ring-2 focus:ring-accent-green focus:border-transparent"
-          />
+          <div className="mt-6">
+            <label className="block text-sm font-medium text-neutral-light mb-2">
+              Your Job Title (Optional)
+            </label>
+            <input
+              type="text"
+              placeholder="e.g., Senior Researcher, Lead Veterinarian"
+              value={roleData.title}
+              onChange={(e) => {
+                setError('');
+                setRoleData(d => ({ ...d, title: e.target.value }));
+              }}
+              className="w-full px-4 py-3 rounded-lg bg-neutral-light/5 border border-neutral-dark/30 text-neutral-light placeholder-neutral-light/30 focus:outline-none focus:ring-2 focus:ring-accent-green focus:border-transparent"
+            />
+            <p className="mt-2 text-sm text-neutral-light/60">
+              If provided, this will be displayed on your profile and in communications
+            </p>
+          </div>
 
           {error && (
             <div className="text-accent-orange text-sm text-center mb-4">
