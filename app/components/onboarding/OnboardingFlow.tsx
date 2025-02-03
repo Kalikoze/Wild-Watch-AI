@@ -8,6 +8,7 @@ import { RoleStep } from '@/app/components/onboarding/steps/RoleStep';
 import { PlanStep } from '@/app/components/onboarding/steps/PlanStep';
 import { useRouter } from 'next/navigation';
 import { FiCheck } from 'react-icons/fi';
+import { saveOnboardingData, updateOnboardingStatus } from '@/app/utils/onboarding';
 
 const steps = [
   { id: 1, name: 'Welcome' },
@@ -27,11 +28,18 @@ export function OnboardingFlow() {
 
   const handleComplete = async () => {
     try {
-      // Save all collected data to your backend
-      await saveOnboardingData(data);
-      router.push('/dashboard');
+      if (step === 1) {
+        await updateOnboardingStatus('in_progress');
+      }
+
+      if (step === steps.length) {
+        await saveOnboardingData(data);
+        await updateOnboardingStatus('completed');
+        router.push('/dashboard');
+      }
     } catch (error) {
       console.error('Failed to complete onboarding:', error);
+      // You might want to add error handling UI here
     }
   };
 
@@ -45,11 +53,11 @@ export function OnboardingFlow() {
               {/* Step Circle */}
               <div
                 className={`flex items-center justify-center w-10 h-10 rounded-full border-2 
-                  ${step > s.id 
-                    ? 'bg-accent-green border-accent-green' 
+                  ${step > s.id
+                    ? 'bg-accent-green border-accent-green'
                     : step === s.id
-                    ? 'border-accent-green bg-primary text-accent-green'
-                    : 'border-neutral-light/30 text-neutral-light/30'
+                      ? 'border-accent-green bg-primary text-accent-green'
+                      : 'border-neutral-light/30 text-neutral-light/30'
                   }`}
               >
                 {step > s.id ? (
@@ -58,9 +66,9 @@ export function OnboardingFlow() {
                   <span className="text-sm font-medium">{s.id}</span>
                 )}
               </div>
-              
+
               {/* Step Name */}
-              <span 
+              <span
                 className={`ml-3 text-sm font-medium
                   ${step >= s.id ? 'text-neutral-light' : 'text-neutral-light/30'}`}
               >
@@ -69,7 +77,7 @@ export function OnboardingFlow() {
 
               {/* Connector Line */}
               {idx < steps.length - 1 && (
-                <div 
+                <div
                   className={`flex-1 h-0.5 mx-4 min-w-[4rem]
                     ${step > s.id ? 'bg-accent-green' : 'bg-neutral-light/30'}`}
                 />

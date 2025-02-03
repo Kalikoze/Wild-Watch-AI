@@ -3,11 +3,11 @@
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 
-interface DashboardNavProps {
+interface AppNavProps {
   context?: 'dashboard' | 'onboarding';
 }
 
-export const DashboardNav = ({ context = 'dashboard' }: DashboardNavProps) => {
+export const AppNav = ({ context = 'dashboard' }: AppNavProps) => {
   const router = useRouter();
   const supabase = createClient();
 
