@@ -7,6 +7,11 @@ type PlanData = {
   billingCycle: 'monthly' | 'annual';
 };
 
+const calculateAnnualPrice = (monthlyPrice: number) => {
+  const annualDiscount = 0.20; // 20% discount
+  return (monthlyPrice * 12 * (1 - annualDiscount)).toFixed(0);
+};
+
 export function PlanStep({
   onComplete,
   onBack
@@ -22,6 +27,28 @@ export function PlanStep({
   const formatStorage = (bytes: number) => {
     const gb = bytes / 1_000_000_000;
     return gb >= 1000 ? `${gb / 1000}TB` : `${gb}GB`;
+  };
+
+  const renderPrice = (basePrice: number) => {
+    if (planData.billingCycle === 'monthly') {
+      return (
+        <span className="text-lg">
+          ${basePrice}/mo
+        </span>
+      );
+    }
+
+    const annualPrice = calculateAnnualPrice(basePrice);
+    const monthlyWithDiscount = (Number(annualPrice) / 12).toFixed(0);
+
+    return (
+      <div className="text-right">
+        <div className="text-lg">${monthlyWithDiscount}/mo</div>
+        <div className="text-sm text-neutral-light/60">
+          ${annualPrice}/year
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -40,20 +67,53 @@ export function PlanStep({
             Start with our free trial or upgrade for more features
           </p>
 
+          {planData.planId !== 'free' && (
+            <div className="flex justify-center p-2 rounded-xl bg-neutral-light/5">
+              <div className="flex w-full max-w-xs">
+                <button
+                  onClick={() => setPlanData(d => ({ ...d, billingCycle: 'monthly' }))}
+                  className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${planData.billingCycle === 'monthly'
+                      ? 'bg-accent-green text-neutral-light'
+                      : 'text-neutral hover:text-neutral-light'
+                    }`}
+                >
+                  Monthly
+                </button>
+                <button
+                  onClick={() => setPlanData(d => ({ ...d, billingCycle: 'annual' }))}
+                  className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${planData.billingCycle === 'annual'
+                      ? 'bg-accent-green text-neutral-light'
+                      : 'text-neutral hover:text-neutral-light'
+                    }`}
+                >
+                  <div className="flex flex-col items-center">
+                    <span className={`text-xs ${planData.billingCycle === 'annual'
+                        ? 'text-neutral-light/80'
+                        : 'text-accent-green'
+                      }`}>
+                      Save 20%
+                    </span>
+                    <span>Annual</span>
+                  </div>
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className="space-y-4">
             {Object.entries(plans).map(([id, plan]) => (
               <button
                 key={id}
                 onClick={() => setPlanData(d => ({ ...d, planId: id }))}
                 className={`w-full p-4 rounded-lg border transition-all text-left ${planData.planId === id
-                    ? 'border-accent-green bg-accent-green/10'
-                    : 'border-neutral-dark/30 hover:bg-neutral-light/5'
+                  ? 'border-accent-green bg-accent-green/10'
+                  : 'border-neutral-dark/30 hover:bg-neutral-light/5'
                   }`}
               >
                 <div className="flex justify-between items-center">
                   <span className="font-medium text-neutral-light">{plan.name}</span>
                   <span className={planData.planId === id ? 'text-accent-green' : 'text-neutral-light'}>
-                    ${plan.basePrice}/mo
+                    {plan.basePrice === 0 ? 'Free' : renderPrice(plan.basePrice)}
                   </span>
                 </div>
                 <div className="mt-2 text-sm text-neutral-light/60">
@@ -72,29 +132,6 @@ export function PlanStep({
               </button>
             ))}
           </div>
-
-          {planData.planId !== 'free' && (
-            <div className="flex justify-center gap-4 p-4 rounded-lg bg-neutral-light/5">
-              <button
-                onClick={() => setPlanData(d => ({ ...d, billingCycle: 'monthly' }))}
-                className={`px-4 py-2 rounded-lg transition-all ${planData.billingCycle === 'monthly'
-                    ? 'bg-accent-green text-primary'
-                    : 'text-neutral-light hover:bg-neutral-light/5'
-                  }`}
-              >
-                Monthly
-              </button>
-              <button
-                onClick={() => setPlanData(d => ({ ...d, billingCycle: 'annual' }))}
-                className={`px-4 py-2 rounded-lg transition-all ${planData.billingCycle === 'annual'
-                    ? 'bg-accent-green text-primary'
-                    : 'text-neutral-light hover:bg-neutral-light/5'
-                  }`}
-              >
-                Annual (Save 20%)
-              </button>
-            </div>
-          )}
 
           <div className="flex gap-4">
             <button
