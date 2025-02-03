@@ -4,23 +4,43 @@ export const plans: Record<string, PlanTier> = {
   free: {
     name: 'Free Trial',
     basePrice: 0,
-    includesTokens: 50,
-    features: ['Basic video analysis', 'Standard reports'],
-    storageLimit: 1_000_000_000 // 1GB
+    includesTokens: 100,
+    features: [
+      'Basic video analysis',
+      'Standard reports',
+      'Up to 3 team members',
+      '5GB shared storage'
+    ],
+    storageLimit: 5_000_000_000 // 5GB
   },
   professional: {
     name: 'Professional',
-    basePrice: 99,
-    includesTokens: 500,
-    features: ['Advanced analysis', 'Priority support', 'Custom reports'],
-    storageLimit: 50_000_000_000 // 50GB
+    basePrice: 299,
+    includesTokens: 1000,
+    features: [
+      'Advanced video analysis',
+      'Priority support',
+      'Custom reports',
+      'Up to 25 team members',
+      '100GB shared storage',
+      'Data export'
+    ],
+    storageLimit: 100_000_000_000 // 100GB
   },
   enterprise: {
     name: 'Enterprise',
-    basePrice: 499,
-    includesTokens: 3000,
-    features: ['Unlimited storage', 'API access', 'Custom AI training'],
-    storageLimit: 1_000_000_000_000 // 1 TB
+    basePrice: 999,
+    includesTokens: 5000,
+    features: [
+      'Unlimited team members',
+      '1TB shared storage',
+      'API access',
+      'Custom AI training',
+      'Dedicated support',
+      'Advanced analytics',
+      'Priority feature requests'
+    ],
+    storageLimit: 1_000_000_000_000 // 1TB
   }
 }
 

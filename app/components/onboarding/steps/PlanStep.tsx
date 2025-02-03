@@ -5,23 +5,48 @@ import { plans } from '@/lib/data/pricing';
 type PlanData = {
   planId: string;
   billingCycle: 'monthly' | 'annual';
+  organizationType: 'new' | 'existing';
 };
 
-const calculateAnnualPrice = (monthlyPrice: number) => {
-  const annualDiscount = 0.20; // 20% discount
+const calculateAnnualPrice = (monthlyPrice: number, planId: string) => {
+  const annualDiscount = planId === 'enterprise' ? 0.20 : 0.15; // 20% for enterprise, 15% for others
   return (monthlyPrice * 12 * (1 - annualDiscount)).toFixed(0);
 };
 
 export function PlanStep({
   onComplete,
-  onBack
+  onBack,
+  organizationType
 }: {
   onComplete: (data: PlanData) => void;
   onBack: () => void;
+  organizationType: 'new' | 'existing';
 }) {
+  if (organizationType === 'existing') {
+    return (
+      <motion.div>
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-neutral-light">
+            Welcome to Your Organization
+          </h2>
+          <p className="text-neutral-light/60 mt-2">
+            You'll be added to your organization's existing plan
+          </p>
+          <button
+            onClick={() => onComplete({ organizationType: 'existing' })}
+            className="mt-6 px-4 py-3 rounded-lg bg-accent-green hover:bg-accent-green-light text-primary transition-all"
+          >
+            Continue
+          </button>
+        </div>
+      </motion.div>
+    );
+  }
+
   const [planData, setPlanData] = useState<PlanData>({
     planId: 'free',
-    billingCycle: 'monthly'
+    billingCycle: 'monthly',
+    organizationType: 'new'
   });
 
   const formatStorage = (bytes: number) => {
@@ -38,7 +63,7 @@ export function PlanStep({
       );
     }
 
-    const annualPrice = calculateAnnualPrice(basePrice);
+    const annualPrice = calculateAnnualPrice(basePrice, planData.planId);
     const monthlyWithDiscount = (Number(annualPrice) / 12).toFixed(0);
 
     return (
@@ -73,8 +98,8 @@ export function PlanStep({
                 <button
                   onClick={() => setPlanData(d => ({ ...d, billingCycle: 'monthly' }))}
                   className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${planData.billingCycle === 'monthly'
-                      ? 'bg-accent-green text-neutral-light'
-                      : 'text-neutral hover:text-neutral-light'
+                    ? 'bg-accent-green text-neutral-light'
+                    : 'text-neutral hover:text-neutral-light'
                     }`}
                 >
                   Monthly
@@ -82,16 +107,16 @@ export function PlanStep({
                 <button
                   onClick={() => setPlanData(d => ({ ...d, billingCycle: 'annual' }))}
                   className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${planData.billingCycle === 'annual'
-                      ? 'bg-accent-green text-neutral-light'
-                      : 'text-neutral hover:text-neutral-light'
+                    ? 'bg-accent-green text-neutral-light'
+                    : 'text-neutral hover:text-neutral-light'
                     }`}
                 >
                   <div className="flex flex-col items-center">
                     <span className={`text-xs ${planData.billingCycle === 'annual'
-                        ? 'text-neutral-light/80'
-                        : 'text-accent-green'
+                      ? 'text-neutral-light/80'
+                      : 'text-accent-green'
                       }`}>
-                      Save 20%
+                      Save {planData.planId === 'enterprise' ? '20%' : '15%'}
                     </span>
                     <span>Annual</span>
                   </div>

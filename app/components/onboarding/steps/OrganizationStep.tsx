@@ -1,11 +1,14 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { createClient } from '@/utils/supabase/client';
+import { toast } from 'react-hot-toast';
 
 type OrgData = {
   type: 'new' | 'existing';
   name: string;
   organizationType: string;
   otherType?: string;
+  organizationId?: string;
 };
 
 export function OrganizationStep({
@@ -21,10 +24,8 @@ export function OrganizationStep({
     organizationType: '',
     otherType: ''
   });
-  const [error, setError] = useState<string>('');
 
   const isValid = () => {
-    console.log(orgData)
     if (orgData.type === 'new') {
       if (orgData.organizationType === 'other_specify') {
         return orgData.name.trim().length >= 2 &&
@@ -33,18 +34,65 @@ export function OrganizationStep({
       }
       return orgData.name.trim().length >= 2 && orgData.organizationType.length > 0;
     }
-    return false;
+    return true;
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     try {
-      if (!isValid()) {
-        setError('Please fill out all required fields');
-        return;
+      if (orgData.type === 'new') {
+        if (!isValid()) {
+          toast.error('Please fill out all required fields', {
+            theme: 'dark',
+            position: 'bottom-right',
+          });
+          return;
+        }
+
+        const supabase = createClient();
+        const { data: existingOrg, error: checkError } = await supabase
+          .from('organizations')
+          .select('id, name')
+          .ilike('name', orgData.name)
+          .single();
+
+        if (checkError && checkError.code !== 'PGRST116') {
+          console.error('Database error:', checkError);
+          toast.error('An error occurred while checking organization name', {
+            theme: 'dark',
+            position: 'bottom-right',
+          });
+          return;
+        }
+
+        if (existingOrg) {
+          toast.error('An organization with this name already exists', {
+            theme: 'dark',
+            position: 'bottom-right',
+          });
+          return;
+        }
       }
+
       onNext(orgData);
+
     } catch (err) {
-      setError('An unexpected error occurred. Please try again.');
+      console.error('Organization step error:', err);
+      toast.error('An unexpected error occurred. Please try again.', {
+        theme: 'dark',
+        position: 'bottom-right',
+      });
+    }
+  };
+
+  // If they select existing organization
+  const handleExistingOrg = async (orgId: string) => {
+    // Verify they have permission to join
+    const canJoin = await verifyOrgAccess(orgId);
+    if (canJoin) {
+      onNext({
+        type: 'existing',
+        organizationId: orgId
+      });
     }
   };
 
@@ -60,12 +108,6 @@ export function OrganizationStep({
           <h2 className="text-2xl font-bold text-neutral-light text-center">
             Tell us about your organization
           </h2>
-
-          {error && (
-            <div className="text-accent-orange text-sm text-center mb-4">
-              {error}
-            </div>
-          )}
 
           <div className="space-y-4">
             <div className="flex gap-4">
@@ -96,13 +138,9 @@ export function OrganizationStep({
                   placeholder="Organization Name *"
                   value={orgData.name}
                   onChange={(e) => {
-                    setError('');
                     setOrgData(d => ({ ...d, name: e.target.value }));
                   }}
-                  className={`w-full px-4 py-3 rounded-lg bg-neutral-light/5 border ${error && !orgData.name.trim()
-                    ? 'border-accent-orange'
-                    : 'border-neutral-dark/30'
-                    } text-neutral-light placeholder-neutral-light/30 focus:outline-none focus:ring-2 focus:ring-accent-green focus:border-transparent`}
+                  className={`w-full px-4 py-3 rounded-lg bg-neutral-light/5 border border-neutral-dark/30 text-neutral-light placeholder-neutral-light/30 focus:outline-none focus:ring-2 focus:ring-accent-green focus:border-transparent`}
                 />
                 <select
                   value={orgData.organizationType}
