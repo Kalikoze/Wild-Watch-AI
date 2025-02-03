@@ -44,6 +44,21 @@ export function RoleStep({
     role: '',
     title: ''
   });
+  const [error, setError] = useState<string>('');
+
+  const isValid = () => roleData.role !== '';
+
+  const handleNext = () => {
+    try {
+      if (!isValid()) {
+        setError('Please select a role');
+        return;
+      }
+      onNext(roleData);
+    } catch (err) {
+      setError('An unexpected error occurred. Please try again.');
+    }
+  };
 
   return (
     <motion.div
@@ -67,8 +82,8 @@ export function RoleStep({
                 key={option.id}
                 onClick={() => setRoleData({ role: option.id, title: option.title })}
                 className={`p-4 rounded-lg border transition-all text-left flex items-center gap-4 ${roleData.role === option.id
-                    ? 'border-accent-green bg-accent-green/10 text-accent-green'
-                    : 'border-neutral-dark/30 text-neutral-light hover:bg-neutral-light/5'
+                  ? 'border-accent-green bg-accent-green/10 text-accent-green'
+                  : 'border-neutral-dark/30 text-neutral-light hover:bg-neutral-light/5'
                   }`}
               >
                 <span className="text-2xl">{option.icon}</span>
@@ -88,6 +103,12 @@ export function RoleStep({
             className="w-full px-4 py-3 rounded-lg bg-neutral-light/5 border border-neutral-dark/30 text-neutral-light placeholder-neutral-light/30 focus:outline-none focus:ring-2 focus:ring-accent-green focus:border-transparent"
           />
 
+          {error && (
+            <div className="text-accent-orange text-sm text-center mb-4">
+              {error}
+            </div>
+          )}
+
           <div className="flex gap-4">
             <button
               onClick={onBack}
@@ -96,8 +117,8 @@ export function RoleStep({
               Back
             </button>
             <button
-              onClick={() => onNext(roleData)}
-              disabled={!roleData.role}
+              onClick={handleNext}
+              disabled={!isValid()}
               className="flex-1 px-4 py-3 rounded-lg bg-accent-green hover:bg-accent-green-light text-primary transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Continue

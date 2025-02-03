@@ -19,6 +19,26 @@ export function OrganizationStep({
     name: '',
     organizationType: ''
   });
+  const [error, setError] = useState<string>('');
+
+  const isValid = () => {
+    if (orgData.type === 'new') {
+      return orgData.name.trim().length >= 2 && orgData.organizationType.length > 0;
+    }
+    return false;
+  };
+
+  const handleNext = () => {
+    try {
+      if (!isValid()) {
+        setError('Please fill out all required fields');
+        return;
+      }
+      onNext(orgData);
+    } catch (err) {
+      setError('An unexpected error occurred. Please try again.');
+    }
+  };
 
   return (
     <motion.div
@@ -33,13 +53,19 @@ export function OrganizationStep({
             Tell us about your organization
           </h2>
 
+          {error && (
+            <div className="text-accent-orange text-sm text-center mb-4">
+              {error}
+            </div>
+          )}
+
           <div className="space-y-4">
             <div className="flex gap-4">
               <button
                 onClick={() => setOrgData(d => ({ ...d, type: 'new' }))}
                 className={`flex-1 px-4 py-3 rounded-lg border transition-all ${orgData.type === 'new'
-                    ? 'border-accent-green bg-accent-green/10 text-accent-green'
-                    : 'border-neutral-dark/30 text-neutral-light/60 hover:bg-neutral-light/5'
+                  ? 'border-accent-green bg-accent-green/10 text-accent-green'
+                  : 'border-neutral-dark/30 text-neutral-light/60 hover:bg-neutral-light/5'
                   }`}
               >
                 New Organization
@@ -47,8 +73,8 @@ export function OrganizationStep({
               <button
                 onClick={() => setOrgData(d => ({ ...d, type: 'existing' }))}
                 className={`flex-1 px-4 py-3 rounded-lg border transition-all ${orgData.type === 'existing'
-                    ? 'border-accent-green bg-accent-green/10 text-accent-green'
-                    : 'border-neutral-dark/30 text-neutral-light/60 hover:bg-neutral-light/5'
+                  ? 'border-accent-green bg-accent-green/10 text-accent-green'
+                  : 'border-neutral-dark/30 text-neutral-light/60 hover:bg-neutral-light/5'
                   }`}
               >
                 Join Existing
@@ -59,10 +85,16 @@ export function OrganizationStep({
               <>
                 <input
                   type="text"
-                  placeholder="Organization Name"
+                  placeholder="Organization Name *"
                   value={orgData.name}
-                  onChange={(e) => setOrgData(d => ({ ...d, name: e.target.value }))}
-                  className="w-full px-4 py-3 rounded-lg bg-neutral-light/5 border border-neutral-dark/30 text-neutral-light placeholder-neutral-light/30 focus:outline-none focus:ring-2 focus:ring-accent-green focus:border-transparent"
+                  onChange={(e) => {
+                    setError('');
+                    setOrgData(d => ({ ...d, name: e.target.value }));
+                  }}
+                  className={`w-full px-4 py-3 rounded-lg bg-neutral-light/5 border ${error && !orgData.name.trim()
+                      ? 'border-accent-orange'
+                      : 'border-neutral-dark/30'
+                    } text-neutral-light placeholder-neutral-light/30 focus:outline-none focus:ring-2 focus:ring-accent-green focus:border-transparent`}
                 />
                 <select
                   value={orgData.organizationType}
@@ -95,8 +127,9 @@ export function OrganizationStep({
               Back
             </button>
             <button
-              onClick={() => onNext(orgData)}
-              className="flex-1 px-4 py-3 rounded-lg bg-accent-green hover:bg-accent-green-light text-primary transition-all"
+              onClick={handleNext}
+              disabled={!isValid()}
+              className="flex-1 px-4 py-3 rounded-lg bg-accent-green hover:bg-accent-green-light text-primary transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Continue
             </button>

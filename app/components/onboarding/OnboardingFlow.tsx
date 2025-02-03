@@ -9,6 +9,7 @@ import { PlanStep } from '@/app/components/onboarding/steps/PlanStep';
 import { useRouter } from 'next/navigation';
 import { FiCheck } from 'react-icons/fi';
 import { saveOnboardingData, updateOnboardingStatus } from '@/app/utils/onboarding';
+import { toast } from 'react-hot-toast';
 
 const steps = [
   { id: 1, name: 'Welcome' },
@@ -25,8 +26,10 @@ export function OnboardingFlow() {
     role: null,
     plan: null
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleComplete = async () => {
+    setIsLoading(true);
     try {
       if (step === 1) {
         await updateOnboardingStatus('in_progress');
@@ -38,8 +41,9 @@ export function OnboardingFlow() {
         router.push('/dashboard');
       }
     } catch (error) {
-      console.error('Failed to complete onboarding:', error);
-      // You might want to add error handling UI here
+      toast.error(error instanceof Error ? error.message : 'An unexpected error occurred');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -87,6 +91,15 @@ export function OnboardingFlow() {
         </div>
       </div>
 
+      {/* Add loading overlay */}
+      {isLoading && (
+        <div className="fixed inset-0 bg-primary/50 flex items-center justify-center z-50">
+          <div className="bg-primary-light p-6 rounded-lg shadow-xl">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-accent-green"></div>
+          </div>
+        </div>
+      )}
+
       {/* Step Content */}
       <AnimatePresence mode="wait">
         {step === 1 && (
@@ -122,6 +135,7 @@ export function OnboardingFlow() {
               await handleComplete();
             }}
             onBack={() => setStep(3)}
+            isLoading={isLoading}
           />
         )}
       </AnimatePresence>
