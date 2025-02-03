@@ -30,7 +30,7 @@ export function OrganizationStep({
       if (orgData.organizationType === 'other_specify') {
         return orgData.name.trim().length >= 2 &&
           orgData.organizationType.length > 0 &&
-          orgData.otherType?.trim().length >= 2;
+          (orgData.otherType?.trim()?.length ?? 0) >= 2;
       }
       return orgData.name.trim().length >= 2 && orgData.organizationType.length > 0;
     }
@@ -42,31 +42,27 @@ export function OrganizationStep({
       if (orgData.type === 'new') {
         if (!isValid()) {
           toast.error('Please fill out all required fields', {
-            theme: 'dark',
             position: 'bottom-right',
           });
           return;
         }
 
         const supabase = createClient();
-        const { data: existingOrg, error: checkError } = await supabase
+        const { data: existingOrgs, error: checkError } = await supabase
           .from('organizations')
-          .select('id, name')
-          .ilike('name', orgData.name)
-          .single();
+          .select('id')
+          .ilike('name', orgData.name);
 
-        if (checkError && checkError.code !== 'PGRST116') {
+        if (checkError) {
           console.error('Database error:', checkError);
           toast.error('An error occurred while checking organization name', {
-            theme: 'dark',
             position: 'bottom-right',
           });
           return;
         }
 
-        if (existingOrg) {
+        if (existingOrgs && existingOrgs.length > 0) {
           toast.error('An organization with this name already exists', {
-            theme: 'dark',
             position: 'bottom-right',
           });
           return;
@@ -78,20 +74,7 @@ export function OrganizationStep({
     } catch (err) {
       console.error('Organization step error:', err);
       toast.error('An unexpected error occurred. Please try again.', {
-        theme: 'dark',
         position: 'bottom-right',
-      });
-    }
-  };
-
-  // If they select existing organization
-  const handleExistingOrg = async (orgId: string) => {
-    // Verify they have permission to join
-    const canJoin = await verifyOrgAccess(orgId);
-    if (canJoin) {
-      onNext({
-        type: 'existing',
-        organizationId: orgId
       });
     }
   };
