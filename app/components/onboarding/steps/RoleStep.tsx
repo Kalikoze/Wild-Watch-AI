@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { FaUserShield } from "react-icons/fa";
 import { MdScience, MdPets } from "react-icons/md";
 import { IoMdEye } from "react-icons/io";
+import Button from '@/app/components/common/Button';
+import { HiArrowLeft, HiArrowRight } from 'react-icons/hi';
 
 type RoleData = {
   role: string;
@@ -132,20 +134,25 @@ export function RoleStep({
             </div>
           )}
 
-          <div className="flex flex-col sm:flex-row gap-4">
-            <button
+          <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
+            <Button
               onClick={onBack}
-              className="w-full px-4 py-3 rounded-lg border border-neutral-dark/30 text-neutral-light hover:bg-neutral-light/5 transition-all"
+              variant="neutral"
+              icon={HiArrowLeft}
+              iconPosition="left"
+              className="w-full sm:w-1/2"
             >
               Back
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={handleNext}
+              variant="primary"
+              icon={HiArrowRight}
               disabled={!isValid()}
-              className="w-full px-4 py-3 rounded-lg bg-accent-green hover:bg-accent-green-light text-primary transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full sm:w-1/2 !bg-accent-green hover:!bg-accent-green-light text-primary"
             >
               Continue
-            </button>
+            </Button>
           </div>
         </div>
       </div>

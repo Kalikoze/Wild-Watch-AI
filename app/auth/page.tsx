@@ -100,7 +100,8 @@ export default function Auth() {
                   disabled={isLoading}
                   variant="primary"
                   icon={HiMail}
-                  className="w-full !bg-accent-green hover:!bg-accent-green-light text-primary sm:!w-full"
+                  fullWidth
+                  className="w-full !bg-accent-green hover:!bg-accent-green-light text-primary"
                 >
                   {isLoading ? 'Sending...' : 'Continue with Email'}
                 </Button>
@@ -116,20 +117,22 @@ export default function Auth() {
               </div>
 
               {/* OAuth Buttons */}
-              <div className="flex flex-col space-y-4">
+              <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
                 <Button
                   onClick={() => handleOAuthSubmit('google')}
-                  variant="oauth"
+                  variant="neutral"
                   icon={FaGoogle}
-                  className="w-full px-4 py-3"
+                  iconPosition="left"
+                  className="w-full sm:w-1/2"
                 >
                   Google
                 </Button>
                 <Button
                   onClick={() => handleOAuthSubmit('azure')}
-                  variant="oauth"
+                  variant="neutral"
                   icon={FaMicrosoft}
-                  className="w-full px-4 py-3"
+                  iconPosition="left"
+                  className="w-full sm:w-1/2"
                 >
                   Microsoft
                 </Button>

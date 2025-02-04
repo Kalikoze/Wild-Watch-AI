@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion';
+import Button from '@/app/components/common/Button';
+import { HiArrowRight } from 'react-icons/hi';
 
 export function WelcomeStep({ onNext }: { onNext: () => void }) {
   return (
@@ -19,12 +21,15 @@ export function WelcomeStep({ onNext }: { onNext: () => void }) {
             </p>
           </header>
 
-          <button
+          <Button
             onClick={onNext}
-            className="w-full sm:w-auto min-w-[200px] px-8 py-3 text-base font-medium rounded-lg text-primary bg-accent-green hover:bg-accent-green-light transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+            variant="primary"
+            icon={HiArrowRight}
+            fullWidth
+            className="!bg-accent-green hover:!bg-accent-green-light text-primary"
           >
             Let&apos;s Get Started
-          </button>
+          </Button>
         </div>
       </div>
     </motion.article>

@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { plans } from '@/lib/data/pricing';
+import Button from '@/app/components/common/Button';
+import { HiArrowLeft, HiArrowRight } from 'react-icons/hi';
 
 export type PlanData = {
   planId: string;
@@ -45,16 +47,18 @@ export function PlanStep({
               <p className="text-neutral-light/60 mt-2">
                 You&apos;ll be added to your organization&apos;s existing plan
               </p>
-              <button
+              <Button
                 onClick={() => onComplete({
                   planId: 'free',
                   billingCycle: 'monthly',
                   organizationType: 'existing'
                 })}
-                className="mt-6 px-4 py-3 rounded-lg bg-accent-green hover:bg-accent-green-light text-primary transition-all"
+                variant="primary"
+                icon={HiArrowRight}
+                className="mt-6 !bg-accent-green hover:!bg-accent-green-light text-primary"
               >
                 Continue
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -171,19 +175,24 @@ export function PlanStep({
             ))}
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4">
-            <button
+          <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
+            <Button
               onClick={onBack}
-              className="w-full px-4 py-3 rounded-lg border border-neutral-dark/30 text-neutral-light hover:bg-neutral-light/5 transition-all"
+              variant="neutral"
+              icon={HiArrowLeft}
+              iconPosition="left"
+              className="w-full sm:w-1/2"
             >
               Back
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => onComplete(planData)}
-              className="w-full px-4 py-3 rounded-lg bg-accent-green hover:bg-accent-green-light text-primary transition-all"
+              variant="primary"
+              icon={HiArrowRight}
+              className="w-full sm:w-1/2 !bg-accent-green hover:!bg-accent-green-light text-primary"
             >
               {planData.planId === 'free' ? 'Start Free Trial' : 'Complete Setup'}
-            </button>
+            </Button>
           </div>
 
           {planData.planId !== 'free' && (

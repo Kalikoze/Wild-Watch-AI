@@ -122,30 +122,6 @@ export const Navigation = () => {
   const MobileAuthButtons = () => {
     if (loading) return null;
 
-    if (user) {
-      return (
-        <div className="pt-4 space-y-4">
-          <Link
-            href="/dashboard"
-            className="block text-accent-green hover:text-accent-green-light font-medium"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Dashboard
-          </Link>
-          <Button
-            onClick={() => {
-              handleSignOut();
-              setIsMobileMenuOpen(false);
-            }}
-            variant="secondary"
-            className="w-full !text-neutral-light !border-neutral-light/20 hover:!bg-neutral-light/10 hover:!text-neutral-light"
-          >
-            Sign Out
-          </Button>
-        </div>
-      );
-    }
-
     return (
       <div className="pt-4 space-y-4">
         <Link
