@@ -5,11 +5,23 @@ import { AnimatePresence } from 'framer-motion';
 import { WelcomeStep } from '@/app/components/onboarding/steps/WelcomeStep';
 import { OrganizationStep } from '@/app/components/onboarding/steps/OrganizationStep';
 import { RoleStep } from '@/app/components/onboarding/steps/RoleStep';
-import { PlanStep } from '@/app/components/onboarding/steps/PlanStep';
+import { PlanStep, PlanData } from '@/app/components/onboarding/steps/PlanStep';
 import { useRouter } from 'next/navigation';
 import { FiCheck } from 'react-icons/fi';
 import { saveOnboardingData, updateOnboardingStatus } from '@/app/utils/onboarding';
 import { toast } from 'react-hot-toast';
+
+type OrgData = {
+  type: 'new' | 'existing';
+  name: string;
+  organizationType: string;
+  otherType?: string;
+};
+
+type RoleData = {
+  role: string;
+  title: string;
+};
 
 const steps = [
   { id: 1, name: 'Welcome' },
@@ -21,7 +33,11 @@ const steps = [
 export function OnboardingFlow() {
   const router = useRouter();
   const [step, setStep] = useState(1);
-  const [data, setData] = useState({
+  const [data, setData] = useState<{
+    organization: OrgData | null;
+    role: RoleData | null;
+    plan: PlanData | null;
+  }>({
     organization: null,
     role: null,
     plan: null
@@ -49,12 +65,10 @@ export function OnboardingFlow() {
 
   return (
     <div className="max-w-4xl mx-auto px-4">
-      {/* Progress Indicator */}
       <div className="mb-8">
         <div className="flex items-center justify-between">
           {steps.map((s, idx) => (
             <div key={s.id} className="flex items-center">
-              {/* Step Circle */}
               <div
                 className={`flex items-center justify-center w-10 h-10 rounded-full border-2 
                   ${step > s.id
@@ -71,7 +85,6 @@ export function OnboardingFlow() {
                 )}
               </div>
 
-              {/* Step Name */}
               <span
                 className={`ml-3 text-sm font-medium
                   ${step >= s.id ? 'text-neutral-light' : 'text-neutral-light/30'}`}
@@ -79,7 +92,6 @@ export function OnboardingFlow() {
                 {s.name}
               </span>
 
-              {/* Connector Line */}
               {idx < steps.length - 1 && (
                 <div
                   className={`flex-1 h-0.5 mx-4 min-w-[4rem]
@@ -91,7 +103,6 @@ export function OnboardingFlow() {
         </div>
       </div>
 
-      {/* Add loading overlay */}
       {isLoading && (
         <div className="fixed inset-0 bg-primary/50 flex items-center justify-center z-50">
           <div className="bg-primary-light p-6 rounded-lg shadow-xl">
@@ -100,7 +111,6 @@ export function OnboardingFlow() {
         </div>
       )}
 
-      {/* Step Content */}
       <AnimatePresence mode="wait">
         {step === 1 && (
           <WelcomeStep
@@ -135,7 +145,7 @@ export function OnboardingFlow() {
               await handleComplete();
             }}
             onBack={() => setStep(3)}
-            isLoading={isLoading}
+            organizationType={data.organization?.type || 'new'}
           />
         )}
       </AnimatePresence>

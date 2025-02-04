@@ -2,21 +2,21 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { plans } from '@/lib/data/pricing';
 
-type PlanData = {
+export type PlanData = {
   planId: string;
   billingCycle: 'monthly' | 'annual';
   organizationType: 'new' | 'existing';
 };
 
 const calculateAnnualPrice = (monthlyPrice: number, planId: string) => {
-  const annualDiscount = planId === 'enterprise' ? 0.20 : 0.15; // 20% for enterprise, 15% for others
+  const annualDiscount = planId === 'enterprise' ? 0.20 : 0.15;
   return (monthlyPrice * 12 * (1 - annualDiscount)).toFixed(0);
 };
 
 export function PlanStep({
   onComplete,
   onBack,
-  organizationType
+  organizationType,
 }: {
   onComplete: (data: PlanData) => void;
   onBack: () => void;
@@ -25,10 +25,10 @@ export function PlanStep({
   const [planData, setPlanData] = useState<PlanData>({
     planId: 'free',
     billingCycle: 'monthly',
-    organizationType: 'new'
+    organizationType: organizationType
   });
 
-  if (organizationType === 'existing') {
+  if (planData.organizationType === 'existing') {
     return (
       <motion.div>
         <div className="text-center">
@@ -39,7 +39,11 @@ export function PlanStep({
             You&apos;ll be added to your organization&apos;s existing plan
           </p>
           <button
-            onClick={() => onComplete({ organizationType: 'existing' })}
+            onClick={() => onComplete({
+              planId: 'free',
+              billingCycle: 'monthly',
+              organizationType: 'existing'
+            })}
             className="mt-6 px-4 py-3 rounded-lg bg-accent-green hover:bg-accent-green-light text-primary transition-all"
           >
             Continue
