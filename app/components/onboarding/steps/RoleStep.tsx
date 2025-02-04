@@ -59,6 +59,7 @@ export function RoleStep({
       }
       onNext(roleData);
     } catch (err) {
+      console.error('Role step error:', err);
       setError('An unexpected error occurred. Please try again.');
     }
   };
@@ -73,7 +74,7 @@ export function RoleStep({
       <div className="relative px-4 py-10 bg-primary-light shadow-xl sm:rounded-3xl sm:p-20 border border-neutral-dark/20">
         <div className="max-w-md mx-auto space-y-6">
           <h2 className="text-2xl font-bold text-neutral-light text-center">
-            What's your role?
+            What&apos;s your role?
           </h2>
           <p className="text-neutral-light/60 text-center text-sm">
             This helps us customize your experience

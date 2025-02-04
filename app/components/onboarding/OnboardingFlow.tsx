@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { WelcomeStep } from '@/app/components/onboarding/steps/WelcomeStep';
 import { OrganizationStep } from '@/app/components/onboarding/steps/OrganizationStep';
 import { RoleStep } from '@/app/components/onboarding/steps/RoleStep';

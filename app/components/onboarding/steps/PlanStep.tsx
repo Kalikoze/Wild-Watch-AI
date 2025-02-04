@@ -22,6 +22,12 @@ export function PlanStep({
   onBack: () => void;
   organizationType: 'new' | 'existing';
 }) {
+  const [planData, setPlanData] = useState<PlanData>({
+    planId: 'free',
+    billingCycle: 'monthly',
+    organizationType: 'new'
+  });
+
   if (organizationType === 'existing') {
     return (
       <motion.div>
@@ -30,7 +36,7 @@ export function PlanStep({
             Welcome to Your Organization
           </h2>
           <p className="text-neutral-light/60 mt-2">
-            You'll be added to your organization's existing plan
+            You&apos;ll be added to your organization&apos;s existing plan
           </p>
           <button
             onClick={() => onComplete({ organizationType: 'existing' })}
@@ -42,12 +48,6 @@ export function PlanStep({
       </motion.div>
     );
   }
-
-  const [planData, setPlanData] = useState<PlanData>({
-    planId: 'free',
-    billingCycle: 'monthly',
-    organizationType: 'new'
-  });
 
   const formatStorage = (bytes: number) => {
     const gb = bytes / 1_000_000_000;
