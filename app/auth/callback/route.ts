@@ -10,13 +10,32 @@ export async function GET(request: Request) {
 
   const supabase = await createServer()
 
+  async function checkOnboardingStatus(userId: string) {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('onboarding_status')
+      .eq('id', userId)
+      .single()
+
+    if (error) throw error
+    return data.onboarding_status !== 'completed'
+  }
+
   if (code) {
     // Handle OAuth flow
     try {
       const { error } = await supabase.auth.exchangeCodeForSession(code)
       if (error) throw error
 
-      return NextResponse.redirect(new URL('/dashboard', request.url))
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) throw new Error('User not found')
+
+      const needsOnboarding = await checkOnboardingStatus(user.id)
+      if (needsOnboarding) {
+        return NextResponse.redirect(new URL('/onboarding', request.url))
+      } else {
+        return NextResponse.redirect(new URL('/dashboard', request.url))
+      }
     } catch (error) {
       console.error('OAuth error:', error)
       return NextResponse.redirect(new URL('/auth/auth-error', request.url))
@@ -39,7 +58,15 @@ export async function GET(request: Request) {
         })
       }
 
-      return NextResponse.redirect(new URL('/dashboard', request.url))
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) throw new Error('User not found')
+
+      const needsOnboarding = await checkOnboardingStatus(user.id)
+      if (needsOnboarding) {
+        return NextResponse.redirect(new URL('/onboarding', request.url))
+      } else {
+        return NextResponse.redirect(new URL('/dashboard', request.url))
+      }
     } catch (error) {
       console.error('Auth error:', error)
       return NextResponse.redirect(new URL('/auth/auth-error', request.url))

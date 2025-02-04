@@ -1,10 +1,13 @@
 'use client'
 
-import Link from 'next/link';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 
-export const DashboardNav = () => {
+interface AppNavProps {
+  context?: 'dashboard' | 'onboarding';
+}
+
+export const AppNav = ({ context = 'dashboard' }: AppNavProps) => {
   const router = useRouter();
   const supabase = createClient();
 
@@ -18,14 +21,15 @@ export const DashboardNav = () => {
   };
 
   return (
-    <nav className="fixed w-[calc(100%-16rem)] right-0 z-50 bg-primary/95 backdrop-blur-sm border-b border-neutral-light/10">
-      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 -translate-x-32">
+    <nav className={`fixed top-0 z-50 bg-primary/95 backdrop-blur-sm border-b border-neutral-light/10 
+      ${context === 'dashboard' ? 'w-[calc(100%-16rem)] right-0' : 'w-full'}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link href="/dashboard" className="flex items-center">
+          <div className="flex items-center">
             <span className="text-2xl font-bold bg-gradient-to-r from-accent-green to-accent-orange bg-clip-text text-transparent">
               Wild Watch AI
             </span>
-          </Link>
+          </div>
 
           <button
             onClick={handleSignOut}
