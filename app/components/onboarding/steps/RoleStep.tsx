@@ -65,14 +65,14 @@ export function RoleStep({
   };
 
   return (
-    <motion.div
+    <motion.article
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="relative sm:max-w-xl sm:mx-auto w-full px-4"
+      className="w-full max-w-2xl mx-auto"
     >
-      <div className="relative px-4 py-10 bg-primary-light shadow-xl sm:rounded-3xl sm:p-20 border border-neutral-dark/20">
-        <div className="max-w-md mx-auto space-y-6">
+      <div className="bg-primary-light shadow-xl rounded-3xl p-8 sm:p-12 border border-neutral-dark/20">
+        <div className="max-w-lg mx-auto space-y-8">
           <h2 className="text-2xl font-bold text-neutral-light text-center">
             What&apos;s your role?
           </h2>
@@ -132,23 +132,23 @@ export function RoleStep({
             </div>
           )}
 
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             <button
               onClick={onBack}
-              className="flex-1 px-4 py-3 rounded-lg border border-neutral-dark/30 text-neutral-light hover:bg-neutral-light/5 transition-all"
+              className="w-full px-4 py-3 rounded-lg border border-neutral-dark/30 text-neutral-light hover:bg-neutral-light/5 transition-all"
             >
               Back
             </button>
             <button
               onClick={handleNext}
               disabled={!isValid()}
-              className="flex-1 px-4 py-3 rounded-lg bg-accent-green hover:bg-accent-green-light text-primary transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-3 rounded-lg bg-accent-green hover:bg-accent-green-light text-primary transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Continue
             </button>
           </div>
         </div>
       </div>
-    </motion.div>
+    </motion.article>
   );
 } 
