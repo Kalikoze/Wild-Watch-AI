@@ -9,6 +9,7 @@ import { HiCursorClick } from 'react-icons/hi';
 import { createClient } from '@/utils/supabase/client'
 import { User } from '@supabase/supabase-js'
 import { useRouter } from 'next/navigation';
+import Button from '@/app/components/common/Button'
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -84,7 +85,7 @@ export const Navigation = () => {
   const AuthButtons = () => {
     if (loading) {
       return (
-        <div className="h-10 w-24 bg-neutral-dark/20 animate-pulse rounded-lg"></div>
+        <div className="h-8 w-24 bg-neutral-dark/20 animate-pulse rounded-lg"></div>
       );
     }
     if (user) {
@@ -96,24 +97,25 @@ export const Navigation = () => {
           >
             Dashboard
           </Link>
-          <button
+          <Button
             onClick={handleSignOut}
-            className="group inline-flex items-center px-6 py-2.5 text-base font-medium text-neutral-light border-2 border-neutral-light/20 hover:bg-neutral-light/10 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+            variant="secondary"
+            className="!text-neutral-light !border-neutral-light/20 hover:!bg-neutral-light/10 hover:!text-neutral-light"
           >
             Sign Out
-          </button>
+          </Button>
         </>
       );
     }
 
     return (
-      <Link
+      <Button
         href="/auth"
-        className="group inline-flex items-center px-6 py-2.5 text-base font-medium text-accent-green border-2 border-accent-green hover:bg-accent-green hover:text-primary rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+        variant="secondary"
+        icon={HiCursorClick}
       >
         Get Started
-        <HiCursorClick className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-      </Link>
+      </Button>
     );
   };
 
@@ -130,15 +132,16 @@ export const Navigation = () => {
           >
             Dashboard
           </Link>
-          <button
+          <Button
             onClick={() => {
               handleSignOut();
               setIsMobileMenuOpen(false);
             }}
-            className="w-full group flex items-center justify-center px-6 py-2.5 text-base font-medium text-neutral-light border-2 border-neutral-light/20 hover:bg-neutral-light/10 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+            variant="secondary"
+            className="w-full !text-neutral-light !border-neutral-light/20 hover:!bg-neutral-light/10 hover:!text-neutral-light"
           >
             Sign Out
-          </button>
+          </Button>
         </div>
       );
     }
@@ -152,14 +155,15 @@ export const Navigation = () => {
         >
           Sign in
         </Link>
-        <Link
+        <Button
           href="/auth"
-          className="group flex items-center justify-center px-6 py-2.5 text-base font-medium text-accent-green border-2 border-accent-green hover:bg-accent-green hover:text-primary rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+          variant="secondary"
+          icon={HiCursorClick}
+          className="w-full"
           onClick={() => setIsMobileMenuOpen(false)}
         >
           Try for Free
-          <HiCursorClick className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-        </Link>
+        </Button>
       </div>
     );
   };
@@ -170,7 +174,7 @@ export const Navigation = () => {
       aria-label="Main navigation"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <span className="text-2xl font-bold bg-gradient-to-r from-accent-green to-accent-orange bg-clip-text text-transparent">

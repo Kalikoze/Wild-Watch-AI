@@ -1,9 +1,9 @@
 'use client'
 
-import Link from 'next/link'
 import { motion } from 'framer-motion';
 import { HiArrowRight, HiSparkles } from 'react-icons/hi';
 import BackgroundEffects from '@/app/components/common/BackgroundEffects';
+import Button from '@/app/components/common/Button'
 
 export default function Hero() {
   return (
@@ -65,22 +65,22 @@ export default function Hero() {
               data-cy="hero-cta"
               className="flex flex-wrap gap-6"
             >
-              <Link
+              <Button
+                href="/auth" 
+                variant="primary"
+                icon={HiArrowRight}
                 data-cy="hero-cta-primary"
-                href="/dashboard"
-                className="group inline-flex items-center px-8 py-4 text-base font-medium text-neutral-light bg-accent-orange-dark hover:bg-accent-orange rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
               >
                 Get Started Free
-                <HiArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
-              <Link
-                data-cy="hero-cta-secondary"
+              </Button>
+              <Button
                 href="/our-story"
-                className="group inline-flex items-center px-8 py-4 text-base font-medium text-accent-green border-2 border-accent-green hover:bg-accent-green hover:text-primary rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+                variant="secondary"
+                icon={HiSparkles}
+                data-cy="hero-cta-secondary"
               >
                 Learn More
-                <HiSparkles className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
+              </Button>
             </motion.div>
           </motion.article>
 

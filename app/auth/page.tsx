@@ -6,6 +6,7 @@ import { FaGoogle, FaMicrosoft } from 'react-icons/fa';
 import { HiMail } from 'react-icons/hi';
 import BackgroundEffects from '@/app/components/common/BackgroundEffects';
 import { handleMagicLinkSignUp, handleOAuthSignUp } from './actions';
+import Button from '@/app/components/common/Button';
 
 export default function Auth() {
   const [email, setEmail] = useState('');
@@ -51,16 +52,21 @@ export default function Auth() {
     <main className="min-h-screen bg-primary flex flex-col justify-center relative overflow-hidden py-12">
       <BackgroundEffects color="green" />
 
-      <motion.article
+      <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-2xl mx-auto"
+        className="relative w-full max-w-2xl mx-auto px-4"
       >
-        <div className="bg-primary-light shadow-xl rounded-3xl p-8 sm:p-12 border border-neutral-dark/20">
-          <div className="max-w-lg mx-auto space-y-8">
-            <header className="text-center space-y-2">
+        <div className="relative py-8 sm:py-12 bg-primary-light shadow-xl rounded-3xl p-8 sm:p-12 border border-neutral-dark/20">
+          <article className="max-w-lg mx-auto space-y-8">
+            <header className="text-center space-y-3">
               <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-accent-green to-accent-orange bg-clip-text text-transparent">
-                Welcome to WildWatch AI
+                <span className="sm:hidden">
+                  Welcome to<br />WildWatch AI
+                </span>
+                <span className="hidden sm:inline">
+                  Welcome to WildWatch AI
+                </span>
               </h1>
               <p className="text-neutral-light/60">
                 For wildlife professionals and sanctuary staff
@@ -73,10 +79,10 @@ export default function Auth() {
               </div>
             )}
 
-            <div className="space-y-6">
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-neutral-light/80 mb-2">
+            <div className="space-y-8">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-3">
+                  <label htmlFor="email" className="block text-sm font-medium text-neutral-light/80">
                     Work Email
                   </label>
                   <input
@@ -89,14 +95,15 @@ export default function Auth() {
                     required
                   />
                 </div>
-                <button
+                <Button
                   type="submit"
                   disabled={isLoading}
-                  className="group w-full flex items-center justify-center px-8 py-3 text-base font-medium rounded-lg text-primary bg-accent-green hover:bg-accent-green-light transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-green disabled:opacity-50 disabled:cursor-not-allowed"
+                  variant="primary"
+                  icon={HiMail}
+                  className="w-full !bg-accent-green hover:!bg-accent-green-light text-primary sm:!w-full"
                 >
                   {isLoading ? 'Sending...' : 'Continue with Email'}
-                  <HiMail className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-                </button>
+                </Button>
               </form>
 
               <div className="relative">
@@ -104,31 +111,33 @@ export default function Auth() {
                   <div className="w-full border-t border-neutral-dark/20"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-primary-light text-neutral-light/60">Or continue with</span>
+                  <span className="px-4 bg-primary-light text-neutral-light/60">Or continue with</span>
                 </div>
               </div>
 
               {/* OAuth Buttons */}
-              <div className="grid grid-cols-2 gap-4">
-                <button
+              <div className="flex flex-col space-y-4">
+                <Button
                   onClick={() => handleOAuthSubmit('google')}
-                  className="group flex items-center justify-center px-4 py-3 bg-neutral-light/5 border border-neutral-dark/30 rounded-lg text-neutral-light hover:bg-neutral-light/10 transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+                  variant="oauth"
+                  icon={FaGoogle}
+                  className="w-full px-4 py-3"
                 >
-                  <FaGoogle className="w-5 h-5 mr-2" />
                   Google
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={() => handleOAuthSubmit('azure')}
-                  className="group flex items-center justify-center px-4 py-3 bg-neutral-light/5 border border-neutral-dark/30 rounded-lg text-neutral-light hover:bg-neutral-light/10 transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+                  variant="oauth"
+                  icon={FaMicrosoft}
+                  className="w-full px-4 py-3"
                 >
-                  <FaMicrosoft className="w-5 h-5 mr-2" />
                   Microsoft
-                </button>
+                </Button>
               </div>
             </div>
-          </div>
+          </article>
         </div>
-      </motion.article>
+      </motion.section>
     </main>
   );
 } 
