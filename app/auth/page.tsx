@@ -51,18 +51,18 @@ export default function Auth() {
     <main className="min-h-screen bg-primary flex flex-col justify-center relative overflow-hidden py-12">
       <BackgroundEffects color="green" />
 
-      <motion.section
+      <motion.article
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative sm:max-w-xl sm:mx-auto w-full"
+        className="w-full max-w-2xl mx-auto"
       >
-        <div className="relative px-4 py-10 bg-primary-light shadow-xl sm:rounded-3xl sm:p-20 border border-neutral-dark/20">
-          <article className="max-w-md mx-auto space-y-4 text-base leading-6 text-neutral-light sm:text-lg sm:leading-7">
+        <div className="bg-primary-light shadow-xl rounded-3xl p-8 sm:p-12 border border-neutral-dark/20">
+          <div className="max-w-lg mx-auto space-y-8">
             <header className="text-center space-y-2">
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-accent-green to-accent-orange bg-clip-text text-transparent">
+              <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-accent-green to-accent-orange bg-clip-text text-transparent">
                 Welcome to WildWatch AI
               </h1>
-              <p className="text-neutral-light/60 text-sm">
+              <p className="text-neutral-light/60">
                 For wildlife professionals and sanctuary staff
               </p>
             </header>
@@ -74,7 +74,6 @@ export default function Auth() {
             )}
 
             <div className="space-y-6">
-              {/* Email Form First */}
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-neutral-light/80 mb-2">
@@ -127,9 +126,9 @@ export default function Auth() {
                 </button>
               </div>
             </div>
-          </article>
+          </div>
         </div>
-      </motion.section>
+      </motion.article>
     </main>
   );
 } 
