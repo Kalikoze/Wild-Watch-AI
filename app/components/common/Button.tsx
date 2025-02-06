@@ -14,6 +14,7 @@ interface ButtonProps {
   className?: string
   type?: 'button' | 'submit' | 'reset'
   fullWidth?: boolean
+  'data-cy'?: string
 }
 
 export default function Button({
@@ -26,7 +27,8 @@ export default function Button({
   disabled = false,
   className = '',
   type = 'button',
-  fullWidth = false
+  fullWidth = false,
+  'data-cy': dataCy
 }: ButtonProps) {
   const baseStyles = `group inline-flex items-center justify-center ${fullWidth ? 'w-full' : 'w-full sm:w-auto'
     } px-6 sm:px-8 py-4 text-base font-medium rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95`
@@ -57,7 +59,11 @@ export default function Button({
 
   if (href) {
     return (
-      <Link href={href} className={combinedClassName}>
+      <Link
+        href={href}
+        className={combinedClassName}
+        data-cy={dataCy}
+      >
         {buttonContent}
       </Link>
     )
@@ -69,6 +75,7 @@ export default function Button({
       onClick={onClick}
       disabled={disabled}
       className={`${combinedClassName} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+      data-cy={dataCy}
     >
       {buttonContent}
     </button>
