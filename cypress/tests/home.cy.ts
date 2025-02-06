@@ -32,8 +32,8 @@ describe('Home Page', () => {
 
     it('should have working CTA buttons with correct links', () => {
       cy.get('[data-cy="hero-cta-primary"]')
-        .should('have.attr', 'href', '/dashboard')
-        .and('contain.text', 'Get Started')
+        .should('have.attr', 'href', '/auth')
+        .and('contain.text', 'Get Started Free')
 
       cy.get('[data-cy="hero-cta-secondary"]')
         .should('have.attr', 'href', '/our-story')

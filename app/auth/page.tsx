@@ -6,29 +6,32 @@ import { FaGoogle, FaMicrosoft } from 'react-icons/fa';
 import { HiMail } from 'react-icons/hi';
 import BackgroundEffects from '@/app/components/common/BackgroundEffects';
 import { handleMagicLinkSignUp, handleOAuthSignUp } from './actions';
+import Button from '@/app/components/common/Button';
+import { toast } from 'react-hot-toast';
 
 export default function Auth() {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setMessage(null);
 
     try {
       await handleMagicLinkSignUp(email);
 
-      setMessage({
-        type: 'success',
-        text: 'Check your email for the magic link!',
+      toast.success('Check your email for the magic link!', {
+        position: 'bottom-right',
+        style: {
+          background: '#1E1E1E',
+          color: '#28A745',
+          border: '1px solid rgba(40, 167, 69, 0.2)',
+        },
       });
     } catch (error) {
       console.error('Error during sign-in with OTP:', error);
-      setMessage({
-        type: 'error',
-        text: 'Failed to send magic link. Please try again.',
+      toast.error('Failed to send magic link. Please try again.', {
+        position: 'bottom-right',
       });
     } finally {
       setIsLoading(false);
@@ -40,9 +43,8 @@ export default function Auth() {
       await handleOAuthSignUp(provider);
     } catch (error) {
       console.error('Error during sign-in with OAuth:', error);
-      setMessage({
-        type: 'error',
-        text: 'Failed to connect with provider. Please try again.',
+      toast.error('Failed to connect with provider. Please try again.', {
+        position: 'bottom-right',
       });
     }
   };
@@ -54,30 +56,28 @@ export default function Auth() {
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative sm:max-w-xl sm:mx-auto w-full"
+        className="relative w-full max-w-2xl mx-auto px-4"
       >
-        <div className="relative px-4 py-10 bg-primary-light shadow-xl sm:rounded-3xl sm:p-20 border border-neutral-dark/20">
-          <article className="max-w-md mx-auto space-y-4 text-base leading-6 text-neutral-light sm:text-lg sm:leading-7">
-            <header className="text-center space-y-2">
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-accent-green to-accent-orange bg-clip-text text-transparent">
-                Welcome to WildWatch AI
+        <div className="relative py-8 sm:py-12 bg-primary-light shadow-xl rounded-3xl p-8 sm:p-12 border border-neutral-dark/20">
+          <article className="max-w-lg mx-auto space-y-8">
+            <header className="text-center space-y-3">
+              <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-accent-green to-accent-orange bg-clip-text text-transparent">
+                <span className="sm:hidden">
+                  Welcome to<br />WildWatch AI
+                </span>
+                <span className="hidden sm:inline">
+                  Welcome to WildWatch AI
+                </span>
               </h1>
-              <p className="text-neutral-light/60 text-sm">
+              <p className="text-neutral-light/60">
                 For wildlife professionals and sanctuary staff
               </p>
             </header>
 
-            {message && (
-              <div className={`p-4 rounded-lg ${message.type === 'success' ? 'bg-accent-green/20 text-accent-green' : 'bg-red-500/20 text-red-500'}`}>
-                {message.text}
-              </div>
-            )}
-
-            <div className="space-y-6">
-              {/* Email Form First */}
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-neutral-light/80 mb-2">
+            <div className="space-y-8">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-3">
+                  <label htmlFor="email" className="block text-sm font-medium text-neutral-light/80">
                     Work Email
                   </label>
                   <input
@@ -90,14 +90,16 @@ export default function Auth() {
                     required
                   />
                 </div>
-                <button
+                <Button
                   type="submit"
                   disabled={isLoading}
-                  className="group w-full flex items-center justify-center px-8 py-3 text-base font-medium rounded-lg text-primary bg-accent-green hover:bg-accent-green-light transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-green disabled:opacity-50 disabled:cursor-not-allowed"
+                  variant="primary"
+                  icon={HiMail}
+                  fullWidth
+                  className="w-full !bg-accent-green hover:!bg-accent-green-light text-primary"
                 >
                   {isLoading ? 'Sending...' : 'Continue with Email'}
-                  <HiMail className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-                </button>
+                </Button>
               </form>
 
               <div className="relative">
@@ -105,26 +107,32 @@ export default function Auth() {
                   <div className="w-full border-t border-neutral-dark/20"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-primary-light text-neutral-light/60">Or continue with</span>
+                  <span className="px-4 bg-primary-light text-neutral-light/60">Or continue with</span>
                 </div>
               </div>
 
               {/* OAuth Buttons */}
-              <div className="grid grid-cols-2 gap-4">
-                <button
+              <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
+                <Button
                   onClick={() => handleOAuthSubmit('google')}
-                  className="group flex items-center justify-center px-4 py-3 bg-neutral-light/5 border border-neutral-dark/30 rounded-lg text-neutral-light hover:bg-neutral-light/10 transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+                  variant="neutral"
+                  icon={FaGoogle}
+                  iconPosition="left"
+                  fullWidth
+                  className="w-full sm:w-1/2"
                 >
-                  <FaGoogle className="w-5 h-5 mr-2" />
                   Google
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={() => handleOAuthSubmit('azure')}
-                  className="group flex items-center justify-center px-4 py-3 bg-neutral-light/5 border border-neutral-dark/30 rounded-lg text-neutral-light hover:bg-neutral-light/10 transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+                  variant="neutral"
+                  icon={FaMicrosoft}
+                  iconPosition="left"
+                  fullWidth
+                  className="w-full sm:w-1/2"
                 >
-                  <FaMicrosoft className="w-5 h-5 mr-2" />
                   Microsoft
-                </button>
+                </Button>
               </div>
             </div>
           </article>

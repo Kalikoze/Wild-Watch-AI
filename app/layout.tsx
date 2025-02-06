@@ -3,7 +3,7 @@ import "./globals.css";
 import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
-  title: "Wild Watch AI",
+  title: "WildWatch AI",
   description: "Wildlife Monitoring with AI",
 };
 
