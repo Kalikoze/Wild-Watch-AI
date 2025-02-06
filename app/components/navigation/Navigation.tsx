@@ -154,7 +154,7 @@ export const Navigation = () => {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <span className="text-2xl font-bold bg-gradient-to-r from-accent-green to-accent-orange bg-clip-text text-transparent">
-              Wild Watch AI
+              WildWatch AI
             </span>
           </Link>
 

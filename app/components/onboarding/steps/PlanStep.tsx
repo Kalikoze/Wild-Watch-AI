@@ -71,7 +71,7 @@ export function PlanStep({
     return gb >= 1000 ? `${gb / 1000}TB` : `${gb}GB`;
   };
 
-  const renderPrice = (basePrice: number) => {
+  const renderPrice = (basePrice: number, planId: string) => {
     if (planData.billingCycle === 'monthly') {
       return (
         <span className="text-lg">
@@ -80,7 +80,7 @@ export function PlanStep({
       );
     }
 
-    const annualPrice = calculateAnnualPrice(basePrice, planData.planId);
+    const annualPrice = calculateAnnualPrice(basePrice, planId);
     const monthlyWithDiscount = (Number(annualPrice) / 12).toFixed(0);
 
     return (
@@ -114,29 +114,21 @@ export function PlanStep({
               <div className="flex w-full max-w-xs">
                 <button
                   onClick={() => setPlanData(d => ({ ...d, billingCycle: 'monthly' }))}
-                  className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${planData.billingCycle === 'monthly'
-                    ? 'bg-accent-green text-neutral-light'
-                    : 'text-neutral hover:text-neutral-light'
+                  className={`flex-1 px-4 py-3 rounded-lg text-sm font-medium transition-all ${planData.billingCycle === 'monthly'
+                      ? 'bg-accent-green text-neutral-light'
+                      : 'text-neutral hover:text-neutral-light'
                     }`}
                 >
                   Monthly
                 </button>
                 <button
                   onClick={() => setPlanData(d => ({ ...d, billingCycle: 'annual' }))}
-                  className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${planData.billingCycle === 'annual'
-                    ? 'bg-accent-green text-neutral-light'
-                    : 'text-neutral hover:text-neutral-light'
+                  className={`flex-1 px-4 py-3 rounded-lg text-sm font-medium transition-all ${planData.billingCycle === 'annual'
+                      ? 'bg-accent-green text-neutral-light'
+                      : 'text-neutral hover:text-neutral-light'
                     }`}
                 >
-                  <div className="flex flex-col items-center">
-                    <span className={`text-xs ${planData.billingCycle === 'annual'
-                      ? 'text-neutral-light/80'
-                      : 'text-accent-green'
-                      }`}>
-                      Save {planData.planId === 'enterprise' ? '20%' : '15%'}
-                    </span>
-                    <span>Annual</span>
-                  </div>
+                  Annual
                 </button>
               </div>
             </div>
@@ -153,9 +145,16 @@ export function PlanStep({
                   }`}
               >
                 <div className="flex justify-between items-center">
-                  <span className="font-medium text-neutral-light">{plan.name}</span>
+                  <div>
+                    <span className="font-medium text-neutral-light">{plan.name}</span>
+                    {id !== 'free' && planData.billingCycle === 'annual' && (
+                      <span className="ml-2 text-xs text-accent-green-light">
+                        Save {id === 'enterprise' ? '20%' : '15%'}
+                      </span>
+                    )}
+                  </div>
                   <span className={planData.planId === id ? 'text-accent-green' : 'text-neutral-light'}>
-                    {plan.basePrice === 0 ? 'Free' : renderPrice(plan.basePrice)}
+                    {plan.basePrice === 0 ? 'Free' : renderPrice(plan.basePrice, id)}
                   </span>
                 </div>
                 <div className="mt-2 text-sm text-neutral-light/60">
@@ -181,6 +180,7 @@ export function PlanStep({
               variant="neutral"
               icon={HiArrowLeft}
               iconPosition="left"
+              fullWidth
               className="w-full sm:w-1/2"
             >
               Back
@@ -189,6 +189,7 @@ export function PlanStep({
               onClick={() => onComplete(planData)}
               variant="primary"
               icon={HiArrowRight}
+              fullWidth
               className="w-full sm:w-1/2 !bg-accent-green hover:!bg-accent-green-light text-primary"
             >
               {planData.planId === 'free' ? 'Start Free Trial' : 'Complete Setup'}

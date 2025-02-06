@@ -7,29 +7,31 @@ import { HiMail } from 'react-icons/hi';
 import BackgroundEffects from '@/app/components/common/BackgroundEffects';
 import { handleMagicLinkSignUp, handleOAuthSignUp } from './actions';
 import Button from '@/app/components/common/Button';
+import { toast } from 'react-hot-toast';
 
 export default function Auth() {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setMessage(null);
 
     try {
       await handleMagicLinkSignUp(email);
 
-      setMessage({
-        type: 'success',
-        text: 'Check your email for the magic link!',
+      toast.success('Check your email for the magic link!', {
+        position: 'bottom-right',
+        style: {
+          background: '#1E1E1E',
+          color: '#28A745',
+          border: '1px solid rgba(40, 167, 69, 0.2)',
+        },
       });
     } catch (error) {
       console.error('Error during sign-in with OTP:', error);
-      setMessage({
-        type: 'error',
-        text: 'Failed to send magic link. Please try again.',
+      toast.error('Failed to send magic link. Please try again.', {
+        position: 'bottom-right',
       });
     } finally {
       setIsLoading(false);
@@ -41,9 +43,8 @@ export default function Auth() {
       await handleOAuthSignUp(provider);
     } catch (error) {
       console.error('Error during sign-in with OAuth:', error);
-      setMessage({
-        type: 'error',
-        text: 'Failed to connect with provider. Please try again.',
+      toast.error('Failed to connect with provider. Please try again.', {
+        position: 'bottom-right',
       });
     }
   };
@@ -72,12 +73,6 @@ export default function Auth() {
                 For wildlife professionals and sanctuary staff
               </p>
             </header>
-
-            {message && (
-              <div className={`p-4 rounded-lg ${message.type === 'success' ? 'bg-accent-green/20 text-accent-green' : 'bg-red-500/20 text-red-500'}`}>
-                {message.text}
-              </div>
-            )}
 
             <div className="space-y-8">
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -123,6 +118,7 @@ export default function Auth() {
                   variant="neutral"
                   icon={FaGoogle}
                   iconPosition="left"
+                  fullWidth
                   className="w-full sm:w-1/2"
                 >
                   Google
@@ -132,6 +128,7 @@ export default function Auth() {
                   variant="neutral"
                   icon={FaMicrosoft}
                   iconPosition="left"
+                  fullWidth
                   className="w-full sm:w-1/2"
                 >
                   Microsoft

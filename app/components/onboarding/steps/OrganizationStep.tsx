@@ -171,6 +171,7 @@ export function OrganizationStep({
               variant="neutral"
               icon={HiArrowLeft}
               iconPosition="left"
+              fullWidth
               className="w-full sm:w-1/2"
             >
               Back
@@ -179,6 +180,7 @@ export function OrganizationStep({
               onClick={handleNext}
               variant="primary"
               icon={HiArrowRight}
+              fullWidth
               disabled={!isValid()}
               className="w-full sm:w-1/2 !bg-accent-green hover:!bg-accent-green-light text-primary"
             >
