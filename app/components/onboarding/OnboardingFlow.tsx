@@ -54,6 +54,14 @@ export function OnboardingFlow() {
       if (step === steps.length) {
         await saveOnboardingData(data);
         await updateOnboardingStatus('completed');
+        toast.success('Setup completed successfully!', {
+          position: 'bottom-right',
+          style: {
+            background: '#1E1E1E',
+            color: '#28A745',
+            border: '1px solid rgba(40, 167, 69, 0.2)',
+          },
+        });
         router.push('/dashboard');
       }
     } catch (error) {
