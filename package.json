@@ -17,7 +17,14 @@
     "supabase:status": "supabase status",
     "dev:local": "supabase start && next dev",
     "mail:view": "open http://localhost:54324",
-    "studio:view": "open http://localhost:54323"
+    "studio:view": "open http://localhost:54323",
+    "db:backup-config": "cp supabase/config.toml supabase/config.local.toml",
+    "db:restore-config": "mv supabase/config.local.toml supabase/config.toml",
+    "db:clean-config": "sed '/flow_state_expiry/d; /code_expiry/d' supabase/config.local.toml > supabase/config.toml",
+    "db:link-test": "npm run db:backup-config && npm run db:clean-config && supabase link --project-ref $SUPABASE_TEST_REF && npm run db:restore-config",
+    "db:link-prod": "npm run db:backup-config && npm run db:clean-config && supabase link --project-ref $SUPABASE_PROD_REF && npm run db:restore-config",
+    "db:push-test": "npm run db:backup-config && npm run db:clean-config && supabase db push && npm run db:restore-config",
+    "db:push-prod": "npm run db:backup-config && npm run db:clean-config && supabase db push && npm run db:restore-config"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.2",
