@@ -11,7 +11,13 @@
     "cypress": "cypress open",
     "cypress:headless": "cypress run",
     "test": "start-server-and-test dev http://localhost:3000 cypress:headless",
-    "test:ui": "start-server-and-test dev http://localhost:3000 cypress"
+    "test:ui": "start-server-and-test dev http://localhost:3000 cypress",
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:status": "supabase status",
+    "dev:local": "supabase start && next dev",
+    "mail:view": "open http://localhost:54324",
+    "studio:view": "open http://localhost:54323"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.2",
