@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "supabase start && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -15,7 +15,6 @@
     "supabase:start": "supabase start",
     "supabase:stop": "supabase stop",
     "supabase:status": "supabase status",
-    "dev:local": "supabase start && next dev",
     "mail:view": "open http://localhost:54324",
     "studio:view": "open http://localhost:54323",
     "db:backup-config": "cp supabase/config.toml supabase/config.local.toml",
