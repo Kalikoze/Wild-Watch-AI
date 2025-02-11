@@ -114,6 +114,9 @@ minimum_password_length = 6
 # Passwords that do not meet the following requirements will be rejected as weak. Supported values
 # are: `letters_digits`, `lower_upper_letters_digits`, `lower_upper_letters_digits_symbols`
 password_requirements = ""
+# Add expiry times for flow state and code
+flow_state_expiry = 3600  # 1 hour in seconds
+code_expiry = 3600       # 1 hour in seconds
 
 [auth.email]
 # Allow/disallow new user signups via email to your project.

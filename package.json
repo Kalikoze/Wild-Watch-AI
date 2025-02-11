@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "supabase start && next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -12,18 +12,14 @@
     "cypress:headless": "cypress run",
     "test": "start-server-and-test dev http://localhost:3000 cypress:headless",
     "test:ui": "start-server-and-test dev http://localhost:3000 cypress",
+    "dev:supabase": "supabase start && next dev",
     "supabase:start": "supabase start",
     "supabase:stop": "supabase stop",
     "supabase:status": "supabase status",
     "mail:view": "open http://localhost:54324",
     "studio:view": "open http://localhost:54323",
-    "db:backup-config": "cp supabase/config.toml supabase/config.local.toml",
-    "db:restore-config": "mv supabase/config.local.toml supabase/config.toml",
-    "db:clean-config": "sed '/flow_state_expiry/d; /code_expiry/d' supabase/config.local.toml > supabase/config.toml",
-    "db:link-test": "npm run db:backup-config && npm run db:clean-config && supabase link --project-ref $SUPABASE_TEST_REF && npm run db:restore-config",
-    "db:link-prod": "npm run db:backup-config && npm run db:clean-config && supabase link --project-ref $SUPABASE_PROD_REF && npm run db:restore-config",
-    "db:push-test": "npm run db:backup-config && npm run db:clean-config && supabase db push && npm run db:restore-config",
-    "db:push-prod": "npm run db:backup-config && npm run db:clean-config && supabase db push && npm run db:restore-config"
+    "db:push-test": "cp supabase/config.staging.toml supabase/config.toml && supabase db push && cp supabase/config.toml supabase/config.toml",
+    "db:push-prod": "cp supabase/config.prod.toml supabase/config.toml && supabase db push && cp supabase/config.toml supabase/config.toml"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.2",

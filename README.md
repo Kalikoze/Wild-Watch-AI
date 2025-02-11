@@ -39,7 +39,7 @@ SUPABASE_PROD_REF=your-production-ref
 
 1. Start the local Supabase instance and Next.js development server:
 ```bash
-npm run dev:local
+npm run dev:supabase
 ```
 
 2. Access local services:
@@ -66,21 +66,12 @@ Apply migrations:
 supabase db reset
 ```
 
-### Linking to Remote Environments
+### Environment Configuration
 
-The project uses three environments:
-- Local (development)
-- Test/Staging (combined)
-- Production
-
-To link to remote environments:
-```bash
-# For testing/staging
-npm run db:link-test
-
-# For production
-npm run db:link-prod
-```
+The project uses three environment-specific configurations:
+- `config.toml` - Local development configuration
+- `config.staging.toml` - Staging environment configuration
+- `config.prod.toml` - Production environment configuration
 
 To push database changes:
 ```bash
@@ -110,8 +101,7 @@ For local development:
 
 ```bash
 # Development
-npm run dev          # Start Next.js development server
-npm run dev:local    # Start Supabase and Next.js
+npm run dev          # Start Next.js development server with Supabase
 
 # Supabase
 npm run supabase:start   # Start local Supabase
@@ -119,11 +109,6 @@ npm run supabase:stop    # Stop local Supabase
 npm run supabase:status  # Check Supabase status
 
 # Database
-npm run db:backup-config   # Backup local config
-npm run db:restore-config  # Restore local config
-npm run db:clean-config    # Clean config for remote
-npm run db:link-test      # Link to staging environment
-npm run db:link-prod      # Link to production environment
 npm run db:push-test      # Push to staging environment
 npm run db:push-prod      # Push to production environment
 
