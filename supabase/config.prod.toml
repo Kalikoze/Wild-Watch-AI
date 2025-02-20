@@ -4,6 +4,9 @@
 # working directory name when running `supabase init`.
 project_id = "Wild-Watch-AI"
 
+[remotes.production]
+project_id = "pepnuvoeeiikxxlomixs"
+
 [api]
 enabled = true
 # Port to use for the API URL.
@@ -93,9 +96,9 @@ file_size_limit = "50MiB"
 enabled = true
 # The base URL of your website. Used as an allow-list for redirects and for constructing URLs used
 # in emails.
-site_url = "http://localhost:3000"
+site_url = "https://wildwatch.ai"
 # A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
-additional_redirect_urls = ["http://localhost:3000/auth/callback", "http://app.localhost:3000/auth/callback", "https://wildwatch.ai/auth/callback", "https://app.wildwatch.ai/auth/callback"]
+additional_redirect_urls = ["https://wildwatch.ai/auth/callback", "https://app.wildwatch.ai/auth/callback"]
 # How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604,800 (1 week).
 jwt_expiry = 3600
 # If disabled, the refresh token will never expire.
@@ -114,9 +117,6 @@ minimum_password_length = 6
 # Passwords that do not meet the following requirements will be rejected as weak. Supported values
 # are: `letters_digits`, `lower_upper_letters_digits`, `lower_upper_letters_digits_symbols`
 password_requirements = ""
-# Add expiry times for flow state and code
-flow_state_expiry = 3600  # 1 hour in seconds
-code_expiry = 3600       # 1 hour in seconds
 
 [auth.email]
 # Allow/disallow new user signups via email to your project.
@@ -213,7 +213,6 @@ max_frequency = "5s"
 [auth.external.apple]
 enabled = false
 client_id = ""
-# DO NOT commit your OAuth provider secret to git. Use environment variable substitution instead:
 secret = "env(SUPABASE_AUTH_EXTERNAL_APPLE_SECRET)"
 # Overrides the default auth redirectUrl.
 redirect_uri = ""
@@ -283,12 +282,10 @@ s3_secret_key = "env(S3_SECRET_KEY)"
 enabled = true
 client_id = "env(GOOGLE_CLIENT_ID)"
 secret = "env(GOOGLE_CLIENT_SECRET)"
-redirect_uri = "http://localhost:54321/auth/v1/callback"
-skip_nonce_check = true
+skip_nonce_check = false
 
 [auth.external.azure]
 enabled = true
 client_id = "env(AZURE_CLIENT_ID)"
 secret = "env(AZURE_CLIENT_SECRET)"
-redirect_uri = "http://localhost:54321/auth/v1/callback"
-skip_nonce_check = true
+skip_nonce_check = false

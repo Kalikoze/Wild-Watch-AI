@@ -31,8 +31,26 @@ GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
 AZURE_CLIENT_ID=your-azure-client-id
 AZURE_CLIENT_SECRET=your-azure-client-secret
-SUPABASE_TEST_REF=your-test-stage-ref
-SUPABASE_PROD_REF=your-production-ref
+```
+
+For staging environment:
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your-staging-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-staging-anon-key
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+AZURE_CLIENT_ID=your-azure-client-id
+AZURE_CLIENT_SECRET=your-azure-client-secret
+```
+
+For production environment:
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your-production-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-production-anon-key
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+AZURE_CLIENT_ID=your-azure-client-id
+AZURE_CLIENT_SECRET=your-azure-client-secret
 ```
 
 ## Local Development
@@ -61,7 +79,7 @@ Create a new migration:
 supabase migration new your_migration_name
 ```
 
-Apply migrations:
+Apply migrations locally:
 ```bash
 supabase db reset
 ```
@@ -75,10 +93,14 @@ The project uses three environment-specific configurations:
 
 To push database changes:
 ```bash
-# For testing/staging
-npm run db:push-test
+# First time setup or switching environments:
+supabase unlink  # If needed to unlink previous project
+supabase link --project-ref your-project-ref
 
-# For production
+# Push to staging
+npm run db:push-staging
+
+# For Production
 npm run db:push-prod
 ```
 
@@ -93,15 +115,17 @@ For local development:
 1. Magic link emails can be viewed at [http://localhost:54324](http://localhost:54324)
 2. OAuth requires configuration in Google Cloud Console and Azure Portal
 3. Add callback URLs to your OAuth providers:
-   - Local: `http://localhost:3000/auth/callback`
-   - Test/Stage: `https://staging.wildwatch.ai/auth/callback`
-   - Production: `https://wildwatch.ai/auth/callback`
+   - Staging Supabase: `https://wibrvvcswedppjkiexjb.supabase.co/auth/v1/callback`
+   - Production Supabase: `https://pepnuvoeeiikxxlomixs.supabase.co/auth/v1/callback`
+
+Note: Project refs are stored in our config files and are visible in Supabase URLs. While these aren't sensitive credentials, all actual secrets (API keys, OAuth credentials, etc.) should be stored in environment variables and never committed to version control.
 
 ## Available Scripts
 
 ```bash
 # Development
-npm run dev          # Start Next.js development server with Supabase
+npm run dev          # Start Next.js development server
+npm run dev:supabase # Start Next.js with local Supabase
 
 # Supabase
 npm run supabase:start   # Start local Supabase
@@ -109,8 +133,8 @@ npm run supabase:stop    # Stop local Supabase
 npm run supabase:status  # Check Supabase status
 
 # Database
-npm run db:push-test      # Push to staging environment
-npm run db:push-prod      # Push to production environment
+npm run db:push-staging  # Push to staging environment
+npm run db:push-prod     # Push to production environment
 
 # Testing
 npm run test        # Run tests
@@ -127,6 +151,8 @@ wildwatch-ai/
 │   ├── migrations/      # Database migrations
 │   └── config.toml      # Supabase configuration
 ├── .env.local           # Local environment variables
+├── .env.staging         # Staging environment variables
+├── .env.production      # Production environment variables
 └── package.json         # Project dependencies and scripts
 ```
 
@@ -135,14 +161,14 @@ wildwatch-ai/
 1. Create a feature branch
 2. Make your changes
 3. Test locally
-4. Push to testing/staging environment for verification
+4. Push to staging environment for verification
 5. Create a pull request
 
 ## Deployment
 
 The application uses a staged deployment process:
 1. Local development
-2. Testing/Staging environment for verification
+2. Staging environment for verification
 3. Production deployment
 
 Ensure all environment variables are properly set in each environment.
