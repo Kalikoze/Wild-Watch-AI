@@ -43,14 +43,15 @@ export async function saveOnboardingData(data: OnboardingData) {
     const { data: roleData, error: roleQueryError } = await supabase
       .from('roles')
       .select('id')
-      .eq('name', data.role?.role || 'viewer')
+      .eq('name', data.role?.role)
       .single()
 
-    if (roleQueryError) throw roleQueryError
-    if (!roleData) throw new Error('Invalid role selected')
+    if (roleQueryError || !roleData) {
+      throw new Error('Failed to validate role selection')
+    }
 
-    const orgType = data.organization?.organizationType === 'other_specify' 
-      ? data.organization.otherType 
+    const orgType = data.organization?.organizationType === 'other_specify'
+      ? data.organization.otherType
       : data.organization?.organizationType
 
     const { error } = await supabase.rpc('handle_onboarding', {
@@ -61,23 +62,9 @@ export async function saveOnboardingData(data: OnboardingData) {
       p_role_id: roleData.id
     })
 
-    if (error?.code === 'P0001' || error?.code === '23505') {
-      if (error.message.includes('An organization with name') ||
-        error.message.includes('unique_organization_name')) {
-        throw new Error(`The organization name "${data.organization?.name}" is already taken. Please choose a different name.`);
-      }
-    }
-
     if (error) throw error
   } catch (error) {
-    console.error('Failed to save onboarding data:', error);
-    if (error instanceof Error && (
-      error.message.includes('The organization name') ||
-      ['Session expired. Please sign in again.',
-        'Invalid role selected'].includes(error.message)
-    )) {
-      throw error;
-    }
-    throw new Error('Unable to save your information. Please try again.');
+    console.error('Failed to save onboarding data:', error)
+    throw error instanceof Error ? error : new Error('Unable to save your information')
   }
 } 

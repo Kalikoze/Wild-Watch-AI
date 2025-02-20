@@ -1,4 +1,4 @@
--- Enable RLS on public tables
+-- Enable RLS
 ALTER TABLE "public"."profiles" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "public"."organizations" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "public"."organization_members" ENABLE ROW LEVEL SECURITY;
@@ -6,7 +6,7 @@ ALTER TABLE "public"."subscription_tiers" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "public"."token_transactions" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "public"."user_roles" ENABLE ROW LEVEL SECURITY;
 
--- Basic security policies for profiles table
+-- Profile policies
 CREATE POLICY "Users can view their own profile"
 ON "public"."profiles"
 FOR SELECT
@@ -17,7 +17,7 @@ ON "public"."profiles"
 FOR UPDATE
 USING (auth.uid() = id);
 
--- Organizations table policies
+-- Organization policies
 CREATE POLICY "Organization members can view their organizations"
 ON "public"."organizations"
 FOR SELECT
@@ -29,7 +29,21 @@ USING (
   )
 );
 
--- Organization members table policies
+CREATE POLICY "Organization admins can update organization details"
+ON "public"."organizations"
+FOR UPDATE
+USING (
+  EXISTS (
+    SELECT 1 FROM user_roles 
+    WHERE user_roles.organization_id = organizations.id 
+    AND user_roles.user_id = auth.uid()
+    AND user_roles.role_id IN (
+      SELECT id FROM roles WHERE name = 'admin'
+    )
+  )
+);
+
+-- Organization members policies
 CREATE POLICY "Users can view organizations they're members of"
 ON "public"."organization_members"
 FOR SELECT
@@ -48,22 +62,7 @@ ON "public"."token_transactions"
 FOR SELECT
 USING (user_id = auth.uid());
 
--- Add organization management policies
-CREATE POLICY "Organization admins can update organization details"
-ON "public"."organizations"
-FOR UPDATE
-USING (
-  EXISTS (
-    SELECT 1 FROM user_roles 
-    WHERE user_roles.organization_id = organizations.id 
-    AND user_roles.user_id = auth.uid()
-    AND user_roles.role_id IN (
-      SELECT id FROM roles WHERE name = 'admin'
-    )
-  )
-);
-
--- Protect role assignments
+-- User roles policies
 CREATE POLICY "Only admins can manage user roles"
 ON "public"."user_roles"
 FOR ALL
@@ -77,7 +76,26 @@ USING (
   )
 );
 
--- Grant specific access to authenticated users
+-- Add minimal INSERT policies needed for onboarding
+CREATE POLICY "Authenticated users can create organizations"
+ON "public"."organizations"
+FOR INSERT
+TO authenticated
+WITH CHECK (true);
+
+CREATE POLICY "Users can be added to organizations"
+ON "public"."organization_members"
+FOR INSERT
+TO authenticated
+WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can be assigned roles"
+ON "public"."user_roles"
+FOR INSERT
+TO authenticated
+WITH CHECK (auth.uid() = user_id);
+
+-- Grant permissions
 GRANT SELECT ON "public"."subscription_tiers" TO authenticated;
 GRANT SELECT, UPDATE ON "public"."profiles" TO authenticated;
-GRANT SELECT ON "public"."organizations" TO authenticated;
+GRANT SELECT ON "public"."organizations" TO authenticated; 

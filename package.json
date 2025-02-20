@@ -15,6 +15,8 @@
     "dev:supabase": "supabase start && next dev",
     "supabase:start": "supabase start",
     "supabase:stop": "supabase stop",
+    "db:reset": "supabase db reset",
+    "db:migration:new": "supabase migration new",
     "supabase:status": "supabase status",
     "mail:view": "open http://localhost:54324",
     "studio:view": "open http://localhost:54323",
