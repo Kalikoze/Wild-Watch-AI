@@ -16,5 +16,9 @@ export default async function AuthErrorPage() {
     }
   }
 
-  return <AuthErrorMessage message={getErrorMessage(errorType)} />
+  return (
+    <main className="min-h-screen bg-primary flex items-center justify-center" data-cy="auth-error-page">
+      <AuthErrorMessage message={getErrorMessage(errorType)} data-cy="auth-error-message" />
+    </main>
+  )
 } 
