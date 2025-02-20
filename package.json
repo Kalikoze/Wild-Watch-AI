@@ -18,7 +18,7 @@
     "supabase:status": "supabase status",
     "mail:view": "open http://localhost:54324",
     "studio:view": "open http://localhost:54323",
-    "db:push-test": "cp supabase/config.staging.toml supabase/config.toml && supabase db push && cp supabase/config.toml supabase/config.toml",
+    "db:push-staging": "cp supabase/config.staging.toml supabase/config.toml && supabase db push && cp supabase/config.toml supabase/config.toml",
     "db:push-prod": "cp supabase/config.prod.toml supabase/config.toml && supabase db push && cp supabase/config.toml supabase/config.toml"
   },
   "dependencies": {
