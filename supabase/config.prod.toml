@@ -4,6 +4,9 @@
 # working directory name when running `supabase init`.
 project_id = "Wild-Watch-AI"
 
+[remotes.production]
+project_id = "pepnuvoeeiikxxlomixs"
+
 [api]
 enabled = true
 # Port to use for the API URL.
@@ -114,9 +117,6 @@ minimum_password_length = 6
 # Passwords that do not meet the following requirements will be rejected as weak. Supported values
 # are: `letters_digits`, `lower_upper_letters_digits`, `lower_upper_letters_digits_symbols`
 password_requirements = ""
-# Add expiry times for flow state and code
-flow_state_expiry = 3600  # 1 hour in seconds
-code_expiry = 3600       # 1 hour in seconds
 
 [auth.email]
 # Allow/disallow new user signups via email to your project.
@@ -213,7 +213,6 @@ max_frequency = "5s"
 [auth.external.apple]
 enabled = false
 client_id = ""
-# DO NOT commit your OAuth provider secret to git. Use environment variable substitution instead:
 secret = "env(SUPABASE_AUTH_EXTERNAL_APPLE_SECRET)"
 # Overrides the default auth redirectUrl.
 redirect_uri = ""
