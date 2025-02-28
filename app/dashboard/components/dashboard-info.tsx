@@ -11,6 +11,15 @@ import {
 } from 'react-icons/ri';
 import Link from 'next/link';
 
+type ActivityType = 'upload' | 'download' | 'analysis';
+
+type Activity = {
+  id: string;
+  type: ActivityType;
+  itemName: string;
+  timestamp: string;
+};
+
 type DashboardInfoProps = {
   email: string;
   subscriptionTier?: string;
@@ -20,12 +29,7 @@ type DashboardInfoProps = {
     totalDuration: number;
     analyzedVideos: number;
   };
-  recentActivity?: {
-    id: string;
-    type: 'upload' | 'analysis' | 'download';
-    itemName: string;
-    timestamp: string;
-  }[];
+  recentActivity?: Activity[];
 }
 
 /**
@@ -45,12 +49,10 @@ export const DashboardInfo = ({
   const [activeTab, setActiveTab] = useState<'overview' | 'activity'>('overview');
 
   // Generate mock data if not provided
-  const mockActivity = recentActivity.length > 0 ? recentActivity : [
+  const mockActivity: Activity[] = recentActivity.length > 0 ? recentActivity : [
     { id: '1', type: 'upload', itemName: 'Yellowstone-Bears-May2023.mp4', timestamp: '2023-05-15T14:30:00Z' },
     { id: '2', type: 'analysis', itemName: 'Serengeti-Lions.mp4', timestamp: '2023-05-12T09:45:00Z' },
-    { id: '3', type: 'download', itemName: 'Bird-Migration-Report.pdf', timestamp: '2023-05-10T16:20:00Z' },
-    { id: '4', type: 'upload', itemName: 'Arctic-Foxes-Winter.mp4', timestamp: '2023-05-08T11:15:00Z' },
-    { id: '5', type: 'analysis', itemName: 'Rainforest-Monkeys.mp4', timestamp: '2023-05-05T13:50:00Z' },
+    { id: '3', type: 'download', itemName: 'Wildlife-Report-May2023.pdf', timestamp: '2023-05-10T16:20:00Z' },
   ];
 
   // Format timestamp to a more readable format
@@ -78,11 +80,16 @@ export const DashboardInfo = ({
   };
 
   // Get icon for activity type
-  const getActivityIcon = (type: 'upload' | 'analysis' | 'download') => {
+  const getActivityIcon = (type: ActivityType) => {
     switch (type) {
-      case 'upload': return <RiUploadCloud2Line className="text-accent-green text-xl" />;
-      case 'analysis': return <RiFileChartLine className="text-accent-orange text-xl" />;
-      case 'download': return <RiDownload2Line className="text-accent-gold text-xl" />;
+      case 'upload':
+        return <RiUploadCloud2Line className="text-accent-green text-xl" />;
+      case 'analysis':
+        return <RiFileChartLine className="text-accent-orange text-xl" />;
+      case 'download':
+        return <RiDownload2Line className="text-accent-gold text-xl" />;
+      default:
+        return null;
     }
   };
 
@@ -125,8 +132,8 @@ export const DashboardInfo = ({
           <button
             onClick={() => setActiveTab('overview')}
             className={`flex-1 py-3 text-center transition-colors ${activeTab === 'overview'
-                ? 'text-accent-green border-b-2 border-accent-green'
-                : 'text-neutral hover:text-neutral-light'
+              ? 'text-accent-green border-b-2 border-accent-green'
+              : 'text-neutral hover:text-neutral-light'
               }`}
           >
             Data Overview
@@ -134,8 +141,8 @@ export const DashboardInfo = ({
           <button
             onClick={() => setActiveTab('activity')}
             className={`flex-1 py-3 text-center transition-colors ${activeTab === 'activity'
-                ? 'text-accent-green border-b-2 border-accent-green'
-                : 'text-neutral hover:text-neutral-light'
+              ? 'text-accent-green border-b-2 border-accent-green'
+              : 'text-neutral hover:text-neutral-light'
               }`}
           >
             Recent Activity

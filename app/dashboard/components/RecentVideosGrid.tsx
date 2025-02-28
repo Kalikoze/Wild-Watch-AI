@@ -5,11 +5,11 @@ import Image from 'next/image';
 import { RiPlayCircleLine, RiTimeLine, RiFileChartLine, RiAlertLine } from 'react-icons/ri';
 import { useState } from 'react';
 
-type VideoItem = {
+export type VideoItem = {
   id: string;
   title: string;
   thumbnailUrl: string;
-  duration: number; // in seconds
+  duration: number; 
   uploadDate: string;
   isAnalyzed: boolean;
   animalCount?: number;

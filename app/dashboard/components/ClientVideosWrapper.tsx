@@ -2,19 +2,17 @@
 
 import { RecentVideosGrid, generateMockVideos } from './RecentVideosGrid';
 import { useState, useEffect } from 'react';
+import type { VideoItem } from './RecentVideosGrid';
 
 export const ClientVideosWrapper = () => {
-  // Start with empty videos array
-  const [videos, setVideos] = useState([]);
+  const [videos, setVideos] = useState<VideoItem[]>([]);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    // This code only runs on the client after hydration
     setIsClient(true);
     setVideos(generateMockVideos());
   }, []);
 
-  // Render empty/placeholder state before client hydration
   if (!isClient) {
     return (
       <div className="bg-primary-light rounded-lg p-6 shadow-md">

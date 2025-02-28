@@ -101,7 +101,7 @@ export const AnimalActivityChart = ({
     ctx.lineTo(rect.width - padding, height - bottomPadding);
     ctx.stroke();
 
-  }, [data, height, title]);
+  }, [data, height, title, maxValue]);
 
   return (
     <div className="bg-primary-light rounded-lg p-6 shadow-md w-full">

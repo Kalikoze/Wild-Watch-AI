@@ -3,13 +3,19 @@
 import { AnimalActivityChart, generateMockAnimalData } from './AnimalActivityChart';
 import { useState, useEffect } from 'react';
 
+type ChartDataItem = {
+  label: string;
+  count: number;
+  color: string;
+};
+
 type ClientChartWrapperProps = {
   chartType: 'wildlife' | 'uploads';
   title: string;
 };
 
 export const ClientChartWrapper = ({ chartType, title }: ClientChartWrapperProps) => {
-  const [chartData, setChartData] = useState([]);
+  const [chartData, setChartData] = useState<ChartDataItem[]>([]);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
