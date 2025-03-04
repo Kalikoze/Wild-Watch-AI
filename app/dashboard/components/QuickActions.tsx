@@ -1,6 +1,5 @@
 'use client';
 
-import Button from '@/app/components/common/Button';
 import {
   RiUploadCloud2Line,
   RiBarChartBoxLine,

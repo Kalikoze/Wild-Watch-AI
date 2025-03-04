@@ -43,7 +43,6 @@ const Dashboard = async () => {
         {/* Top row: QuickInfo */}
         <div className="col-span-12">
           <QuickInfo
-            email={profile.email}
             subscriptionTier={organization?.subscription_tier}
             aiRequestsCount={profile.ai_requests_count}
             videoData={mockVideoData}

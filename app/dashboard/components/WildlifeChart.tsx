@@ -33,7 +33,12 @@ const speciesColors = {
 
 export const WildlifeChart = ({ data, title }: WildlifeChartProps) => {
   // Process data to group by species
-  const processedData = data.reduce((acc: any[], curr) => {
+  interface ProcessedDataPoint {
+    timestamp: string;
+    [species: string]: string | number;
+  }
+
+  const processedData = data.reduce((acc: ProcessedDataPoint[], curr) => {
     const existingPoint = acc.find(point => point.timestamp === curr.timestamp);
     if (existingPoint) {
       existingPoint[curr.species] = curr.count;

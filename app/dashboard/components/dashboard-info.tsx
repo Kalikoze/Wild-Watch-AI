@@ -7,7 +7,6 @@ import {
   RiTimerLine,
   RiUploadCloud2Line,
   RiDownload2Line,
-  RiAlertLine,
   RiBarChartBoxLine
 } from 'react-icons/ri';
 import Button from '@/app/components/common/Button';
@@ -23,7 +22,6 @@ type Activity = {
 };
 
 type DashboardInfoProps = {
-  email: string;
   subscriptionTier?: string;
   aiRequestsCount: number;
   videoData?: {
@@ -58,7 +56,6 @@ const getActivityIcon = (type: ActivityType) => {
 };
 
 export const DashboardInfo = ({
-  email,
   subscriptionTier = 'Free',
   aiRequestsCount = 0,
   videoData = {

@@ -128,7 +128,17 @@ export const AnimalBehaviorChart = ({ data, title }: AnimalBehaviorChartProps) =
     setSelectedBehavior(null);
   };
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  interface CustomTooltipProps {
+    active?: boolean;
+    payload?: Array<{
+      value: number;
+      name: string;
+      color: string;
+    }>;
+    label?: string;
+  }
+
+  const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-primary-dark/95 backdrop-blur-sm px-3 py-2 border border-neutral-light/10 shadow-lg rounded-md text-neutral-light">

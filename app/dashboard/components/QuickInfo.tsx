@@ -1,6 +1,6 @@
 'use client';
 
-import { VideoData } from '@/types/wildlife';
+import { VideoData } from '@/app/types/wildlife';
 import {
   RiVideoLine,
   RiFileChartLine,
@@ -12,7 +12,6 @@ import {
 import Tooltip from '@/app/components/common/Tooltip';
 
 type QuickInfoProps = {
-  email: string;
   subscriptionTier?: string;
   aiRequestsCount: number;
   videoData: VideoData;
@@ -23,7 +22,6 @@ const analysisTooltip = "Progress of AI behavior analysis across your video coll
 const creditsTooltip = (tier: string) => `AI processing credits for behavior analysis. Your ${tier} plan includes a monthly allocation with premium features.`;
 
 export const QuickInfo = ({
-  email,
   subscriptionTier = 'Free',
   aiRequestsCount,
   videoData,
