@@ -24,6 +24,7 @@
     "db:push-prod": "cp supabase/config.prod.toml supabase/config.toml && supabase db push && cp supabase/config.toml supabase/config.toml"
   },
   "dependencies": {
+    "@radix-ui/react-tooltip": "^1.1.8",
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.47.16",
     "framer-motion": "^11.15.0",
@@ -33,6 +34,7 @@
     "react-hook-form": "^7.54.2",
     "react-hot-toast": "^2.5.1",
     "react-icons": "^5.4.0",
+    "recharts": "^2.15.1",
     "sharp": "^0.33.5"
   },
   "devDependencies": {
