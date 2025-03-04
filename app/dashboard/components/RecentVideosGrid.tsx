@@ -2,14 +2,14 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { RiPlayCircleLine, RiTimeLine, RiFileChartLine, RiAlertLine } from 'react-icons/ri';
+import { RiPlayCircleLine, RiTimeLine, RiFileChartLine, RiAlertLine, RiArrowRightLine } from 'react-icons/ri';
 import { useState } from 'react';
 
 export type VideoItem = {
   id: string;
   title: string;
   thumbnailUrl: string;
-  duration: number; 
+  duration: number;
   uploadDate: string;
   isAnalyzed: boolean;
   animalCount?: number;
@@ -54,13 +54,13 @@ export const RecentVideosGrid = ({
 
   return (
     <div className="bg-primary-light rounded-lg p-6 shadow-md">
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-semibold text-neutral-light">Recent Videos</h2>
         <Link
           href="/dashboard/videos"
-          className="text-accent-green hover:text-accent-green-light text-sm"
+          className="text-accent-green hover:text-accent-green-light text-sm font-medium flex items-center gap-1 group"
         >
-          View All
+          View All <RiArrowRightLine className="transition-transform group-hover:translate-x-1" />
         </Link>
       </div>
 
@@ -75,14 +75,15 @@ export const RecentVideosGrid = ({
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {videos.slice(0, maxDisplay).map((video) => (
-            <div
+            <Link
               key={video.id}
-              className="bg-primary rounded-lg overflow-hidden border border-neutral-light/10 hover:border-accent-green/60 transition-colors"
+              href={`/dashboard/videos/${video.id}`}
+              className="group"
             >
-              <Link href={`/dashboard/videos/${video.id}`} className="block relative">
-                <div className="aspect-video relative group">
+              <div className="bg-primary rounded-lg overflow-hidden border border-neutral-light/10 hover:border-accent-green hover:shadow-md transition duration-200 h-full flex flex-col">
+                <div className="aspect-video relative overflow-hidden">
                   {imageErrors[video.id] ? (
                     <div className="absolute inset-0 bg-primary-dark flex flex-col items-center justify-center text-neutral">
                       <RiAlertLine className="text-3xl mb-2" />
@@ -93,36 +94,38 @@ export const RecentVideosGrid = ({
                       src={video.thumbnailUrl}
                       alt={video.title}
                       fill
-                      className="object-cover"
+                      className="object-cover transform transition-transform duration-300 group-hover:scale-105"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       onError={() => handleImageError(video.id)}
                     />
                   )}
-                  <div className="absolute inset-0 bg-primary/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <RiPlayCircleLine className="text-neutral-light text-4xl" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <RiPlayCircleLine className="text-neutral-light text-5xl" />
                   </div>
                   <div className="absolute bottom-2 right-2 bg-primary-dark/80 text-neutral-light text-xs px-2 py-1 rounded-md flex items-center">
                     <RiTimeLine className="mr-1" />
                     {formatDuration(video.duration)}
                   </div>
                   {video.isAnalyzed && (
-                    <div className="absolute top-2 left-2 bg-accent-green/80 text-neutral-light text-xs px-2 py-1 rounded-md flex items-center">
+                    <div className="absolute top-2 left-2 bg-accent-green/90 text-neutral-light text-xs px-2 py-1 rounded-md flex items-center">
                       <RiFileChartLine className="mr-1" />
                       Analyzed
                     </div>
                   )}
                 </div>
-              </Link>
-              <div className="p-3">
-                <h3 className="text-neutral-light font-medium text-sm line-clamp-1">{video.title}</h3>
-                <div className="flex justify-between items-center mt-2 text-xs text-neutral">
-                  <span>{formatDate(video.uploadDate)}</span>
-                  {video.animalCount !== undefined && (
-                    <span>{video.animalCount} animals</span>
-                  )}
+                <div className="p-4 flex flex-col flex-grow">
+                  <h3 className="text-neutral-light font-medium text-base mb-2 line-clamp-1 group-hover:text-accent-green transition-colors">
+                    {video.title}
+                  </h3>
+                  <div className="flex justify-between items-center mt-auto text-xs text-neutral">
+                    <span>{formatDate(video.uploadDate)}</span>
+                    {video.animalCount !== undefined && (
+                      <span className="px-2 py-1 bg-primary-dark rounded-full">{video.animalCount} animals</span>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}
@@ -131,7 +134,7 @@ export const RecentVideosGrid = ({
 };
 
 // Generate mock data for demo purposes
-export const generateMockVideos = (count = 6): VideoItem[] => {
+export const generateMockVideos = (count = 8): VideoItem[] => {
   const animalTypes = ['Bears', 'Wolves', 'Deer', 'Birds', 'Foxes', 'Elephants', 'Lions'];
   const locations = ['Yellowstone', 'Serengeti', 'Amazon', 'Arctic', 'Borneo', 'Galapagos'];
 
