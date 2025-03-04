@@ -15,8 +15,6 @@ export default async function DashboardLayout({
     return redirect('/signup');
   }
 
-  // You'd fetch this from your database in a real implementation
-  // For now, we'll use the email domain to determine if user is part of an organization
   const isOrganization = user.email?.includes('@org') || false;
 
   return (
@@ -30,7 +28,7 @@ export default async function DashboardLayout({
 
       <div className="flex-1 flex flex-col ml-64">
         <AppNav />
-        <main className="flex-1 overflow-y-auto pt-16 px-8">
+        <main className="flex-1 overflow-y-auto pt-24 px-12 py-12">
           {children}
         </main>
       </div>
