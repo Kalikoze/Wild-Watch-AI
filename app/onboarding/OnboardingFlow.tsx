@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { WelcomeStep } from '@/app/components/onboarding/steps/WelcomeStep';
-import { OrganizationStep } from '@/app/components/onboarding/steps/OrganizationStep';
-import { RoleStep } from '@/app/components/onboarding/steps/RoleStep';
-import { PlanStep, PlanData } from '@/app/components/onboarding/steps/PlanStep';
+import { WelcomeStep } from '@/app/onboarding/components/steps/WelcomeStep';
+import { OrganizationStep } from '@/app/onboarding/components/steps/OrganizationStep';
+import { RoleStep } from '@/app/onboarding/components/steps/RoleStep';
+import { PlanStep, PlanData } from '@/app/onboarding/components/steps/PlanStep';
 import { useRouter } from 'next/navigation';
 import { FiCheck } from 'react-icons/fi';
 import { saveOnboardingData, updateOnboardingStatus } from '@/app/utils/onboarding';

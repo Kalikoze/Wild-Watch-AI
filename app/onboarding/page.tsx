@@ -1,6 +1,6 @@
 'use client';
 
-import { OnboardingFlow } from '@/app/components/onboarding/OnboardingFlow';
+import { OnboardingFlow } from '@/app/onboarding/OnboardingFlow';
 
 export default function OnboardingPage() {
   return (
