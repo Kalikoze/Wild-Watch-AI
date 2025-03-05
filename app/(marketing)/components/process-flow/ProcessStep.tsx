@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { FaUpload, FaCog, FaChartBar, FaBell, FaLightbulb } from 'react-icons/fa';
-import { ProcessStep as ProcessStepType } from '@/lib/data/process-steps';
+import { ProcessStep as ProcessStepType } from '@/app/(marketing)/data/process-steps';
 
 const iconMap = {
   upload: FaUpload,

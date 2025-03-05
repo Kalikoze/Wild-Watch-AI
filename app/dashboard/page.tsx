@@ -1,7 +1,7 @@
 import React from 'react'
 import { redirect } from 'next/navigation'
 import { createServer } from '@/utils/supabase/server'
-import { fetchDashboardData } from '@/lib/services/dashboard-service'
+import { fetchDashboardData } from '@/app/dashboard/services/dashboard-service'
 import { QuickInfo } from './components/QuickInfo'
 import { QuickActions } from './components/QuickActions'
 import { ClientVideosWrapper } from './components/ClientVideosWrapper'

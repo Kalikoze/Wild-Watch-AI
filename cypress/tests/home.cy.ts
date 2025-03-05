@@ -1,7 +1,7 @@
-import { features } from '@/lib/data/features'
-import { processSteps } from '@/lib/data/process-steps'
-import { useCases } from '@/lib/data/useCases'
-import { faqs } from '@/lib/data/faqs'
+import { features } from '@/app/(marketing)/data/features'
+import { processSteps } from '@/app/(marketing)/data/process-steps'
+import { useCases } from '@/app/(marketing)/data/useCases'
+import { faqs } from '@/app/(marketing)/data/faqs'
 describe('Home Page', () => {
   beforeEach(() => {
     cy.visit('/')

@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import ProcessStep from '@/app/(marketing)/components/process-flow/ProcessStep';
 import BackgroundEffects from '@/app/components/common/BackgroundEffects';
-import { processSteps } from '@/lib/data/process-steps';
+import { processSteps } from '@/app/(marketing)/data/process-steps';
 
 export default function ProcessFlow() {
   return (

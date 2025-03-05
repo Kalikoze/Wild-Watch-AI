@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { faqs } from '@/lib/data/faqs';
+import { faqs } from '@/app/(marketing)/data/faqs';
 import FAQItem from './FAQItem';
 import BackgroundEffects from '@/app/components/common/BackgroundEffects';
 

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { plans } from '@/lib/data/pricing';
+import { plans } from '@/app/(marketing)/data/pricing';
 import Button from '@/app/components/common/Button';
 import { HiArrowLeft, HiArrowRight } from 'react-icons/hi';
 
@@ -115,8 +115,8 @@ export function PlanStep({
                 <button
                   onClick={() => setPlanData(d => ({ ...d, billingCycle: 'monthly' }))}
                   className={`flex-1 px-4 py-3 rounded-lg text-sm font-medium transition-all ${planData.billingCycle === 'monthly'
-                      ? 'bg-accent-green text-neutral-light'
-                      : 'text-neutral hover:text-neutral-light'
+                    ? 'bg-accent-green text-neutral-light'
+                    : 'text-neutral hover:text-neutral-light'
                     }`}
                 >
                   Monthly
@@ -124,8 +124,8 @@ export function PlanStep({
                 <button
                   onClick={() => setPlanData(d => ({ ...d, billingCycle: 'annual' }))}
                   className={`flex-1 px-4 py-3 rounded-lg text-sm font-medium transition-all ${planData.billingCycle === 'annual'
-                      ? 'bg-accent-green text-neutral-light'
-                      : 'text-neutral hover:text-neutral-light'
+                    ? 'bg-accent-green text-neutral-light'
+                    : 'text-neutral hover:text-neutral-light'
                     }`}
                 >
                   Annual

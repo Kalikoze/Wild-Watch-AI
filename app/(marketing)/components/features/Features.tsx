@@ -1,4 +1,4 @@
-import { features } from '@/lib/data/features';
+import { features } from '@/app/(marketing)/data/features';
 import FeatureRow from '@/app/(marketing)/components/features/FeatureRow';
 import FeatureHeader from '@/app/(marketing)/components/features/FeatureHeader';
 import BackgroundEffects from '@/app/components/common/BackgroundEffects';
