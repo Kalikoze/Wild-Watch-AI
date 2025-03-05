@@ -123,7 +123,7 @@ export function RecentActivity({ activities, maxDisplay = 5 }: RecentActivityPro
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-start">
                       <p className="text-neutral-light text-sm font-medium truncate pr-2 group-hover:text-accent-green transition-colors">
-                        {activity.title || activity.itemName || ''}
+                        {activity.title || ''}
                       </p>
                       <div className="flex items-center">
                         <span className="text-neutral text-xs whitespace-nowrap">

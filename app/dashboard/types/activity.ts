@@ -15,13 +15,33 @@ export type Activity = {
   type: ActivityType;
   title?: string;
   description?: string;
-  itemName?: string;  // For backward compatibility
   timestamp: string;
   details?: {
+    // Common fields
     species?: string;
     confidence?: number;
     location?: string;
-    [key: string]: any;
+
+    // For video processing
+    videoId?: string;
+    duration?: number;
+    processedFrames?: number;
+
+    // For alerts and system events
+    severity?: 'low' | 'medium' | 'high';
+    status?: 'success' | 'failed' | 'in-progress';
+    message?: string;
+
+    // For file operations
+    fileName?: string;
+    fileSize?: number;
+    fileType?: string;
+
+    // For behavior tracking
+    animalId?: string;
+    behaviorType?: string;
+    previousValue?: string;
+    newValue?: string;
   };
 };
 
@@ -38,7 +58,6 @@ export type DashboardInfoProps = {
     totalDuration: number;
   };
   activities?: Activity[];
-  recentActivity?: Activity[];  // For backward compatibility
 };
 
 /**

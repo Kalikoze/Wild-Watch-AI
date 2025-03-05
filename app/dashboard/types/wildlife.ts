@@ -20,7 +20,7 @@ export type AnimalBehaviorDataPoint = {
 export type Activity = {
   id: string;
   type: ActivityType;
-  itemName: string;
+  title: string;
   timestamp: string;
 };
 

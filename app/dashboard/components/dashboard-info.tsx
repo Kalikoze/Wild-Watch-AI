@@ -53,12 +53,12 @@ export const DashboardInfo = ({
     analyzedVideos: 0,
     pendingAnalysis: 0
   },
-  recentActivity = []
+  activities = []
 }: DashboardInfoProps) => {
-  const mockActivity: Activity[] = recentActivity.length > 0 ? recentActivity : [
-    { id: '1', type: 'upload', itemName: 'Yellowstone-Bears-May2023.mp4', timestamp: '2023-05-15T14:30:00Z' },
-    { id: '2', type: 'analysis', itemName: 'Serengeti-Lions.mp4', timestamp: '2023-05-12T09:45:00Z' },
-    { id: '3', type: 'download', itemName: 'Wildlife-Report-May2023.pdf', timestamp: '2023-05-10T16:20:00Z' },
+  const mockActivity: Activity[] = activities.length > 0 ? activities : [
+    { id: '1', type: 'upload', title: 'Yellowstone-Bears-May2023.mp4', timestamp: '2023-05-15T14:30:00Z' },
+    { id: '2', type: 'analysis', title: 'Serengeti-Lions.mp4', timestamp: '2023-05-12T09:45:00Z' },
+    { id: '3', type: 'download', title: 'Wildlife-Report-May2023.pdf', timestamp: '2023-05-10T16:20:00Z' },
   ];
 
   return (
@@ -168,7 +168,7 @@ export const DashboardInfo = ({
             <div key={activity.id} className="flex items-center bg-primary rounded-lg p-3">
               {getActivityIcon(activity.type)}
               <div className="ml-3 flex-1">
-                <p className="text-neutral-light text-sm font-medium truncate">{activity.itemName || activity.title}</p>
+                <p className="text-neutral-light text-sm font-medium truncate">{activity.title}</p>
                 <p className="text-neutral text-xs">
                   {activity.type === 'upload' && 'Video uploaded'}
                   {activity.type === 'analysis' && 'Analysis completed'}

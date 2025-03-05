@@ -56,31 +56,31 @@ export const mockActivity: Activity[] = [
   {
     id: '1',
     type: 'upload',
-    itemName: 'Elephant Enclosure - Morning Routine.mp4',
+    title: 'Elephant Enclosure - Morning Routine.mp4',
     timestamp: '2024-03-15T14:30:00Z'
   },
   {
     id: '2',
     type: 'analysis',
-    itemName: 'Lion Pride - Feeding Time.mp4',
+    title: 'Lion Pride - Feeding Time.mp4',
     timestamp: '2024-03-14T09:45:00Z'
   },
   {
     id: '3',
     type: 'behavior-edit',
-    itemName: 'Tiger Cubs - Play Session.mp4',
+    title: 'Tiger Cubs - Play Session.mp4',
     timestamp: '2024-03-13T16:20:00Z'
   },
   {
     id: '4',
     type: 'upload',
-    itemName: 'Giraffe Habitat - Afternoon.mp4',
+    title: 'Giraffe Habitat - Afternoon.mp4',
     timestamp: '2024-03-12T11:15:00Z'
   },
   {
     id: '5',
     type: 'analysis',
-    itemName: 'Penguin Colony - Feeding.mp4',
+    title: 'Penguin Colony - Feeding.mp4',
     timestamp: '2024-03-11T10:30:00Z'
   },
 ]; 
