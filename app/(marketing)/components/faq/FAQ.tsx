@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { faqs } from '@/lib/data/faqs';
 import FAQItem from './FAQItem';
-import BackgroundEffects from '../common/BackgroundEffects';
+import BackgroundEffects from '@/app/components/common/BackgroundEffects';
 
 export default function FAQ() {
   const [leftColumnOpen, setLeftColumnOpen] = useState<number | null>(null);

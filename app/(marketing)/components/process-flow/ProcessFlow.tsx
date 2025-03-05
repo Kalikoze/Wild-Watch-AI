@@ -1,8 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import ProcessStep from './ProcessStep';
-import BackgroundEffects from '../common/BackgroundEffects';
+import ProcessStep from '@/app/(marketing)/components/process-flow/ProcessStep';
+import BackgroundEffects from '@/app/components/common/BackgroundEffects';
 import { processSteps } from '@/lib/data/process-steps';
 
 export default function ProcessFlow() {

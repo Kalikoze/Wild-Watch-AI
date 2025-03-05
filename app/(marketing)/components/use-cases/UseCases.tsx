@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useCases } from '@/lib/data/useCases';
-import UseCaseCard from '@/app/components/use-cases/UseCaseCard';
+import UseCaseCard from '@/app/(marketing)/components/use-cases/UseCaseCard';
 import BackgroundEffects from '@/app/components/common/BackgroundEffects';
 
 export default function UseCases() {
