@@ -1,9 +1,9 @@
-import Hero from '@/app/components/Hero'
-import Features from '@/app/components/features/Features'
-import ProcessFlow from '@/app/components/process-flow/ProcessFlow'
-import UseCases from '@/app/components/use-cases/UseCases'
-import FAQ from '@/app/components/faq/FAQ'
-import FinalCTA from '@/app/components/FinalCTA'
+import Hero from '@/app/(marketing)/components/Hero'
+import Features from '@/app/(marketing)/components/features/Features'
+import ProcessFlow from '@/app/(marketing)/components/process-flow/ProcessFlow'
+import UseCases from '@/app/(marketing)/components/use-cases/UseCases'
+import FAQ from '@/app/(marketing)/components/faq/FAQ'
+import FinalCTA from '@/app/(marketing)/components/FinalCTA'
 
 export default function Home() {
   return (

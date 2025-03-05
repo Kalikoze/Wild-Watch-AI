@@ -4,37 +4,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { RiPlayCircleLine, RiTimeLine, RiFileChartLine, RiAlertLine, RiArrowRightLine } from 'react-icons/ri';
 import { useState } from 'react';
+import { VideoItem, RecentVideosGridProps } from '@/app/dashboard/types';
 
-export type VideoItem = {
-  id: string;
-  title: string;
-  thumbnailUrl: string;
-  duration: number;
-  uploadDate: string;
-  isAnalyzed: boolean;
-  animalCount?: number;
-};
-
-type RecentVideosGridProps = {
-  videos: VideoItem[];
-  maxDisplay?: number;
-};
-
-export const RecentVideosGrid = ({
-  videos,
-  maxDisplay = 4
-}: RecentVideosGridProps) => {
-  // State to track image load errors
+export const RecentVideosGrid: React.FC<RecentVideosGridProps> = ({ videos, maxDisplay = 8 }) => {
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
 
-  // Function to format seconds to MM:SS
-  const formatDuration = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  const formatDuration = (durationInSeconds: number): string => {
+    const minutes = Math.floor(durationInSeconds / 60);
+    const seconds = Math.floor(durationInSeconds % 60);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  // Function to format date
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
@@ -44,7 +24,6 @@ export const RecentVideosGrid = ({
     });
   };
 
-  // Handle image error
   const handleImageError = (videoId: string) => {
     setImageErrors(prev => ({
       ...prev,
@@ -133,12 +112,10 @@ export const RecentVideosGrid = ({
   );
 };
 
-// Generate mock data for demo purposes
 export const generateMockVideos = (count = 8): VideoItem[] => {
   const animalTypes = ['Bears', 'Wolves', 'Deer', 'Birds', 'Foxes', 'Elephants', 'Lions'];
   const locations = ['Yellowstone', 'Serengeti', 'Amazon', 'Arctic', 'Borneo', 'Galapagos'];
 
-  // More reliable placeholder image sources
   const placeholderImages = [
     'https://images.unsplash.com/photo-1545066836-77c58e1045c9?q=80&w=800', // Bear
     'https://images.unsplash.com/photo-1591824438708-ce405f36ba3d?q=80&w=800', // Wolf
@@ -153,17 +130,16 @@ export const generateMockVideos = (count = 8): VideoItem[] => {
     const animalIndex = Math.floor(Math.random() * animalTypes.length);
     const animalType = animalTypes[animalIndex];
     const location = locations[Math.floor(Math.random() * locations.length)];
-    const isAnalyzed = Math.random() > 0.3; // 70% chance to be analyzed
+    const isAnalyzed = Math.random() > 0.3;
 
-    // Subtract random days from current date (1-60 days)
     const date = new Date();
     date.setDate(date.getDate() - Math.floor(Math.random() * 60) - 1);
 
     return {
       id: `video-${i + 1}`,
       title: `${location} ${animalType} - Wildlife Study`,
-      thumbnailUrl: placeholderImages[animalIndex], // Use pre-selected reliable images
-      duration: Math.floor(Math.random() * 600) + 60, // 1-10 minutes
+      thumbnailUrl: placeholderImages[animalIndex],
+      duration: Math.floor(Math.random() * 600) + 60,
       uploadDate: date.toISOString(),
       isAnalyzed,
       animalCount: isAnalyzed ? Math.floor(Math.random() * 20) + 1 : undefined,

@@ -7,51 +7,40 @@ import {
   RiTimerLine,
   RiUploadCloud2Line,
   RiDownload2Line,
-  RiBarChartBoxLine
+  RiBarChartBoxLine,
+  RiAlertLine,
+  RiInformationLine,
 } from 'react-icons/ri';
 import Button from '@/app/components/common/Button';
 import Link from 'next/link';
+import { Activity, ActivityType, DashboardInfoProps } from '@/app/dashboard/types';
 
-type ActivityType = 'upload' | 'download' | 'analysis';
-
-type Activity = {
-  id: string;
-  type: ActivityType;
-  itemName: string;
-  timestamp: string;
-};
-
-type DashboardInfoProps = {
-  subscriptionTier?: string;
-  aiRequestsCount: number;
-  videoData?: {
-    totalVideos: number;
-    totalDuration: number;
-    analyzedVideos: number;
-  };
-  recentActivity?: Activity[];
-}
-
-const formatDate = (dateString: string) => {
+const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
+  return new Intl.DateTimeFormat('en-US', {
     month: 'short',
     day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  });
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true
+  }).format(date);
 };
 
 const getActivityIcon = (type: ActivityType) => {
   switch (type) {
-    case 'upload':
-      return <RiUploadCloud2Line className="text-accent-green text-xl" />;
+    case 'detection':
+      return <RiVideoLine className="text-accent-green text-xl" />;
     case 'analysis':
       return <RiFileChartLine className="text-accent-orange text-xl" />;
+    case 'alert':
+      return <RiAlertLine className="text-accent-gold text-xl" />;
+    case 'upload':
+      return <RiUploadCloud2Line className="text-accent-green text-xl" />;
     case 'download':
       return <RiDownload2Line className="text-accent-gold text-xl" />;
+    case 'system':
     default:
-      return null;
+      return <RiInformationLine className="text-neutral text-xl" />;
   }
 };
 
@@ -61,14 +50,15 @@ export const DashboardInfo = ({
   videoData = {
     totalVideos: 0,
     totalDuration: 0,
-    analyzedVideos: 0
+    analyzedVideos: 0,
+    pendingAnalysis: 0
   },
-  recentActivity = []
+  activities = []
 }: DashboardInfoProps) => {
-  const mockActivity: Activity[] = recentActivity.length > 0 ? recentActivity : [
-    { id: '1', type: 'upload', itemName: 'Yellowstone-Bears-May2023.mp4', timestamp: '2023-05-15T14:30:00Z' },
-    { id: '2', type: 'analysis', itemName: 'Serengeti-Lions.mp4', timestamp: '2023-05-12T09:45:00Z' },
-    { id: '3', type: 'download', itemName: 'Wildlife-Report-May2023.pdf', timestamp: '2023-05-10T16:20:00Z' },
+  const mockActivity: Activity[] = activities.length > 0 ? activities : [
+    { id: '1', type: 'upload', title: 'Yellowstone-Bears-May2023.mp4', timestamp: '2023-05-15T14:30:00Z' },
+    { id: '2', type: 'analysis', title: 'Serengeti-Lions.mp4', timestamp: '2023-05-12T09:45:00Z' },
+    { id: '3', type: 'download', title: 'Wildlife-Report-May2023.pdf', timestamp: '2023-05-10T16:20:00Z' },
   ];
 
   return (
@@ -178,11 +168,12 @@ export const DashboardInfo = ({
             <div key={activity.id} className="flex items-center bg-primary rounded-lg p-3">
               {getActivityIcon(activity.type)}
               <div className="ml-3 flex-1">
-                <p className="text-neutral-light text-sm font-medium truncate">{activity.itemName}</p>
+                <p className="text-neutral-light text-sm font-medium truncate">{activity.title}</p>
                 <p className="text-neutral text-xs">
                   {activity.type === 'upload' && 'Video uploaded'}
                   {activity.type === 'analysis' && 'Analysis completed'}
                   {activity.type === 'download' && 'Report downloaded'}
+                  {activity.description}
                 </p>
               </div>
               <span className="text-neutral text-xs">{formatDate(activity.timestamp)}</span>

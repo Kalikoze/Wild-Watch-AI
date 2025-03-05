@@ -1,6 +1,6 @@
-import { features } from '@/lib/data/features';
-import FeatureRow from '@/app/components/features/FeatureRow';
-import FeatureHeader from '@/app/components/features/FeatureHeader';
+import { features } from '@/app/(marketing)/data/features';
+import FeatureRow from '@/app/(marketing)/components/features/FeatureRow';
+import FeatureHeader from '@/app/(marketing)/components/features/FeatureHeader';
 import BackgroundEffects from '@/app/components/common/BackgroundEffects';
 export default function Features() {
   return (

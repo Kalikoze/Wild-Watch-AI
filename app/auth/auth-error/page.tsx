@@ -1,11 +1,12 @@
-import AuthErrorMessage from '@/app/components/AuthErrorMessage'
+import AuthErrorMessage from '@/app/auth/components/AuthErrorMessage'
 import { headers } from 'next/headers'
+import { AuthErrorType } from '@/app/auth/types'
 
 export default async function AuthErrorPage() {
   const headersList = await headers()
-  const errorType = headersList.get('x-auth-error-type')
+  const errorType = headersList.get('x-auth-error-type') as AuthErrorType | null
 
-  const getErrorMessage = (type: string | null) => {
+  const getErrorMessage = (type: AuthErrorType | null) => {
     switch (type) {
       case 'expired':
         return "This login link has expired or has already been used. Please request a new one."

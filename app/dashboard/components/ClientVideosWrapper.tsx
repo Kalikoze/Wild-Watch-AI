@@ -1,17 +1,17 @@
 'use client';
 
-import { RecentVideosGrid, generateMockVideos } from './RecentVideosGrid';
 import { useState, useEffect } from 'react';
-import type { VideoItem } from './RecentVideosGrid';
+import { RecentVideosGrid, generateMockVideos } from '@/app/dashboard/components/RecentVideosGrid';
+import { VideoItem } from '@/app/dashboard/types';
 import { RiArrowRightLine } from 'react-icons/ri';
 
 export const ClientVideosWrapper = () => {
-  const [videos, setVideos] = useState<VideoItem[]>([]);
   const [isClient, setIsClient] = useState(false);
+  const [videoData, setVideoData] = useState<VideoItem[]>([]);
 
   useEffect(() => {
     setIsClient(true);
-    setVideos(generateMockVideos());
+    setVideoData(generateMockVideos());
   }, []);
 
   if (!isClient) {
@@ -41,5 +41,5 @@ export const ClientVideosWrapper = () => {
     );
   }
 
-  return <RecentVideosGrid videos={videos} />;
+  return <RecentVideosGrid videos={videoData} />;
 }; 

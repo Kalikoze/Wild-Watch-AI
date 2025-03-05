@@ -1,44 +1,21 @@
 'use client';
 
-import { AnimalActivityChart, generateMockAnimalData } from './AnimalActivityChart';
 import { useState, useEffect } from 'react';
-
-type ChartDataItem = {
-  label: string;
-  count: number;
-  color: string;
-};
-
-type ClientChartWrapperProps = {
-  chartType: 'wildlife' | 'uploads';
-  title: string;
-};
+import { ChartDataItem, ClientChartWrapperProps } from '@/app/dashboard/types';
+import { AnimalActivityChart, generateMockAnimalData } from '@/app/dashboard/components/AnimalActivityChart';
 
 export const ClientChartWrapper = ({ chartType, title }: ClientChartWrapperProps) => {
   const [chartData, setChartData] = useState<ChartDataItem[]>([]);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    // This code only runs on the client after hydration
     setIsClient(true);
 
-    // Generate the appropriate data based on chart type
-    const data = chartType === 'wildlife'
-      ? generateMockAnimalData()
-      : [
-        { label: 'Mon', count: 8, color: '#28A745' },
-        { label: 'Tue', count: 12, color: '#34CE57' },
-        { label: 'Wed', count: 7, color: '#28A745' },
-        { label: 'Thu', count: 14, color: '#34CE57' },
-        { label: 'Fri', count: 10, color: '#28A745' },
-        { label: 'Sat', count: 20, color: '#34CE57' },
-        { label: 'Sun', count: 15, color: '#28A745' },
-      ];
+    const data = generateMockAnimalData()
 
     setChartData(data);
   }, [chartType]);
 
-  // Render placeholder before client hydration
   if (!isClient) {
     return (
       <div className="bg-primary-light rounded-lg p-6 shadow-md w-full">

@@ -10,19 +10,9 @@ import {
   ResponsiveContainer,
   Legend
 } from 'recharts';
+import { WildlifeChartProps, ProcessedDataPoint, WildlifeDataPoint } from '@/app/dashboard/types';
 
-type WildlifeDataPoint = {
-  timestamp: string;
-  species: string;
-  count: number;
-};
-
-type WildlifeChartProps = {
-  data: WildlifeDataPoint[];
-  title: string;
-};
-
-const speciesColors = {
+const speciesColors: Record<string, string> = {
   'Bears': '#28A745',
   'Wolves': '#1E7E34',
   'Deer': '#34CE57',
@@ -31,14 +21,9 @@ const speciesColors = {
   'Rabbits': '#FFA000'
 };
 
-export const WildlifeChart = ({ data, title }: WildlifeChartProps) => {
+export const WildlifeChart: React.FC<WildlifeChartProps> = ({ data, title }) => {
   // Process data to group by species
-  interface ProcessedDataPoint {
-    timestamp: string;
-    [species: string]: string | number;
-  }
-
-  const processedData = data.reduce((acc: ProcessedDataPoint[], curr) => {
+  const processedData = data.reduce((acc: ProcessedDataPoint[], curr: WildlifeDataPoint) => {
     const existingPoint = acc.find(point => point.timestamp === curr.timestamp);
     if (existingPoint) {
       existingPoint[curr.species] = curr.count;
@@ -51,7 +36,7 @@ export const WildlifeChart = ({ data, title }: WildlifeChartProps) => {
     return acc;
   }, []);
 
-  const species = Array.from(new Set(data.map(d => d.species)));
+  const species = Array.from(new Set(data.map((d: WildlifeDataPoint) => d.species)));
 
   return (
     <div className="bg-primary-light rounded-lg p-6 shadow-md w-full">
@@ -93,7 +78,7 @@ export const WildlifeChart = ({ data, title }: WildlifeChartProps) => {
                 paddingTop: '20px'
               }}
             />
-            {species.map((species) => (
+            {species.map((species: string) => (
               <Area
                 key={species}
                 type="monotone"

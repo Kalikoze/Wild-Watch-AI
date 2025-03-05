@@ -1,8 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useCases } from '@/lib/data/useCases';
-import UseCaseCard from '@/app/components/use-cases/UseCaseCard';
+import { useCases } from '@/app/(marketing)/data/useCases';
+import UseCaseCard from '@/app/(marketing)/components/use-cases/UseCaseCard';
 import BackgroundEffects from '@/app/components/common/BackgroundEffects';
 
 export default function UseCases() {
