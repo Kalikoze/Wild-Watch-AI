@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import {
   BarChart,
   Bar,
@@ -12,8 +12,8 @@ import {
   ResponsiveContainer,
   Cell
 } from 'recharts';
-import { AnimalBehaviorDataPoint, AnimalType, BehaviorType } from '@/app/types/wildlife';
-import { behaviorColors } from '../data/mock-data';
+import { AnimalType, BehaviorType } from '@/app/dashboard/types/wildlife';
+import { behaviorColors } from '@/app/dashboard/data/mock-data';
 import {
   RiDropLine,
   RiPlayLine,
@@ -24,11 +24,7 @@ import {
   RiInformationLine
 } from 'react-icons/ri';
 import Tooltip from '@/app/components/common/Tooltip';
-
-type AnimalBehaviorChartProps = {
-  data: AnimalBehaviorDataPoint[];
-  title: string;
-};
+import { AnimalBehaviorChartProps, CustomTooltipProps } from '@/app/dashboard/types/charts';
 
 const animalColors = {
   'Lion': '#FF5722',
@@ -58,7 +54,6 @@ export const AnimalBehaviorChart = ({ data, title }: AnimalBehaviorChartProps) =
   const [selectedBehavior, setSelectedBehavior] = useState<BehaviorType | null>(null);
   const [selectedAnimal, setSelectedAnimal] = useState<AnimalType | null>(null);
 
-  // Create unique lists of animals and behaviors for filters
   const animals = useMemo(() =>
     Array.from(new Set(data.map(d => d.animal))),
     [data]
@@ -69,9 +64,7 @@ export const AnimalBehaviorChart = ({ data, title }: AnimalBehaviorChartProps) =
     [data]
   );
 
-  // Filter and process data for the chart
   const chartData = useMemo(() => {
-    // Apply filters
     let filteredData = [...data];
 
     if (selectedBehavior) {
@@ -82,30 +75,25 @@ export const AnimalBehaviorChart = ({ data, title }: AnimalBehaviorChartProps) =
       filteredData = filteredData.filter(d => d.animal === selectedAnimal);
     }
 
-    // Group data based on what's being shown
     if (selectedBehavior && !selectedAnimal) {
-      // If behavior is selected, show animals on X-axis
       return filteredData.map(d => ({
         name: d.animal,
         value: d.count,
         color: animalColors[d.animal as keyof typeof animalColors]
       }));
     } else if (selectedAnimal && !selectedBehavior) {
-      // If animal is selected, show behaviors on X-axis
       return filteredData.map(d => ({
         name: d.behavior,
         value: d.count,
         color: behaviorColors[d.behavior as keyof typeof behaviorColors]
       }));
     } else if (selectedAnimal && selectedBehavior) {
-      // If both are selected, just show the behavior count for that animal
       return filteredData.map(d => ({
         name: `${d.animal} - ${d.behavior}`,
         value: d.count,
         color: behaviorColors[d.behavior as keyof typeof behaviorColors]
       }));
     } else {
-      // If nothing is selected, aggregate by behavior
       const result: Record<string, { name: string; value: number; color: string }> = {};
 
       filteredData.forEach(d => {
@@ -128,21 +116,11 @@ export const AnimalBehaviorChart = ({ data, title }: AnimalBehaviorChartProps) =
     setSelectedBehavior(null);
   };
 
-  interface CustomTooltipProps {
-    active?: boolean;
-    payload?: Array<{
-      value: number;
-      name: string;
-      color: string;
-    }>;
-    label?: string;
-  }
-
-  const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
+  const renderCustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-primary-dark/95 backdrop-blur-sm px-3 py-2 border border-neutral-light/10 shadow-lg rounded-md text-neutral-light">
-          <p className="font-bold tracking-wide">{`${label}`}</p>
+          <p className="font-bold tracking-wide">{`${payload[0].name}`}</p>
           <p className="text-sm leading-relaxed mt-1">{`Observations: ${payload[0].value}`}</p>
           {selectedBehavior && (
             <p className="text-xs mt-1 max-w-[200px] leading-relaxed text-neutral-light/90">
@@ -270,7 +248,7 @@ export const AnimalBehaviorChart = ({ data, title }: AnimalBehaviorChartProps) =
                 stroke="#A0A0A0"
                 tick={{ fill: '#A0A0A0' }}
               />
-              <RechartsTooltip content={<CustomTooltip />} />
+              <RechartsTooltip content={renderCustomTooltip} />
               <Legend wrapperStyle={{ color: '#A0A0A0' }} />
               <Bar dataKey="value" name={selectedAnimal || selectedBehavior || "Behavior Count"} radius={[4, 4, 0, 0]}>
                 {chartData.map((entry, index) => (

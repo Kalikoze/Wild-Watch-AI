@@ -7,13 +7,12 @@ import {
   RiDownload2Line,
   RiEdit2Line,
   RiHistoryLine,
-  RiArrowRightSLine
+  RiArrowRightSLine,
+  RiVideoLine,
+  RiAlertLine,
+  RiInformationLine
 } from 'react-icons/ri';
-import { Activity, ActivityType } from '@/app/types/wildlife';
-
-export interface RecentActivityProps {
-  activities: Activity[];
-}
+import { ActivityType, RecentActivityProps } from '@/app/dashboard/types/activity';
 
 const activityConfig: Record<ActivityType, {
   icon: typeof RiUploadCloud2Line;
@@ -44,6 +43,24 @@ const activityConfig: Record<ActivityType, {
     label: 'Report downloaded',
     color: 'text-accent-green-light',
     bgColor: 'bg-accent-green-light/10'
+  },
+  detection: {
+    icon: RiVideoLine,
+    label: 'Wildlife detected',
+    color: 'text-accent-green',
+    bgColor: 'bg-accent-green/10'
+  },
+  alert: {
+    icon: RiAlertLine,
+    label: 'Alert triggered',
+    color: 'text-accent-gold',
+    bgColor: 'bg-accent-gold/10'
+  },
+  system: {
+    icon: RiInformationLine,
+    label: 'System notification',
+    color: 'text-neutral-light',
+    bgColor: 'bg-neutral-light/10'
   }
 } as const;
 
@@ -70,7 +87,7 @@ const getRelativeTime = (dateString: string) => {
   return formatDate(dateString);
 };
 
-export function RecentActivity({ activities }: RecentActivityProps) {
+export function RecentActivity({ activities, maxDisplay = 5 }: RecentActivityProps) {
   return (
     <div className="bg-primary-light rounded-lg shadow-md border border-neutral-light/10 overflow-hidden h-full flex flex-col">
       <div className="px-5 py-4 border-b border-neutral-light/10 flex justify-between items-center">
@@ -89,7 +106,7 @@ export function RecentActivity({ activities }: RecentActivityProps) {
 
       <div className="overflow-auto p-3 flex-grow">
         <div className="space-y-3">
-          {activities.map(activity => {
+          {activities.slice(0, maxDisplay).map(activity => {
             const config = activityConfig[activity.type];
             const Icon = config.icon;
             const relativeTime = getRelativeTime(activity.timestamp);
@@ -106,7 +123,7 @@ export function RecentActivity({ activities }: RecentActivityProps) {
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-start">
                       <p className="text-neutral-light text-sm font-medium truncate pr-2 group-hover:text-accent-green transition-colors">
-                        {activity.itemName}
+                        {activity.title || activity.itemName || ''}
                       </p>
                       <div className="flex items-center">
                         <span className="text-neutral text-xs whitespace-nowrap">
@@ -116,7 +133,7 @@ export function RecentActivity({ activities }: RecentActivityProps) {
                       </div>
                     </div>
                     <p className="text-neutral text-xs mt-1">
-                      {config.label}
+                      {activity.description || config.label}
                     </p>
                   </div>
                 </div>

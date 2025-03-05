@@ -1,6 +1,6 @@
 'use client';
 
-import { VideoData } from '@/app/types/wildlife';
+import { VideoData } from '@/app/dashboard/types/wildlife';
 import {
   RiVideoLine,
   RiFileChartLine,

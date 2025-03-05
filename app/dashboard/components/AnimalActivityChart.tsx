@@ -1,23 +1,12 @@
 'use client';
 
+import { AnimalActivityChartProps } from '@/app/dashboard/types/charts';
 import { useEffect, useRef } from 'react';
-
-type AnimalActivityData = {
-  label: string;
-  count: number;
-  color: string;
-};
-
-type AnimalActivityChartProps = {
-  data: AnimalActivityData[];
-  title: string;
-  height?: number;
-};
 
 export const AnimalActivityChart = ({
   data,
   title,
-  height = 200
+  height = 300
 }: AnimalActivityChartProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
