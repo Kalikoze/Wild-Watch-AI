@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { RecentVideosGrid, generateMockVideos } from '@/app/dashboard/components/RecentVideosGrid';
-import { VideoItem } from '@/app/dashboard/types/videos';
+import { VideoItem } from '@/app/dashboard/types';
 import { RiArrowRightLine } from 'react-icons/ri';
 
 export const ClientVideosWrapper = () => {

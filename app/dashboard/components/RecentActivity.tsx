@@ -12,7 +12,7 @@ import {
   RiAlertLine,
   RiInformationLine
 } from 'react-icons/ri';
-import { ActivityType, RecentActivityProps } from '@/app/dashboard/types/activity';
+import { ActivityType, RecentActivityProps } from '@/app/dashboard/types';
 
 const activityConfig: Record<ActivityType, {
   icon: typeof RiUploadCloud2Line;

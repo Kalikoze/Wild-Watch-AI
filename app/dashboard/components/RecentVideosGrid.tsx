@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { RiPlayCircleLine, RiTimeLine, RiFileChartLine, RiAlertLine, RiArrowRightLine } from 'react-icons/ri';
 import { useState } from 'react';
-import { VideoItem, RecentVideosGridProps } from '../types/videos';
+import { VideoItem, RecentVideosGridProps } from '@/app/dashboard/types';
 
 export const RecentVideosGrid: React.FC<RecentVideosGridProps> = ({ videos, maxDisplay = 8 }) => {
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});

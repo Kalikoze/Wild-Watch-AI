@@ -13,7 +13,7 @@ import {
 } from 'react-icons/ri';
 import Button from '@/app/components/common/Button';
 import Link from 'next/link';
-import { Activity, ActivityType, DashboardInfoProps } from '../types/activity';
+import { Activity, ActivityType, DashboardInfoProps } from '@/app/dashboard/types';
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString);

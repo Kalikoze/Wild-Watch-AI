@@ -1,6 +1,6 @@
 'use client';
 
-import { VideoData } from '@/app/dashboard/types/wildlife';
+import { VideoDataSummary } from '@/app/dashboard/types';
 import {
   RiVideoLine,
   RiFileChartLine,
@@ -11,10 +11,10 @@ import {
 } from 'react-icons/ri';
 import Tooltip from '@/app/components/common/Tooltip';
 
-type QuickInfoProps = {
+interface QuickInfoProps {
   subscriptionTier?: string;
   aiRequestsCount: number;
-  videoData: VideoData;
+  videoData: VideoDataSummary;
 }
 
 const videoTooltip = "Your complete video collection ready for AI analysis. New uploads are automatically added to your library.";

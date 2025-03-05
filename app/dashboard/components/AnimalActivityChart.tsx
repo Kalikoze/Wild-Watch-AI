@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimalActivityChartProps } from '@/app/dashboard/types/charts';
+import { AnimalActivityChartProps } from '@/app/dashboard/types';
 import { useEffect, useRef } from 'react';
 
 export const AnimalActivityChart = ({

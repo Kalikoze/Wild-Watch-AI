@@ -1,14 +1,14 @@
 /**
- * Types for activity-related components in the dashboard
+ * Core dashboard activity and UI component types
  */
 
 /**
- * Types of activities that can be displayed
+ * Types of activities that can be displayed in the dashboard
  */
 export type ActivityType = 'detection' | 'analysis' | 'alert' | 'system' | 'upload' | 'download' | 'behavior-edit';
 
 /**
- * Structure for an activity item
+ * Structure for an activity item in the dashboard
  */
 export type Activity = {
   id: string;
@@ -46,17 +46,22 @@ export type Activity = {
 };
 
 /**
+ * Structure for video data summary used in dashboard
+ */
+export type VideoDataSummary = {
+  totalVideos: number;
+  analyzedVideos: number;
+  pendingAnalysis: number;
+  totalDuration?: number;
+};
+
+/**
  * Props for the DashboardInfo component
  */
 export type DashboardInfoProps = {
   subscriptionTier?: string;
   aiRequestsCount?: number;
-  videoData?: {
-    totalVideos: number;
-    analyzedVideos: number;
-    pendingAnalysis: number;
-    totalDuration: number;
-  };
+  videoData?: VideoDataSummary;
   activities?: Activity[];
 };
 

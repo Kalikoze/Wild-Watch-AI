@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ChartDataItem, ClientChartWrapperProps } from '@/app/dashboard/types/charts';
+import { ChartDataItem, ClientChartWrapperProps } from '@/app/dashboard/types';
 import { AnimalActivityChart, generateMockAnimalData } from '@/app/dashboard/components/AnimalActivityChart';
 
 export const ClientChartWrapper = ({ chartType, title }: ClientChartWrapperProps) => {

@@ -1,4 +1,4 @@
-import { Activity, AnimalBehaviorDataPoint } from '@/app/dashboard/types/wildlife';
+import { Activity, AnimalBehaviorDataPoint } from '@/app/dashboard/types';
 
 // Animal-specific behavior data
 export const mockBehaviorData: AnimalBehaviorDataPoint[] = [

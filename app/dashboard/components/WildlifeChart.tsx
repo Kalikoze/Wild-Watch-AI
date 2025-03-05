@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
   Legend
 } from 'recharts';
-import { WildlifeChartProps, ProcessedDataPoint } from '../types/charts';
+import { WildlifeChartProps, ProcessedDataPoint, WildlifeDataPoint } from '@/app/dashboard/types';
 
 const speciesColors: Record<string, string> = {
   'Bears': '#28A745',
@@ -23,7 +23,7 @@ const speciesColors: Record<string, string> = {
 
 export const WildlifeChart: React.FC<WildlifeChartProps> = ({ data, title }) => {
   // Process data to group by species
-  const processedData = data.reduce((acc: ProcessedDataPoint[], curr) => {
+  const processedData = data.reduce((acc: ProcessedDataPoint[], curr: WildlifeDataPoint) => {
     const existingPoint = acc.find(point => point.timestamp === curr.timestamp);
     if (existingPoint) {
       existingPoint[curr.species] = curr.count;
@@ -36,7 +36,7 @@ export const WildlifeChart: React.FC<WildlifeChartProps> = ({ data, title }) => 
     return acc;
   }, []);
 
-  const species = Array.from(new Set(data.map(d => d.species)));
+  const species = Array.from(new Set(data.map((d: WildlifeDataPoint) => d.species)));
 
   return (
     <div className="bg-primary-light rounded-lg p-6 shadow-md w-full">
@@ -78,7 +78,7 @@ export const WildlifeChart: React.FC<WildlifeChartProps> = ({ data, title }) => 
                 paddingTop: '20px'
               }}
             />
-            {species.map((species) => (
+            {species.map((species: string) => (
               <Area
                 key={species}
                 type="monotone"

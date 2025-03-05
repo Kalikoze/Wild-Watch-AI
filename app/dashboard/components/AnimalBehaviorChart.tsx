@@ -12,7 +12,7 @@ import {
   ResponsiveContainer,
   Cell
 } from 'recharts';
-import { AnimalType, BehaviorType } from '@/app/dashboard/types/wildlife';
+import { AnimalType, BehaviorType } from '@/app/dashboard/types';
 import { behaviorColors } from '@/app/dashboard/data/mock-data';
 import {
   RiDropLine,
@@ -24,7 +24,7 @@ import {
   RiInformationLine
 } from 'react-icons/ri';
 import Tooltip from '@/app/components/common/Tooltip';
-import { AnimalBehaviorChartProps, CustomTooltipProps } from '@/app/dashboard/types/charts';
+import { AnimalBehaviorChartProps, CustomTooltipProps } from '@/app/dashboard/types';
 
 const animalColors = {
   'Lion': '#FF5722',

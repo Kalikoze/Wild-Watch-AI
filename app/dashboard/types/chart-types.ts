@@ -3,7 +3,7 @@
  */
 
 import { TooltipProps } from 'recharts';
-import { AnimalBehaviorDataPoint } from './wildlife';
+import { AnimalBehaviorDataPoint } from './wildlife-types';
 
 /**
  * Data structure for wildlife data points in charts
@@ -77,4 +77,4 @@ export type AnimalBehaviorChartProps = {
  * Props for custom tooltips in chart components
  * Uses Recharts TooltipProps generic type
  */
-export type CustomTooltipProps = TooltipProps<number, string>;
+export type CustomTooltipProps = TooltipProps<number, string>; 

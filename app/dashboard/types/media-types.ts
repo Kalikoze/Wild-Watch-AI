@@ -1,5 +1,5 @@
 /**
- * Types for video components in the dashboard
+ * Types for video and media components in the dashboard
  */
 
 /**
@@ -21,15 +21,4 @@ export type VideoItem = {
 export type RecentVideosGridProps = {
   videos: VideoItem[];
   maxDisplay?: number;
-};
-
-/**
- * Aggregated video statistics
- */
-export type VideoData = {
-  totalVideos: number;
-  analyzedVideos: number;
-  pendingAnalysis: number;
-  // Extended version used in dashboard-info.tsx
-  totalDuration?: number;
 }; 
