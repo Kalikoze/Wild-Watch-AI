@@ -3,19 +3,13 @@
 import { motion } from 'framer-motion';
 import BackgroundEffects from '@/app/components/common/BackgroundEffects';
 import { HiExclamationCircle } from 'react-icons/hi';
-
-interface AuthErrorMessageProps {
-  message?: string;
-  redirectPath?: string;
-  redirectText?: string;
-}
+import { AuthErrorMessageProps } from '@/app/auth/types';
 
 export default function AuthErrorMessage({
   message,
   redirectPath = "/auth",
   redirectText = "Back to Sign Up"
 }: AuthErrorMessageProps) {
-  // If no message prop is provided, try to get it from URL parameters
   const errorMessage = message ||
     (typeof window !== 'undefined'
       ? new URLSearchParams(window.location.search).get('message')

@@ -1,6 +1,7 @@
 import { type EmailOtpType } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
 import { createServer } from '@/utils/supabase/server'
+import { OnboardingStatus, AuthErrorType } from '@/app/auth/types'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -10,7 +11,7 @@ export async function GET(request: Request) {
 
   const supabase = await createServer()
 
-  async function checkOnboardingStatus(userId: string) {
+  async function checkOnboardingStatus(userId: string): Promise<boolean> {
     const { data, error } = await supabase
       .from('profiles')
       .select('onboarding_status')
@@ -18,7 +19,7 @@ export async function GET(request: Request) {
       .single()
 
     if (error) throw error
-    return data.onboarding_status !== 'completed'
+    return data.onboarding_status !== 'completed' as OnboardingStatus
   }
 
   if (code) {
@@ -51,9 +52,13 @@ export async function GET(request: Request) {
       })
 
       if (error) {
+        const errorType: AuthErrorType = error.message === "Token has expired or is invalid"
+          ? 'expired'
+          : 'invalid';
+
         return NextResponse.redirect(new URL('/auth/auth-error', request.url), {
           headers: {
-            'x-auth-error-type': error.message === "Token has expired or is invalid" ? 'expired' : 'invalid'
+            'x-auth-error-type': errorType
           }
         })
       }
