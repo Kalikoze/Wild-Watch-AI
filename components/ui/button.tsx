@@ -22,7 +22,7 @@ const buttonVariants = cva(
         green:
           "bg-accent-green text-primary shadow-sm hover:bg-accent-green-light",
         orange:
-          "bg-accent-orange text-primary shadow-sm hover:bg-accent-orange-light",
+          "bg-accent-orange-dark hover:bg-accent-orange text-neutral-light shadow-sm",
         blue:
           "bg-accent-blue text-primary shadow-sm hover:bg-accent-blue-light",
         gold:
@@ -32,7 +32,7 @@ const buttonVariants = cva(
         default: "h-9 px-4 py-2",
         sm: "h-8 rounded-md px-3 text-xs",
         lg: "h-10 rounded-md px-8",
-        xl: "h-12 rounded-md px-8 text-base",
+        xl: "h-12 rounded-md px-8 py-4 text-base",
         icon: "h-9 w-9",
       },
     },

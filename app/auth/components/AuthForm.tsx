@@ -9,13 +9,10 @@ import { signInWithGoogle } from '@/app/auth/lib/providers/google';
 import { signInWithAzure } from '@/app/auth/lib/providers/azure';
 import { toast } from 'react-hot-toast';
 import { OAuthProvider } from '@/app/auth/types';
-
-// Import shadcn components
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 
 export const AuthForm = () => {
