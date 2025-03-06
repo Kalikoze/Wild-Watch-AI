@@ -1,6 +1,7 @@
 import AuthErrorMessage from '@/app/auth/components/AuthErrorMessage'
 import { headers } from 'next/headers'
 import { AuthErrorType } from '@/app/auth/types'
+import BackgroundEffects from '@/app/components/common/BackgroundEffects'
 
 export default async function AuthErrorPage() {
   const headersList = await headers()
@@ -18,8 +19,21 @@ export default async function AuthErrorPage() {
   }
 
   return (
-    <main className="min-h-screen bg-primary flex items-center justify-center" data-cy="auth-error-page">
-      <AuthErrorMessage message={getErrorMessage(errorType)} data-cy="auth-error-message" />
+    <main className="min-h-screen h-screen bg-primary flex flex-col justify-center relative overflow-hidden py-12" data-cy="auth-error-page">
+      <BackgroundEffects color="orange" />
+
+      <div
+        aria-hidden="true"
+        className="absolute -top-24 -right-24 w-96 h-96 opacity-20 pointer-events-none mix-blend-screen"
+        style={{
+          background: 'radial-gradient(circle, var(--accent-orange-rgb-glow) 0%, transparent 70%)',
+          filter: 'blur(30px)',
+        }}
+      />
+
+      <div className="container mx-auto px-4">
+        <AuthErrorMessage message={getErrorMessage(errorType)} data-cy="auth-error-message" />
+      </div>
     </main>
-  )
+  );
 } 

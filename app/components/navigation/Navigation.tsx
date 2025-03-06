@@ -176,7 +176,7 @@ export const Navigation = () => {
                 {link.href === '/compare' ? (
                   <span className="inline-flex items-center">
                     Why WildWatch?
-                    <span className="ml-1 text-xs px-2 py-0.5 rounded-full bg-accent-orange/20 border border-accent-orange/30">
+                    <span className="ml-1 text-xs px-2 py-0.5 rounded-full bg-primary-light border border-accent-orange/50 font-semibold">
                       Compare
                     </span>
                   </span>

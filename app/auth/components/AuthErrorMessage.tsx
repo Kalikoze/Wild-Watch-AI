@@ -1,9 +1,11 @@
 'use client'
 
 import { motion } from 'framer-motion';
-import BackgroundEffects from '@/app/components/common/BackgroundEffects';
 import { HiExclamationCircle } from 'react-icons/hi';
 import { AuthErrorMessageProps } from '@/app/auth/types';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 export default function AuthErrorMessage({
   message,
@@ -17,38 +19,52 @@ export default function AuthErrorMessage({
     "There was a problem verifying your authentication. Please try signing in again."
 
   return (
-    <div className="min-h-screen bg-primary flex flex-col justify-center relative overflow-hidden py-12" data-cy="auth-error-container">
-      <BackgroundEffects color="orange" />
-
+    <>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative sm:max-w-xl sm:mx-auto w-full"
+        className="relative w-full max-w-xl mx-auto px-4"
         data-cy="auth-error-content"
       >
-        <div className="relative px-4 py-10 bg-primary-light shadow-xl sm:rounded-3xl sm:p-20 border border-neutral-dark/20">
-          <div className="max-w-md mx-auto text-center">
-            <div className="mb-4">
-              <HiExclamationCircle className="mx-auto h-12 w-12 text-accent-orange mb-4" data-cy="auth-error-icon" />
+        <Card className="relative py-8 sm:py-12 bg-primary-light shadow-xl rounded-3xl p-8 sm:p-12 border border-neutral-dark/20 overflow-hidden">
+          <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-accent-orange/10 blur-xl" />
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent-orange via-accent-gold/30 to-accent-orange-light" />
+
+          <CardContent className="max-w-md mx-auto text-center p-0 relative z-10">
+            <div className="mb-6">
+              <HiExclamationCircle className="mx-auto h-14 w-14 text-accent-orange mb-5" data-cy="auth-error-icon" />
               <h1 className="text-2xl font-bold text-neutral-light mb-4" data-cy="auth-error-title" id="auth-error-heading">Authentication Error</h1>
             </div>
-            <section role="alert" aria-labelledby="auth-error-heading">
-              <p className="text-neutral-light/80 mb-8" data-cy="auth-error-message">
-                {errorMessage}
-              </p>
-              <motion.a
-                href={redirectPath}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-neutral-light bg-accent-orange-dark hover:bg-accent-orange rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
-                data-cy="auth-error-back-button"
-              >
-                {redirectText}
-              </motion.a>
-            </section>
-          </div>
-        </div>
+
+            <div className="space-y-8">
+              <section role="alert" aria-labelledby="auth-error-heading">
+                <p className="text-neutral-light/80 mb-8" data-cy="auth-error-message">
+                  {errorMessage}
+                </p>
+                <Button
+                  asChild
+                  variant="orange"
+                  size="xl"
+                  className={cn(
+                    "w-full transition-all duration-300",
+                    "hover:scale-[1.02] active:scale-[0.98]",
+                    "shadow-[0_0_15px_rgba(255,87,34,0.15)]"
+                  )}
+                  data-cy="auth-error-back-button"
+                >
+                  <motion.a
+                    href={redirectPath}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {redirectText}
+                  </motion.a>
+                </Button>
+              </section>
+            </div>
+          </CardContent>
+        </Card>
       </motion.div>
-    </div>
+    </>
   );
 } 
