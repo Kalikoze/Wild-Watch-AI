@@ -27,7 +27,6 @@ export default function AuthErrorMessage({
         data-cy="auth-error-content"
       >
         <Card className="relative py-8 sm:py-12 bg-primary-light shadow-xl rounded-3xl p-8 sm:p-12 border border-neutral-dark/20 overflow-hidden">
-          <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-accent-orange/10 blur-xl" />
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent-orange via-accent-gold/30 to-accent-orange-light" />
 
           <CardContent className="max-w-md mx-auto text-center p-0 relative z-10">

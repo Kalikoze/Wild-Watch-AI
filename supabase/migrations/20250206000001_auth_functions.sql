@@ -48,7 +48,6 @@ BEGIN
   IF EXISTS (
     SELECT 1 FROM public.organizations 
     WHERE lower(name) = lower(trim(p_org_name))
-    AND type = p_org_type
   ) THEN
     RAISE EXCEPTION 'An organization with name "%" already exists', p_org_name;
   END IF;
@@ -83,6 +82,27 @@ BEGIN
   WHERE id = p_user_id;
 END;
 $$;
+
+-- Function to check if an organization name already exists (bypassing RLS)
+CREATE OR REPLACE FUNCTION public.check_organization_name_exists(org_name TEXT)
+RETURNS BOOLEAN
+LANGUAGE plpgsql
+SECURITY DEFINER -- This allows the function to bypass RLS
+AS $$
+DECLARE
+  name_exists BOOLEAN;
+BEGIN
+  SELECT EXISTS (
+    SELECT 1 FROM organizations 
+    WHERE lower(name) = lower(org_name)
+  ) INTO name_exists;
+  
+  RETURN name_exists;
+END;
+$$;
+
+-- Grant execute permission to authenticated users
+GRANT EXECUTE ON FUNCTION public.check_organization_name_exists TO authenticated;
 
 -- Create triggers
 CREATE TRIGGER on_auth_user_created

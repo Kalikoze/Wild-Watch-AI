@@ -67,8 +67,6 @@ export const AuthForm = () => {
       data-cy="auth-section"
     >
       <Card className="relative py-8 sm:py-12 bg-primary-light shadow-xl rounded-3xl p-8 sm:p-12 border border-neutral-dark/20 overflow-hidden">
-        {/* Blue accent element */}
-        <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-accent-blue/10 blur-xl" />
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent-green via-accent-blue/30 to-accent-orange" />
 
         <CardContent className="max-w-lg mx-auto space-y-8 p-0 sm:p-2 relative z-10">
@@ -101,7 +99,7 @@ export const AuthForm = () => {
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="h-12 bg-neutral-light/5 border-neutral-dark/30 text-neutral-light placeholder-neutral-light/30 focus:border-accent-green focus:ring-accent-green transition duration-300"
+                  className="h-12 bg-neutral-light/5 border-neutral-dark/30 text-neutral-light placeholder-neutral-light/30 transition duration-300"
                   placeholder="name@organization.com"
                   required
                   data-cy="auth-email-input"

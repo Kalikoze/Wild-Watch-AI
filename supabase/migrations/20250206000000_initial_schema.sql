@@ -19,8 +19,7 @@ CREATE TABLE "public"."organizations" (
     "subscription_tier" text REFERENCES subscription_tiers(id),
     "status" text DEFAULT 'active'::text,
     "updated_at" timestamp with time zone DEFAULT now(),
-    "updated_by" uuid REFERENCES auth.users(id),
-    "name_lower" text GENERATED ALWAYS AS (lower(name)) STORED
+    "updated_by" uuid REFERENCES auth.users(id)
 );
 
 CREATE TABLE "public"."profiles" (
@@ -70,7 +69,8 @@ CREATE TABLE "public"."token_transactions" (
 );
 
 -- Create indexes
-CREATE UNIQUE INDEX idx_organizations_name_type ON public.organizations(name_lower, type);
+CREATE EXTENSION IF NOT EXISTS citext;
+CREATE UNIQUE INDEX idx_organizations_name ON public.organizations((lower(name)));
 CREATE INDEX idx_organizations_subscription_tier ON public.organizations(subscription_tier);
 CREATE INDEX idx_profiles_last_login ON public.profiles(last_login);
 CREATE INDEX idx_token_transactions_user_id ON public.token_transactions(user_id);

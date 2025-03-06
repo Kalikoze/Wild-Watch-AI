@@ -1,33 +1,28 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { plans } from '@/app/(marketing)/data/pricing';
-import Button from '@/app/components/common/Button';
-import { HiArrowLeft, HiArrowRight } from 'react-icons/hi';
-
-export type PlanData = {
-  planId: string;
-  billingCycle: 'monthly' | 'annual';
-  organizationType: 'new' | 'existing';
-};
+import { HiCheck } from 'react-icons/hi';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { StepButtons } from '@/components/ui/step-buttons';
+import { FormToggle } from '@/components/ui/form-toggle';
+import { cn } from '@/lib/utils';
+import { PlanData, PlanStepProps } from '@/app/onboarding/types';
 
 const calculateAnnualPrice = (monthlyPrice: number, planId: string) => {
   const annualDiscount = planId === 'enterprise' ? 0.20 : 0.15;
   return (monthlyPrice * 12 * (1 - annualDiscount)).toFixed(0);
 };
 
-export function PlanStep({
+export default function PlanStep({
   onComplete,
   onBack,
   organizationType,
-}: {
-  onComplete: (data: PlanData) => void;
-  onBack: () => void;
-  organizationType: 'new' | 'existing';
-}) {
+}: PlanStepProps) {
   const [planData, setPlanData] = useState<PlanData>({
     planId: 'free',
     billingCycle: 'monthly',
-    organizationType: organizationType
+    organizationType
   });
 
   if (planData.organizationType === 'existing') {
@@ -38,30 +33,29 @@ export function PlanStep({
         exit={{ opacity: 0, y: -20 }}
         className="w-full max-w-2xl mx-auto"
       >
-        <div className="bg-primary-light shadow-xl rounded-3xl p-8 sm:p-12 border border-neutral-dark/20">
-          <div className="max-w-lg mx-auto space-y-8">
+        <Card className="relative py-8 sm:py-12 bg-primary-light shadow-xl rounded-3xl p-8 sm:p-12 border border-neutral-dark/20 overflow-hidden">
+          {/* Decorative gradient bar at top */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent-green via-accent-green-light to-accent-green/30" />
+
+          <CardContent className="max-w-lg mx-auto p-0 space-y-8 relative z-10">
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-neutral-light">
+              <h2 className="text-2xl sm:text-3xl font-bold text-neutral-light">
                 Welcome to Your Organization
               </h2>
-              <p className="text-neutral-light/60 mt-2">
+              <p className="text-neutral-light/70 mt-3">
                 You&apos;ll be added to your organization&apos;s existing plan
               </p>
-              <Button
-                onClick={() => onComplete({
+              <StepButtons
+                onNext={() => onComplete({
                   planId: 'free',
                   billingCycle: 'monthly',
                   organizationType: 'existing'
                 })}
-                variant="primary"
-                icon={HiArrowRight}
-                className="mt-6 !bg-accent-green hover:!bg-accent-green-light text-primary"
-              >
-                Continue
-              </Button>
+                nextText="Continue"
+              />
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </motion.article>
     );
   }
@@ -93,6 +87,10 @@ export function PlanStep({
     );
   };
 
+  const handleChange = (changes: Partial<PlanData>) => {
+    setPlanData(prev => ({ ...prev, ...changes }));
+  };
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 20 }}
@@ -100,109 +98,94 @@ export function PlanStep({
       exit={{ opacity: 0, y: -20 }}
       className="w-full max-w-2xl mx-auto"
     >
-      <div className="bg-primary-light shadow-xl rounded-3xl p-8 sm:p-12 border border-neutral-dark/20">
-        <div className="max-w-lg mx-auto space-y-8">
-          <h2 className="text-2xl font-bold text-neutral-light text-center">
-            Choose your plan
-          </h2>
-          <p className="text-neutral-light/60 text-center text-sm">
-            Start with our free trial or upgrade for more features
-          </p>
+      <Card className="relative py-8 sm:py-12 bg-primary-light shadow-xl rounded-3xl p-8 sm:p-12 border border-neutral-dark/20 overflow-hidden">
+        {/* Decorative gradient bar at top */}
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent-green via-accent-green-light to-accent-green/30" />
 
-          {planData.planId !== 'free' && (
-            <div className="flex justify-center p-2 rounded-xl bg-neutral-light/5">
-              <div className="flex w-full max-w-xs">
-                <button
-                  onClick={() => setPlanData(d => ({ ...d, billingCycle: 'monthly' }))}
-                  className={`flex-1 px-4 py-3 rounded-lg text-sm font-medium transition-all ${planData.billingCycle === 'monthly'
-                    ? 'bg-accent-green text-neutral-light'
-                    : 'text-neutral hover:text-neutral-light'
-                    }`}
-                >
-                  Monthly
-                </button>
-                <button
-                  onClick={() => setPlanData(d => ({ ...d, billingCycle: 'annual' }))}
-                  className={`flex-1 px-4 py-3 rounded-lg text-sm font-medium transition-all ${planData.billingCycle === 'annual'
-                    ? 'bg-accent-green text-neutral-light'
-                    : 'text-neutral hover:text-neutral-light'
-                    }`}
-                >
-                  Annual
-                </button>
-              </div>
-            </div>
-          )}
+        <CardContent className="max-w-lg mx-auto p-0 space-y-8 relative z-10">
+          <header className="text-center">
+            <h2 className="text-2xl sm:text-3xl font-bold text-neutral-light">
+              Choose your plan
+            </h2>
+            <p className="text-neutral-light/70 text-sm mt-2">
+              Start with our free trial or upgrade for more features
+            </p>
+          </header>
+
+          <FormToggle
+            value={planData.billingCycle}
+            onChange={(billingCycle) => handleChange({ billingCycle })}
+            options={[
+              { value: 'monthly', label: 'Monthly' },
+              { value: 'annual', label: 'Annual' }
+            ]}
+          />
 
           <div className="space-y-4">
             {Object.entries(plans).map(([id, plan]) => (
-              <button
+              <Button
                 key={id}
-                onClick={() => setPlanData(d => ({ ...d, planId: id }))}
-                className={`w-full p-4 rounded-lg border transition-all text-left ${planData.planId === id
-                  ? 'border-accent-green bg-accent-green/10'
-                  : 'border-neutral-dark/30 hover:bg-neutral-light/5'
-                  }`}
+                type="button"
+                variant="outline"
+                onClick={() => handleChange({ planId: id })}
+                className={cn(
+                  "w-full p-4 h-auto rounded-lg justify-start text-left transition-all duration-300 bg-transparent",
+                  "border-neutral-dark/30",
+                  planData.planId === id
+                    ? "border-accent-green bg-accent-green/5 hover:bg-accent-green/10"
+                    : "text-neutral-light/80 hover:bg-neutral-light/5 hover:text-neutral-light hover:border-neutral-light/40"
+                )}
               >
-                <div className="flex justify-between items-center">
-                  <div>
-                    <span className="font-medium text-neutral-light">{plan.name}</span>
-                    {id !== 'free' && planData.billingCycle === 'annual' && (
-                      <span className="ml-2 text-xs text-accent-green-light">
-                        Save {id === 'enterprise' ? '20%' : '15%'}
+                <div className="w-full">
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center">
+                      <span className={cn(
+                        "font-medium transition-all",
+                        planData.planId === id ? "text-accent-green" : "text-neutral-light"
+                      )}>
+                        {plan.name}
                       </span>
-                    )}
+                      {id !== 'free' && planData.billingCycle === 'annual' && (
+                        <span className="ml-2 text-xs px-2 py-1 bg-accent-green/10 text-accent-green rounded-full">
+                          Save {id === 'enterprise' ? '20%' : '15%'}
+                        </span>
+                      )}
+                    </div>
+                    <span className={cn(
+                      "font-medium transition-all",
+                      planData.planId === id ? "text-accent-green" : "text-neutral-light"
+                    )}>
+                      {plan.basePrice === 0 ? 'Free' : renderPrice(plan.basePrice, id)}
+                    </span>
                   </div>
-                  <span className={planData.planId === id ? 'text-accent-green' : 'text-neutral-light'}>
-                    {plan.basePrice === 0 ? 'Free' : renderPrice(plan.basePrice, id)}
-                  </span>
+                  <div className="mt-2 text-sm text-neutral-light/60">
+                    Includes {plan.includesTokens} tokens • {formatStorage(plan.storageLimit)} storage
+                  </div>
+                  <ul className="mt-3 space-y-1.5 border-t border-neutral-dark/10 pt-3">
+                    {plan.features.map((feature, index) => (
+                      <li key={index} className="text-sm text-neutral-light/80 flex items-center gap-2">
+                        <HiCheck className="text-accent-green h-4 w-4 shrink-0" /> {feature}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div className="mt-2 text-sm text-neutral-light/60">
-                  Includes {plan.includesTokens} tokens
-                </div>
-                <div className="mt-1 text-sm text-neutral-light/60">
-                  {formatStorage(plan.storageLimit)} storage
-                </div>
-                <ul className="mt-2 space-y-1">
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className="text-sm text-neutral-light/80 flex items-center gap-2">
-                      <span className="text-accent-green">✓</span> {feature}
-                    </li>
-                  ))}
-                </ul>
-              </button>
+              </Button>
             ))}
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
-            <Button
-              onClick={onBack}
-              variant="neutral"
-              icon={HiArrowLeft}
-              iconPosition="left"
-              fullWidth
-              className="w-full sm:w-1/2"
-            >
-              Back
-            </Button>
-            <Button
-              onClick={() => onComplete(planData)}
-              variant="primary"
-              icon={HiArrowRight}
-              fullWidth
-              className="w-full sm:w-1/2 !bg-accent-green hover:!bg-accent-green-light text-primary"
-            >
-              {planData.planId === 'free' ? 'Start Free Trial' : 'Complete Setup'}
-            </Button>
-          </div>
+          <StepButtons
+            onBack={onBack}
+            onNext={() => onComplete(planData)}
+            nextText={planData.planId === 'free' ? 'Start Free Trial' : 'Complete Setup'}
+          />
 
           {planData.planId !== 'free' && (
             <p className="text-center text-sm text-neutral-light/60">
               30-day money-back guarantee • Cancel anytime
             </p>
           )}
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </motion.article>
   );
 } 
