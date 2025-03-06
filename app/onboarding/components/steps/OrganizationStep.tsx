@@ -58,6 +58,7 @@ export default function OrganizationStep({
 
       return true;
     } catch (err) {
+      console.error('Organization name check error:', err);
       toast.error('An unexpected error occurred. Please try again.', {
         position: 'bottom-right',
       });

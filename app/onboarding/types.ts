@@ -23,16 +23,19 @@ export interface PlanData {
   organizationType: OrganizationType;
 }
 
-export interface OnboardingStepProps {
-  onNext: (data: any) => void;
+export interface BaseStepProps {
   onBack: () => void;
 }
 
-export interface OrganizationStepProps extends OnboardingStepProps {
+export interface WelcomeStepProps {
+  onNext: () => void;
+}
+
+export interface OrganizationStepProps extends BaseStepProps {
   onNext: (data: OrgData) => void;
 }
 
-export interface RoleStepProps extends OnboardingStepProps {
+export interface RoleStepProps extends BaseStepProps {
   onNext: (data: RoleData) => void;
 }
 

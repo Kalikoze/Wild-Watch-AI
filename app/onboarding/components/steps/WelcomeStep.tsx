@@ -3,8 +3,9 @@ import { HiArrowRight } from 'react-icons/hi';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { WelcomeStepProps } from '@/app/onboarding/types';
 
-export function WelcomeStep({ onNext }: { onNext: () => void }) {
+export function WelcomeStep({ onNext }: WelcomeStepProps) {
   return (
     <motion.article
       initial={{ opacity: 0, y: 20 }}
