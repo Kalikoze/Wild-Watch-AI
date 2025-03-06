@@ -1,48 +1,89 @@
 import type { Config } from "tailwindcss";
 
 export default {
-  content: [
+    darkMode: ["class"],
+    content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {
-      colors: {
-        primary: {
-          DEFAULT: '#121212', // Rich black
-          light: '#1E1E1E',   // Lighter black
-          dark: '#0A0A0A',    // Darker black
-        },
-        accent: {
-          green: {
-            DEFAULT: '#28A745', // Rich modern green
-            dark: '#1E7E34',   // Darker green for primary actions
-            light: '#34CE57',   // Lighter green for hover states
-          },
-          orange: {
-            DEFAULT: '#FF5722', // Vibrant orange
-            light: '#FF7F50',   // Coral orange
-            dark: '#B33810',    // Deep orange
-          },
-          gold: {
-            DEFAULT: '#FFA000', // Warm gold
-            light: '#FFB74D',   // Lighter gold for hover states
-            dark: '#FF8F00',   // Darker gold for primary actions
-          },
-          blue: {
-            DEFAULT: '#2196F3', // Vibrant blue
-            light: '#64B5F6',   // Lighter blue for hover states
-            dark: '#1976D2',   // Darker blue for primary actions
-          },
-        },
-        neutral: {
-          light: '#F5F5F5', // Almost white
-          DEFAULT: '#A0A0A0',   // Medium gray
-          dark: '#404040',   // Dark gray
-        },
-      },
-    },
+  	extend: {
+  		colors: {
+  			primary: {
+  				DEFAULT: 'hsl(var(--primary))',
+  				light: '#1E1E1E',
+  				dark: '#0A0A0A',
+  				foreground: 'hsl(var(--primary-foreground))'
+  			},
+  			accent: {
+  				green: {
+  					DEFAULT: '#28A745',
+  					dark: '#1E7E34',
+  					light: '#34CE57'
+  				},
+  				orange: {
+  					DEFAULT: '#FF5722',
+  					light: '#FF7F50',
+  					dark: '#B33810'
+  				},
+  				gold: {
+  					DEFAULT: '#FFA000',
+  					light: '#FFB74D',
+  					dark: '#FF8F00'
+  				},
+  				blue: {
+  					DEFAULT: '#2196F3',
+  					light: '#64B5F6',
+  					dark: '#1976D2'
+  				},
+  				DEFAULT: 'hsl(var(--accent))',
+  				foreground: 'hsl(var(--accent-foreground))'
+  			},
+  			neutral: {
+  				light: '#F5F5F5',
+  				DEFAULT: '#A0A0A0',
+  				dark: '#404040'
+  			},
+  			background: 'hsl(var(--background))',
+  			foreground: 'hsl(var(--foreground))',
+  			card: {
+  				DEFAULT: 'hsl(var(--card))',
+  				foreground: 'hsl(var(--card-foreground))'
+  			},
+  			popover: {
+  				DEFAULT: 'hsl(var(--popover))',
+  				foreground: 'hsl(var(--popover-foreground))'
+  			},
+  			secondary: {
+  				DEFAULT: 'hsl(var(--secondary))',
+  				foreground: 'hsl(var(--secondary-foreground))'
+  			},
+  			muted: {
+  				DEFAULT: 'hsl(var(--muted))',
+  				foreground: 'hsl(var(--muted-foreground))'
+  			},
+  			destructive: {
+  				DEFAULT: 'hsl(var(--destructive))',
+  				foreground: 'hsl(var(--destructive-foreground))'
+  			},
+  			border: 'hsl(var(--border))',
+  			input: 'hsl(var(--input))',
+  			ring: 'hsl(var(--ring))',
+  			chart: {
+  				'1': 'hsl(var(--chart-1))',
+  				'2': 'hsl(var(--chart-2))',
+  				'3': 'hsl(var(--chart-3))',
+  				'4': 'hsl(var(--chart-4))',
+  				'5': 'hsl(var(--chart-5))'
+  			}
+  		},
+  		borderRadius: {
+  			lg: 'var(--radius)',
+  			md: 'calc(var(--radius) - 2px)',
+  			sm: 'calc(var(--radius) - 4px)'
+  		}
+  	}
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 } satisfies Config;
