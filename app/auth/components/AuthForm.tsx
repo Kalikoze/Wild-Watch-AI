@@ -7,9 +7,16 @@ import { HiMail } from 'react-icons/hi';
 import { signInWithMagicLink } from '@/app/auth/lib/magic-link';
 import { signInWithGoogle } from '@/app/auth/lib/providers/google';
 import { signInWithAzure } from '@/app/auth/lib/providers/azure';
-import Button from '@/app/components/common/Button';
 import { toast } from 'react-hot-toast';
 import { OAuthProvider } from '@/app/auth/types';
+
+// Import shadcn components
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
+import { cn } from '@/lib/utils';
 
 export const AuthForm = () => {
   const [email, setEmail] = useState('');
@@ -62,34 +69,42 @@ export const AuthForm = () => {
       className="relative w-full max-w-2xl mx-auto px-4"
       data-cy="auth-section"
     >
-      <div className="relative py-8 sm:py-12 bg-primary-light shadow-xl rounded-3xl p-8 sm:p-12 border border-neutral-dark/20">
-        <article className="max-w-lg mx-auto space-y-8">
-          <header className="text-center space-y-3" data-cy="auth-header">
-            <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-accent-green to-accent-orange bg-clip-text text-transparent" data-cy="auth-title">
+      <Card className="relative py-8 sm:py-12 bg-primary-light shadow-xl rounded-3xl p-8 sm:p-12 border border-neutral-dark/20 overflow-hidden">
+        {/* Blue accent element */}
+        <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-accent-blue/10 blur-xl" />
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent-green via-accent-blue/30 to-accent-orange" />
+
+        <CardContent className="max-w-lg mx-auto space-y-8 p-0 sm:p-2 relative z-10">
+          <div className="text-center space-y-3" data-cy="auth-header">
+            <h1 className="text-3xl sm:text-4xl font-bold" data-cy="auth-title">
               <span className="sm:hidden">
-                Welcome to<br />WildWatch AI
+                <span className="text-neutral-light">Welcome to</span><br />
+                <span className="text-neutral-light">WildWatch</span>
+                <span className="text-accent-green">AI</span>
               </span>
               <span className="hidden sm:inline">
-                Welcome to WildWatch AI
+                <span className="text-neutral-light">Welcome to </span>
+                <span className="text-neutral-light">WildWatch </span>
+                <span className="text-accent-green">AI</span>
               </span>
             </h1>
             <p className="text-neutral-light/60" data-cy="auth-subtitle">
               For wildlife professionals and sanctuary staff
             </p>
-          </header>
+          </div>
 
           <div className="space-y-8">
             <form onSubmit={handleSubmit} className="space-y-6" data-cy="auth-email-form">
               <div className="space-y-3">
-                <label htmlFor="email" className="block text-sm font-medium text-neutral-light/80">
+                <Label htmlFor="email" className="text-neutral-light/80">
                   Work Email
-                </label>
-                <input
+                </Label>
+                <Input
                   type="email"
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg bg-neutral-light/5 border border-neutral-dark/30 text-neutral-light placeholder-neutral-light/30 focus:outline-none focus:ring-2 focus:ring-accent-green focus:border-transparent"
+                  className="h-12 bg-neutral-light/5 border-neutral-dark/30 text-neutral-light placeholder-neutral-light/30 focus:border-accent-green focus:ring-accent-green transition duration-300"
                   placeholder="name@organization.com"
                   required
                   data-cy="auth-email-input"
@@ -98,22 +113,30 @@ export const AuthForm = () => {
               <Button
                 type="submit"
                 disabled={isLoading}
-                variant="primary"
-                icon={HiMail}
-                fullWidth
-                className="w-full !bg-accent-green hover:!bg-accent-green-light text-primary"
+                variant="green"
+                size="xl"
+                className={cn(
+                  "w-full transition-all duration-300",
+                  "hover:scale-[1.02] active:scale-[0.98]",
+                  "shadow-[0_0_15px_rgba(40,167,69,0.15)]"
+                )}
                 data-cy="auth-email-submit"
               >
-                {isLoading ? 'Sending...' : 'Continue with Email'}
+                {isLoading ? 'Sending...' : (
+                  <>
+                    <HiMail className="mr-2 h-5 w-5" />
+                    Continue with Email
+                  </>
+                )}
               </Button>
             </form>
 
-            <div className="relative" data-cy="auth-divider">
+            <div className="relative py-4" data-cy="auth-divider">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-neutral-dark/20"></div>
+                <div className="w-full border-t border-neutral-dark/30"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-primary-light text-neutral-light/60">Or continue with</span>
+                <span className="px-4 bg-primary-light text-neutral-light">Or continue with</span>
               </div>
             </div>
 
@@ -121,30 +144,38 @@ export const AuthForm = () => {
             <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0" data-cy="auth-oauth-buttons">
               <Button
                 onClick={() => handleOAuthSubmit('google')}
-                variant="neutral"
-                icon={FaGoogle}
-                iconPosition="left"
-                fullWidth
-                className="w-full sm:w-1/2"
+                variant="outline"
+                size="xl"
+                className={cn(
+                  "w-full sm:w-1/2 bg-neutral-light/5 border-neutral-dark/30 text-neutral-light",
+                  "hover:bg-neutral-light/10 hover:text-neutral-light transition-all duration-300",
+                  "hover:scale-[1.02] active:scale-[0.98]",
+                  "hover:border-neutral-light/20 hover:shadow-[0_0_10px_rgba(255,255,255,0.05)]"
+                )}
                 data-cy="auth-google-button"
               >
+                <FaGoogle className="mr-2 h-5 w-5" />
                 Google
               </Button>
               <Button
                 onClick={() => handleOAuthSubmit('azure')}
-                variant="neutral"
-                icon={FaMicrosoft}
-                iconPosition="left"
-                fullWidth
-                className="w-full sm:w-1/2"
+                variant="outline"
+                size="xl"
+                className={cn(
+                  "w-full sm:w-1/2 bg-neutral-light/5 border-neutral-dark/30 text-neutral-light",
+                  "hover:bg-neutral-light/10 hover:text-neutral-light transition-all duration-300",
+                  "hover:scale-[1.02] active:scale-[0.98]",
+                  "hover:border-neutral-light/20 hover:shadow-[0_0_10px_rgba(255,255,255,0.05)]"
+                )}
                 data-cy="auth-microsoft-button"
               >
+                <FaMicrosoft className="mr-2 h-5 w-5" />
                 Microsoft
               </Button>
             </div>
           </div>
-        </article>
-      </div>
+        </CardContent>
+      </Card>
     </motion.section>
   );
 } 
