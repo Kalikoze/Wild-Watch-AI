@@ -1,83 +1,95 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { toast } from 'react-hot-toast';
-import Button from '@/app/components/common/Button';
-import { HiArrowLeft, HiArrowRight } from 'react-icons/hi';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { FormToggle } from '@/components/ui/form-toggle';
+import { AnimatedSection } from '@/components/ui/animated-section';
+import { StepButtons } from '@/components/ui/step-buttons';
+import { StyledSelect } from '@/components/ui/styled-select';
+import { validateOrganizationData } from '@/app/onboarding/utils';
+import { organizationTypes } from '@/app/onboarding/data/organizationTypes';
+import { OrgData, OrganizationStepProps } from '@/app/onboarding/types';
 
-type OrgData = {
-  type: 'new' | 'existing';
-  name: string;
-  organizationType: string;
-  otherType?: string;
-  organizationId?: string;
-};
-
-export function OrganizationStep({
+export default function OrganizationStep({
   onNext,
   onBack
-}: {
-  onNext: (data: OrgData) => void;
-  onBack: () => void;
-}) {
+}: OrganizationStepProps) {
   const [orgData, setOrgData] = useState<OrgData>({
     type: 'new',
     name: '',
-    organizationType: '',
+    organizationType: 'placeholder',
     otherType: ''
   });
+  const [isChecking, setIsChecking] = useState(false);
+  const isSubmitting = useRef<boolean>(false);
 
-  const isValid = () => {
-    if (orgData.type === 'new') {
-      if (orgData.organizationType === 'other_specify') {
-        return orgData.name.trim().length >= 2 &&
-          orgData.organizationType.length > 0 &&
-          (orgData.otherType?.trim()?.length ?? 0) >= 2;
-      }
-      return orgData.name.trim().length >= 2 && orgData.organizationType.length > 0;
-    }
-    return true;
+  const isValid = () => validateOrganizationData(orgData);
+
+  const handleChange = (changes: Partial<OrgData>) => {
+    setOrgData(prev => ({ ...prev, ...changes }));
   };
 
-  const handleNext = async () => {
+
+  const checkOrganizationName = async (name: string): Promise<boolean> => {
+    setIsChecking(true);
     try {
-      if (orgData.type === 'new') {
-        if (!isValid()) {
-          toast.error('Please fill out all required fields', {
-            position: 'bottom-right',
-          });
-          return;
-        }
+      const supabase = createClient();
+      const { data: nameExists, error } = await supabase
+        .rpc('check_organization_name_exists', {
+          org_name: name.trim()
+        });
 
-        const supabase = createClient();
-        const { data: existingOrgs, error: checkError } = await supabase
-          .from('organizations')
-          .select('id')
-          .ilike('name', orgData.name);
-
-        if (checkError) {
-          console.error('Database error:', checkError);
-          toast.error('An error occurred while checking organization name', {
-            position: 'bottom-right',
-          });
-          return;
-        }
-
-        if (existingOrgs && existingOrgs.length > 0) {
-          toast.error('An organization with this name already exists', {
-            position: 'bottom-right',
-          });
-          return;
-        }
+      if (error) {
+        toast.error('An error occurred while checking organization name', {
+          position: 'bottom-right',
+        });
+        return false;
       }
 
-      onNext(orgData);
+      if (nameExists === true) {
+        toast.error('An organization with this name already exists', {
+          position: 'bottom-right',
+        });
+        return false;
+      }
 
+      return true;
     } catch (err) {
-      console.error('Organization step error:', err);
       toast.error('An unexpected error occurred. Please try again.', {
         position: 'bottom-right',
       });
+      return false;
+    } finally {
+      setIsChecking(false);
+    }
+  };
+
+  const handleNext = async () => {
+    if (isSubmitting.current) return;
+    isSubmitting.current = true;
+
+    try {
+      if (orgData.type !== 'new') {
+        onNext(orgData);
+        return;
+      }
+
+      if (!isValid()) {
+        toast.error('Please fill out all required fields', {
+          position: 'bottom-right',
+        });
+        return;
+      }
+
+      const isNameAvailable = await checkOrganizationName(orgData.name);
+      if (!isNameAvailable) return;
+
+      onNext(orgData);
+    } finally {
+      isSubmitting.current = false;
     }
   };
 
@@ -88,8 +100,10 @@ export function OrganizationStep({
       exit={{ opacity: 0, y: -20 }}
       className="w-full max-w-2xl mx-auto"
     >
-      <div className="bg-primary-light shadow-xl rounded-3xl p-8 sm:p-12 border border-neutral-dark/20">
-        <div className="max-w-lg mx-auto space-y-8">
+      <Card className="relative py-8 sm:py-12 bg-primary-light shadow-xl rounded-3xl p-8 sm:p-12 border border-neutral-dark/20 overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent-green via-accent-green-light to-accent-green/30" />
+
+        <CardContent className="max-w-lg mx-auto p-0 space-y-8 relative z-10">
           <header className="text-center">
             <h2 className="text-2xl sm:text-3xl font-bold text-neutral-light">
               Tell us about your organization
@@ -97,98 +111,89 @@ export function OrganizationStep({
           </header>
 
           <div className="space-y-6">
-            <div className="flex gap-4">
-              <button
-                onClick={() => setOrgData(d => ({ ...d, type: 'new' }))}
-                className={`flex-1 px-4 py-3 rounded-lg border transition-all ${orgData.type === 'new'
-                  ? 'border-accent-green bg-accent-green/10 text-accent-green'
-                  : 'border-neutral-dark/30 text-neutral-light/60 hover:bg-neutral-light/5'
-                  }`}
-              >
-                New Organization
-              </button>
-              <button
-                onClick={() => setOrgData(d => ({ ...d, type: 'existing' }))}
-                className={`flex-1 px-4 py-3 rounded-lg border transition-all ${orgData.type === 'existing'
-                  ? 'border-accent-green bg-accent-green/10 text-accent-green'
-                  : 'border-neutral-dark/30 text-neutral-light/60 hover:bg-neutral-light/5'
-                  }`}
-              >
-                Join Existing
-              </button>
-            </div>
+            <FormToggle
+              value={orgData.type}
+              onChange={(type) => handleChange({ type })}
+              options={[
+                { value: 'new', label: 'New Organization' },
+                { value: 'existing', label: 'Join Existing' }
+              ]}
+            />
 
-            {orgData.type === 'new' && (
+            <AnimatedSection isVisible={orgData.type === 'new'}>
               <div className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Organization Name *"
-                  value={orgData.name}
-                  onChange={(e) => setOrgData(d => ({ ...d, name: e.target.value }))}
-                  className="w-full px-4 py-3 rounded-lg bg-neutral-light/5 border border-neutral-dark/30 text-neutral-light placeholder-neutral-light/30 focus:outline-none focus:ring-2 focus:ring-accent-green focus:border-transparent"
-                />
-                <select
-                  value={orgData.organizationType}
-                  onChange={(e) => setOrgData(d => ({ ...d, organizationType: e.target.value }))}
-                  className="w-full px-4 py-3 rounded-lg bg-neutral-light/5 border border-neutral-dark/30 text-neutral-light focus:outline-none focus:ring-2 focus:ring-accent-green focus:border-transparent"
-                >
-                  <option value="">Select Organization Type</option>
-                  <option value="sanctuary">Wildlife Sanctuary</option>
-                  <option value="zoo">Zoo</option>
-                  <option value="aquarium">Aquarium</option>
-                  <option value="research">Research Institution</option>
-                  <option value="conservation">Conservation Center</option>
-                  <option value="rehabilitation">Wildlife Rehabilitation Center</option>
-                  <option value="education">Educational Institution</option>
-                  <option value="veterinary">Wildlife Veterinary Facility</option>
-                  <option value="other_specify">Other</option>
-                </select>
+                <div className="space-y-2">
+                  <Label htmlFor="org-name" className="text-neutral-light">
+                    Organization Name <span className="text-accent-orange">*</span>
+                  </Label>
+                  <Input
+                    id="org-name"
+                    type="text"
+                    placeholder="Enter your organization name"
+                    value={orgData.name}
+                    onChange={(e) => handleChange({ name: e.target.value })}
+                    className="h-10 bg-neutral-light/5 border-neutral-dark/30 text-neutral-light placeholder-neutral-light/30"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="org-type" className="text-neutral-light">
+                    Organization Type <span className="text-accent-orange">*</span>
+                  </Label>
+                  <StyledSelect
+                    id="org-type"
+                    placeholder="Select organization type"
+                    value={orgData.organizationType}
+                    onValueChange={(value) => handleChange({ organizationType: value })}
+                    options={organizationTypes}
+                  />
+                </div>
 
                 {orgData.organizationType === 'other_specify' && (
-                  <input
-                    type="text"
-                    placeholder="Please specify your organization type *"
-                    value={orgData.otherType || ''}
-                    onChange={(e) => setOrgData(d => ({ ...d, otherType: e.target.value }))}
-                    className="w-full px-4 py-3 rounded-lg bg-neutral-light/5 border border-neutral-dark/30 text-neutral-light placeholder-neutral-light/30 focus:outline-none focus:ring-2 focus:ring-accent-green focus:border-transparent"
-                  />
+                  <div className="space-y-2">
+                    <Label htmlFor="org-other-type" className="text-neutral-light">
+                      Specify Organization Type <span className="text-accent-orange">*</span>
+                    </Label>
+                    <Input
+                      id="org-other-type"
+                      type="text"
+                      placeholder="Please specify your organization type"
+                      value={orgData.otherType || ''}
+                      onChange={(e) => handleChange({ otherType: e.target.value })}
+                      className="h-10 bg-neutral-light/5 border-neutral-dark/30 text-neutral-light placeholder-neutral-light/30"
+                    />
+                  </div>
                 )}
               </div>
-            )}
+            </AnimatedSection>
 
-            {orgData.type === 'existing' && (
-              <input
-                type="text"
-                placeholder="Organization Code or Email Domain"
-                className="w-full px-4 py-3 rounded-lg bg-neutral-light/5 border border-neutral-dark/30 text-neutral-light placeholder-neutral-light/30 focus:outline-none focus:ring-2 focus:ring-accent-green focus:border-transparent"
-              />
-            )}
+            <AnimatedSection isVisible={orgData.type === 'existing'}>
+              <div className="space-y-2">
+                <Label htmlFor="org-code" className="text-neutral-light">
+                  Organization Code or Email Domain
+                </Label>
+                <Input
+                  id="org-code"
+                  type="text"
+                  placeholder="Enter organization code or email domain"
+                  value={orgData.organizationId || ''}
+                  onChange={(e) => handleChange({
+                    organizationId: e.target.value,
+                    organizationType: 'existing_org'
+                  })}
+                  className="h-10 bg-neutral-light/5 border-neutral-dark/30 text-neutral-light placeholder-neutral-light/30"
+                />
+              </div>
+            </AnimatedSection>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
-            <Button
-              onClick={onBack}
-              variant="neutral"
-              icon={HiArrowLeft}
-              iconPosition="left"
-              fullWidth
-              className="w-full sm:w-1/2"
-            >
-              Back
-            </Button>
-            <Button
-              onClick={handleNext}
-              variant="primary"
-              icon={HiArrowRight}
-              fullWidth
-              disabled={!isValid()}
-              className="w-full sm:w-1/2 !bg-accent-green hover:!bg-accent-green-light text-primary"
-            >
-              Continue
-            </Button>
-          </div>
-        </div>
-      </div>
+          <StepButtons
+            onBack={onBack}
+            onNext={handleNext}
+            isNextDisabled={!isValid() || isChecking}
+          />
+        </CardContent>
+      </Card>
     </motion.article>
   );
 } 
