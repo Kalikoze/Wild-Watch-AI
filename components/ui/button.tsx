@@ -27,6 +27,13 @@ const buttonVariants = cva(
           "bg-accent-blue text-primary shadow-sm hover:bg-accent-blue-light",
         gold:
           "bg-accent-gold text-primary shadow-sm hover:bg-accent-gold-light",
+        // WildWatch AI specific variants
+        "ww-dashboard":
+          "text-accent-green hover:text-accent-green-light hover:bg-transparent font-medium transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]",
+        "ww-outline-light":
+          "bg-transparent border border-neutral-light/20 text-neutral-light hover:bg-neutral-light/10 hover:text-neutral-light transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] h-11 px-6",
+        "ww-accent":
+          "bg-transparent border border-accent-green text-accent-green hover:bg-accent-green/10 hover:text-accent-green-light transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_10px_rgba(40,167,69,0.1)] hover:shadow-[0_0_15px_rgba(40,167,69,0.15)]",
       },
       size: {
         default: "h-9 px-4 py-2",
@@ -47,17 +54,48 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
   VariantProps<typeof buttonVariants> {
   asChild?: boolean
+  withArrow?: boolean
+  icon?: React.ComponentType<any>
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, withArrow = false, icon: Icon, children, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
+
+    const content = (
+      <>
+        {Icon && <Icon className={cn("h-5 w-5 mr-2", variant === "ww-outline-light" && "text-neutral-light")} />}
+        {children}
+        {withArrow && (
+          <svg
+            className="h-4 w-4 transition-transform group-hover:translate-x-1"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
+        )}
+      </>
+    );
+
+    // If asChild is true, we need to pass children directly
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(
+          buttonVariants({ variant, size, className }),
+          withArrow && "group"
+        )}
         ref={ref}
         {...props}
-      />
+      >
+        {asChild ? children : content}
+      </Comp>
     )
   }
 )
