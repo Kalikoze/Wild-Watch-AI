@@ -50,12 +50,17 @@ const buttonVariants = cva(
   }
 )
 
+// Define a more specific type for the icon component
+type IconProps = {
+  className?: string;
+};
+
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
   VariantProps<typeof buttonVariants> {
   asChild?: boolean
   withArrow?: boolean
-  icon?: React.ComponentType<any>
+  icon?: React.ComponentType<IconProps>
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(

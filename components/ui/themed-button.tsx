@@ -30,6 +30,11 @@ const iconMap = {
 
 type IconName = keyof typeof iconMap;
 
+// Define a type for icon props
+type IconProps = {
+  className?: string;
+};
+
 interface ThemedButtonProps extends Omit<ButtonProps, 'icon'> {
   iconName?: IconName;
 }
@@ -48,7 +53,7 @@ interface ThemedButtonProps extends Omit<ButtonProps, 'icon'> {
  * <ThemedButton variant="ww-outline-light" iconName="logout">Sign Out</ThemedButton>
  */
 export const ThemedButton = React.forwardRef<HTMLButtonElement, ThemedButtonProps>(
-  ({ className, variant, iconName, ...props }, ref) => {
+  ({ variant, iconName, ...props }, ref) => {
     // Get the icon component if an icon name was provided
     const IconComponent = iconName ? iconMap[iconName] : undefined;
 
@@ -60,7 +65,7 @@ export const ThemedButton = React.forwardRef<HTMLButtonElement, ThemedButtonProp
         ref={ref}
         variant={variant}
         icon={IconComponent ?
-          (props: any) => <IconComponent {...props} className={iconClassName || props.className} />
+          (iconProps: IconProps) => <IconComponent {...iconProps} className={iconClassName || iconProps.className} />
           : undefined}
         {...props}
       />
@@ -89,10 +94,11 @@ export function DashboardButton({ children, className, ...props }: Omit<ThemedBu
   );
 }
 
-export function ActionButton({ children, ...props }: Omit<ThemedButtonProps, 'variant'>) {
+export function ActionButton({ children, className, ...props }: Omit<ThemedButtonProps, 'variant'>) {
   return (
     <ThemedButton
       variant="ww-accent"
+      className={className}
       {...props}
     >
       {children}
