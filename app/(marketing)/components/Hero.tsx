@@ -41,9 +41,9 @@ export default function Hero() {
               className="mb-6 text-5xl font-bold tracking-tight text-neutral-light sm:text-6xl lg:text-7xl"
             >
               Intelligent{' '}
-              <span className="text-accent-green">Wildlife</span>{' '}
+              <span className="text-accent-orange">Wildlife</span>{' '}
               Monitoring with{' '}
-              <span className="text-accent-orange">AI</span>
+              <span className="text-accent-green">AI</span>
             </motion.h1>
 
             <motion.p
