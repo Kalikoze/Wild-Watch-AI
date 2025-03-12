@@ -51,7 +51,7 @@ export default function PlanStep({
                   billingCycle: 'monthly',
                   organizationType: 'existing'
                 })}
-                nextText="Continue"
+                nextLabel="Continue"
               />
             </div>
           </CardContent>
@@ -128,13 +128,8 @@ export default function PlanStep({
                 type="button"
                 variant="outline"
                 onClick={() => handleChange({ planId: id })}
-                className={cn(
-                  "w-full p-4 h-auto rounded-lg justify-start text-left transition-all duration-300 bg-transparent",
-                  "border-neutral-dark/30",
-                  planData.planId === id
-                    ? "border-accent-green bg-accent-green/5 hover:bg-accent-green/10"
-                    : "text-neutral-light/80 hover:bg-neutral-light/5 hover:text-neutral-light hover:border-neutral-light/40"
-                )}
+                color={planData.planId === id ? "green" : "neutral"}
+                className="w-full p-4 h-auto justify-start text-left"
               >
                 <div className="w-full">
                   <div className="flex justify-between items-center">
@@ -176,7 +171,7 @@ export default function PlanStep({
           <StepButtons
             onBack={onBack}
             onNext={() => onComplete(planData)}
-            nextText={planData.planId === 'free' ? 'Start Free Trial' : 'Complete Setup'}
+            nextLabel={planData.planId === 'free' ? 'Start Free Trial' : 'Complete Setup'}
           />
 
           {planData.planId !== 'free' && (

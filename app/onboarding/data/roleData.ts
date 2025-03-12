@@ -9,13 +9,13 @@ export const roleOptions: RoleOption[] = [
   {
     id: 'admin',
     title: 'Administrator',
-    description: 'Full access to manage organization, users, and video analysis settings',
+    description: 'Can manage all organization, users, and video analysis settings',
     iconType: 'admin',
   },
   {
     id: 'researcher',
     title: 'Researcher',
-    description: 'Can upload videos, conduct analysis, and generate behavioral reports',
+    description: 'Can upload videos, run analysis, and generate behavioral reports',
     iconType: 'researcher',
   },
   {
@@ -27,7 +27,7 @@ export const roleOptions: RoleOption[] = [
   {
     id: 'viewer',
     title: 'Viewer',
-    description: 'View-only access to analysis results and reports',
+    description: 'Can view latest analysis results and access behavioral reports',
     iconType: 'viewer',
   },
 ]; 

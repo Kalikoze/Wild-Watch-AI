@@ -39,7 +39,8 @@ export const AuthButtons = ({
       )}>
         <Button
           asChild
-          variant="ghost"
+          variant="text"
+          color="green"
           size="lg"
           className={cn(
             "text-accent-green hover:text-accent-green-light hover:bg-transparent",
@@ -64,6 +65,7 @@ export const AuthButtons = ({
             onNavigate?.();
           }}
           variant="outline"
+          color="neutral"
           size="lg"
           className={cn(
             "bg-transparent border-neutral-light/20 text-neutral-light hover:bg-neutral-light/10",
