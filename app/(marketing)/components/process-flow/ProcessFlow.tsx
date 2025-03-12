@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import ProcessStep from '@/app/(marketing)/components/process-flow/ProcessStep';
-import BackgroundEffects from '@/app/components/common/BackgroundEffects';
 import { processSteps } from '@/app/(marketing)/data/process-steps';
 
 export default function ProcessFlow() {
@@ -12,8 +11,6 @@ export default function ProcessFlow() {
       className="relative py-32 bg-primary overflow-hidden"
       aria-labelledby="process-title"
     >
-      <BackgroundEffects color="orange" />
-
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.header
           data-cy="process-header"

@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion';
 import { useCases } from '@/app/(marketing)/data/useCases';
 import UseCaseCard from '@/app/(marketing)/components/use-cases/UseCaseCard';
-import BackgroundEffects from '@/app/components/common/BackgroundEffects';
 
 export default function UseCases() {
   return (
@@ -13,8 +12,6 @@ export default function UseCases() {
       aria-labelledby="use-cases-title"
     >
       <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-primary via-primary-light to-primary" />
-
-      <BackgroundEffects color="green" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.header

@@ -1,9 +1,6 @@
-import BackgroundEffects from '@/app/components/common/BackgroundEffects';
-
 export default function PrivacyPolicy() {
   return (
     <main className="relative min-h-screen bg-primary">
-      <BackgroundEffects color="green" />
       
       <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 pt-24 pb-16">
         <article className="rounded-2xl bg-primary-light/50 backdrop-blur-sm border border-neutral-light/10 p-8 lg:p-12">

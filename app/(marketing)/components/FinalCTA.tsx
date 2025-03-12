@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { HiArrowRight, HiSparkles } from 'react-icons/hi';
-import BackgroundEffects from '@/app/components/common/BackgroundEffects';
+import { Button } from '@/components/ui/button';
 
 export default function FinalCTA() {
   return (
@@ -16,8 +16,6 @@ export default function FinalCTA() {
         aria-hidden="true"
         className="absolute inset-0 bg-gradient-to-b from-primary via-primary-light to-primary"
       />
-
-      <BackgroundEffects color="green" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.article
@@ -66,28 +64,31 @@ export default function FinalCTA() {
               viewport={{ once: true }}
               className="flex flex-col sm:flex-row gap-6 justify-center"
             >
-              <Link
+              <Button
+                asChild
+                variant="solid"
+                color="green"
+                size="xl"
                 data-cy="final-cta-demo-button"
-                href="/contact"
-                className="group inline-flex items-center px-8 py-4 text-lg font-medium text-neutral-light bg-accent-orange-dark hover:bg-accent-orange rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
               >
-                Schedule Demo
-                <HiArrowRight
-                  aria-hidden="true"
-                  className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1"
-                />
-              </Link>
-              <Link
+                <Link href="/contact">
+                  <HiArrowRight className="h-5 w-5" />
+                  Schedule Demo
+                </Link>
+              </Button>
+
+              <Button
+                asChild
+                variant="outline"
+                color="neutral"
+                size="xl"
                 data-cy="final-cta-learn-more-button"
-                href="/our-story"
-                className="group inline-flex items-center px-8 py-4 text-lg font-medium text-accent-green border-2 border-accent-green hover:bg-accent-green hover:text-primary rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
               >
-                Learn More
-                <HiSparkles
-                  aria-hidden="true"
-                  className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1"
-                />
-              </Link>
+                <Link href="/our-story">
+                  <HiSparkles className="h-5 w-5 mr-2" />
+                  Learn More
+                </Link>
+              </Button>
             </motion.nav>
           </motion.header>
         </motion.article>

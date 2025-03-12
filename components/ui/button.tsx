@@ -88,7 +88,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       arrowDirection = withArrow;
     }
 
-    // Left arrow component
     const LeftArrow = () => (
       <svg
         className="h-4 w-4 mr-2 transition-transform group-hover:-translate-x-1"
@@ -105,7 +104,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       </svg>
     );
 
-    // Right arrow component
     const RightArrow = () => (
       <svg
         className="h-4 w-4 transition-transform group-hover:translate-x-1"

@@ -1,7 +1,6 @@
 import AuthErrorMessage from '@/app/auth/components/AuthErrorMessage'
 import { headers } from 'next/headers'
 import { AuthErrorType } from '@/app/auth/types'
-import BackgroundEffects from '@/app/components/common/BackgroundEffects'
 
 export default async function AuthErrorPage() {
   const headersList = await headers()
@@ -20,7 +19,6 @@ export default async function AuthErrorPage() {
 
   return (
     <main className="min-h-screen h-screen bg-primary flex flex-col justify-center relative overflow-hidden py-12" data-cy="auth-error-page">
-      <BackgroundEffects color="orange" />
 
       <div
         aria-hidden="true"
