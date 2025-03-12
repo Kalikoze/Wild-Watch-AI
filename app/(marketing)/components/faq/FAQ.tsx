@@ -26,7 +26,7 @@ export default function FAQ() {
           <h2
             data-cy="faq-title"
             id="faq-title"
-            className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-accent-green via-accent-orange to-accent-gold bg-clip-text text-transparent"
+            className="text-4xl md:text-5xl font-bold mb-6 text-neutral-light"
           >
             Frequently Asked Questions
           </h2>

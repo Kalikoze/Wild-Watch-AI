@@ -5,15 +5,15 @@ import { motion } from 'framer-motion';
 export default function FeatureHeader() {
   return (
     <motion.header
-      initial={{ y: 50 }}
-      whileInView={{ y: 0 }}
+      initial={{ y: 50, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: true }}
       className="text-center mb-20"
       data-cy="features-header"
     >
       <h2
-        className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-accent-green via-accent-orange to-accent-gold bg-clip-text text-transparent"
+        className="text-4xl md:text-5xl font-bold mb-6 text-neutral-light"
         data-cy="features-title"
       >
         Streamlined Animal Monitoring

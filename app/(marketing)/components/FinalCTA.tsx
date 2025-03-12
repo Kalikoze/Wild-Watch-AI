@@ -40,7 +40,7 @@ export default function FinalCTA() {
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.7, delay: 0.2 }}
               viewport={{ once: true }}
-              className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-accent-green via-accent-orange to-accent-gold bg-clip-text text-transparent"
+              className="text-4xl md:text-5xl font-bold mb-6 text-neutral-light"
             >
               Ready to Transform Animal Care?
             </motion.h2>
