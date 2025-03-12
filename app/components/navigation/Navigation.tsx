@@ -115,7 +115,8 @@ export const Navigation = () => {
 
           {/* Mobile menu button */}
           <Button
-            variant="ghost"
+            variant="outline"
+            color="neutral"
             size="icon"
             className={cn(
               "md:hidden text-neutral-light hover:bg-neutral-light/10",
