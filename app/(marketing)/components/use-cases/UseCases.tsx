@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion';
 import { useCases } from '@/app/(marketing)/data/useCases';
 import UseCaseCard from '@/app/(marketing)/components/use-cases/UseCaseCard';
-import BackgroundEffects from '@/app/components/common/BackgroundEffects';
 
 export default function UseCases() {
   return (
@@ -13,8 +12,6 @@ export default function UseCases() {
       aria-labelledby="use-cases-title"
     >
       <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-primary via-primary-light to-primary" />
-
-      <BackgroundEffects color="green" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.header
@@ -27,7 +24,7 @@ export default function UseCases() {
         >
           <h2
             data-cy="use-cases-title"
-            className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-accent-green via-accent-orange to-accent-gold bg-clip-text text-transparent"
+            className="text-4xl md:text-5xl font-bold mb-6 text-neutral-light"
           >
             Transforming Animal Care
           </h2>

@@ -13,7 +13,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { cn } from '@/lib/utils';
 
 export const AuthForm = () => {
   const [email, setEmail] = useState('');
@@ -108,21 +107,13 @@ export const AuthForm = () => {
               <Button
                 type="submit"
                 disabled={isLoading}
-                variant="green"
-                size="xl"
-                className={cn(
-                  "w-full transition-all duration-300",
-                  "hover:scale-[1.02] active:scale-[0.98]",
-                  "shadow-[0_0_15px_rgba(40,167,69,0.15)]"
-                )}
+                variant="solid"
+                color="green"
+                icon={isLoading ? undefined : HiMail}
+                className="w-full"
                 data-cy="auth-email-submit"
               >
-                {isLoading ? 'Sending...' : (
-                  <>
-                    <HiMail className="mr-2 h-5 w-5" />
-                    Continue with Email
-                  </>
-                )}
+                {isLoading ? 'Sending...' : 'Continue with Email'}
               </Button>
             </form>
 
@@ -140,31 +131,21 @@ export const AuthForm = () => {
               <Button
                 onClick={() => handleOAuthSubmit('google')}
                 variant="outline"
-                size="xl"
-                className={cn(
-                  "w-full sm:w-1/2 bg-neutral-light/5 border-neutral-dark/30 text-neutral-light",
-                  "hover:bg-neutral-light/10 hover:text-neutral-light transition-all duration-300",
-                  "hover:scale-[1.02] active:scale-[0.98]",
-                  "hover:border-neutral-light/20 hover:shadow-[0_0_10px_rgba(255,255,255,0.05)]"
-                )}
+                color="neutral"
+                icon={FaGoogle}
+                className="w-full sm:w-1/2"
                 data-cy="auth-google-button"
               >
-                <FaGoogle className="mr-2 h-5 w-5" />
                 Google
               </Button>
               <Button
                 onClick={() => handleOAuthSubmit('azure')}
                 variant="outline"
-                size="xl"
-                className={cn(
-                  "w-full sm:w-1/2 bg-neutral-light/5 border-neutral-dark/30 text-neutral-light",
-                  "hover:bg-neutral-light/10 hover:text-neutral-light transition-all duration-300",
-                  "hover:scale-[1.02] active:scale-[0.98]",
-                  "hover:border-neutral-light/20 hover:shadow-[0_0_10px_rgba(255,255,255,0.05)]"
-                )}
+                color="neutral"
+                icon={FaMicrosoft}
+                className="w-full sm:w-1/2"
                 data-cy="auth-microsoft-button"
               >
-                <FaMicrosoft className="mr-2 h-5 w-5" />
                 Microsoft
               </Button>
             </div>

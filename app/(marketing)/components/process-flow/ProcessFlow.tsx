@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import ProcessStep from '@/app/(marketing)/components/process-flow/ProcessStep';
-import BackgroundEffects from '@/app/components/common/BackgroundEffects';
 import { processSteps } from '@/app/(marketing)/data/process-steps';
 
 export default function ProcessFlow() {
@@ -12,17 +11,19 @@ export default function ProcessFlow() {
       className="relative py-32 bg-primary overflow-hidden"
       aria-labelledby="process-title"
     >
-      <BackgroundEffects color="orange" />
-
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.header
+          initial={{ y: 50, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
           data-cy="process-header"
           className="text-center mb-20"
         >
           <h2
             data-cy="process-title"
             id="process-title"
-            className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-accent-green via-accent-orange to-accent-gold bg-clip-text text-transparent"
+            className="text-4xl md:text-5xl font-bold mb-6 text-neutral-light"
           >
             How It Works
           </h2>

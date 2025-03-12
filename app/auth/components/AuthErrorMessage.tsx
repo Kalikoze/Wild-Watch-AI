@@ -5,7 +5,6 @@ import { HiExclamationCircle } from 'react-icons/hi';
 import { AuthErrorMessageProps } from '@/app/auth/types';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 
 export default function AuthErrorMessage({
   message,
@@ -42,13 +41,9 @@ export default function AuthErrorMessage({
                 </p>
                 <Button
                   asChild
-                  variant="orange"
-                  size="xl"
-                  className={cn(
-                    "w-full transition-all duration-300",
-                    "hover:scale-[1.02] active:scale-[0.98]",
-                    "shadow-[0_0_15px_rgba(255,87,34,0.15)]"
-                  )}
+                  variant="solid"
+                  color="orange"
+                  className="w-full"
                   data-cy="auth-error-back-button"
                 >
                   <motion.a

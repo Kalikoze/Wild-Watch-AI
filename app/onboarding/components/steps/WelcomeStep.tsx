@@ -1,8 +1,6 @@
 import { motion } from 'framer-motion';
-import { HiArrowRight } from 'react-icons/hi';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 import { WelcomeStepProps } from '@/app/onboarding/types';
 
 export function WelcomeStep({ onNext }: WelcomeStepProps) {
@@ -31,16 +29,12 @@ export function WelcomeStep({ onNext }: WelcomeStepProps) {
 
           <Button
             onClick={onNext}
-            variant="green"
-            size="xl"
-            className={cn(
-              "w-full transition-all duration-300",
-              "hover:scale-[1.02] active:scale-[0.98]",
-              "hover:shadow-[0_0_15px_rgba(40,167,69,0.3)]"
-            )}
+            variant="solid"
+            color="green"
+            withArrow
+            className="w-full"
           >
             Let&apos;s Get Started
-            <HiArrowRight className="ml-2 h-5 w-5" />
           </Button>
         </CardContent>
       </Card>

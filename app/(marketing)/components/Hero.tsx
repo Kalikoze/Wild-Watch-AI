@@ -2,8 +2,8 @@
 
 import { motion } from 'framer-motion';
 import { HiArrowRight, HiSparkles } from 'react-icons/hi';
-import BackgroundEffects from '@/app/components/common/BackgroundEffects';
-import Button from '@/app/components/common/Button'
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export default function Hero() {
   return (
@@ -12,7 +12,6 @@ export default function Hero() {
       aria-labelledby="hero-heading"
       className="relative h-[80vh] bg-primary flex items-center overflow-hidden"
     >
-      <BackgroundEffects color="orange" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -66,20 +65,30 @@ export default function Hero() {
               className="flex flex-wrap gap-6"
             >
               <Button
-                href="/auth" 
-                variant="primary"
-                icon={HiArrowRight}
+                asChild
+                variant="solid"
+                color="green"
+                size="xl"
+                withArrow="right"
                 data-cy="hero-cta-primary"
               >
-                Get Started Free
+                <Link href="/auth">
+                  <HiArrowRight className="h-5 w-5" />
+                  Get Started Free
+                </Link>
               </Button>
+
               <Button
-                href="/our-story"
-                variant="secondary"
-                icon={HiSparkles}
+                asChild
+                variant="outline"
+                color="neutral"
+                size="xl"
                 data-cy="hero-cta-secondary"
               >
-                Learn More
+                <Link href="/our-story">
+                  <HiSparkles className="h-5 w-5 mr-2" />
+                  Learn More
+                </Link>
               </Button>
             </motion.div>
           </motion.article>

@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { faqs } from '@/app/(marketing)/data/faqs';
 import FAQItem from './FAQItem';
-import BackgroundEffects from '@/app/components/common/BackgroundEffects';
 
 export default function FAQ() {
   const [leftColumnOpen, setLeftColumnOpen] = useState<number | null>(null);
@@ -16,8 +15,6 @@ export default function FAQ() {
       className="relative py-24 bg-primary"
       aria-labelledby="faq-title"
     >
-      <BackgroundEffects color="orange" />
-
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.header
           initial={{ y: 50, opacity: 0 }}
@@ -29,7 +26,7 @@ export default function FAQ() {
           <h2
             data-cy="faq-title"
             id="faq-title"
-            className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-accent-green via-accent-orange to-accent-gold bg-clip-text text-transparent"
+            className="text-4xl md:text-5xl font-bold mb-6 text-neutral-light"
           >
             Frequently Asked Questions
           </h2>
